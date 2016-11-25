@@ -26,6 +26,16 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>io.interface21</groupId>
+			<artifactId>ameba-lib</artifactId>
+			<version>1.8</version>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.16.8</version>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
