@@ -22,6 +22,7 @@
 package io.interface21.shop2gether;
 
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
@@ -39,5 +40,6 @@ import lombok.NoArgsConstructor;
 @Entity
 class Owner extends User {
 
+    @OneToMany
     private List<Item> items;
 }

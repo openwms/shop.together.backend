@@ -21,26 +21,14 @@
  */
 package io.interface21.shop2gether;
 
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import java.util.List;
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.ameba.integration.jpa.ApplicationEntity;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 /**
- * A UserGroup.
+ * A OwnerRepository.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Entity
-class UserGroup extends ApplicationEntity {
+@RepositoryRestResource
+interface OwnerRepository {
 
-    @OneToMany
-    private List<User> users;
 }
