@@ -21,6 +21,7 @@
  */
 package io.interface21.shop2gether;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 /**
@@ -28,7 +29,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-@RepositoryRestResource
-interface OwnerRepository {
+@RepositoryRestResource(collectionResourceRel = "owners", path = "owners")
+interface OwnerRepository extends JpaRepository<Owner, Long> {
 
 }
