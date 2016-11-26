@@ -33,13 +33,11 @@ import org.ameba.integration.jpa.ApplicationEntity;
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Data
 @Entity
 class User extends ApplicationEntity {
 
-    private String username;
-    private String phonenumber;
-    private String email;
+    private String username, phonenumber, email;
 }

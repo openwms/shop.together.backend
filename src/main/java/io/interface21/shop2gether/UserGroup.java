@@ -23,6 +23,7 @@ package io.interface21.shop2gether;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import java.util.ArrayList;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
@@ -42,5 +43,5 @@ import org.ameba.integration.jpa.ApplicationEntity;
 class UserGroup extends ApplicationEntity {
 
     @OneToMany
-    private List<User> users;
+    private List<User> users = new ArrayList<>();
 }

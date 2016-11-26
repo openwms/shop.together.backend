@@ -21,13 +21,13 @@
  */
 package io.interface21.shop2gether;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import java.util.ArrayList;
 import java.util.List;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * A Owner.
@@ -35,11 +35,17 @@ import lombok.NoArgsConstructor;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
 class Owner extends User {
 
-    @OneToMany
-    private List<Item> items;
+    @OneToMany(cascade = CascadeType.MERGE)
+    private List<Item> items = new ArrayList<>();
+
+    /** Dear JPA ... */
+    protected Owner() {
+    }
+
+    public Owner(String username, String phonenumber, String email) {
+        super(username, phonenumber, email);
+    }
 }
