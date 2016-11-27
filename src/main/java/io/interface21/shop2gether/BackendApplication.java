@@ -21,7 +21,7 @@ public class BackendApplication {
 	@Bean
 	CommandLineRunner clr(OwnerRepository repo) {
 		return  args -> {
-			Owner heiko = repo.save(new Owner("heiko", "4711", "heiko@home.com"));
+			Owner heiko = repo.save(new Owner("heiko", "4711", "heiko@home.com", true));
 			heiko.getItems().add(new TextNote("Title", "1 x Eggs", null, false));
 			repo.save(heiko);
 		};

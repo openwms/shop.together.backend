@@ -22,8 +22,8 @@
 package io.interface21.shop2gether;
 
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,9 +45,9 @@ import org.ameba.integration.jpa.ApplicationEntity;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Table(name = "T_USER_GROUP")
 class UserGroup extends ApplicationEntity {
 
-    @OneToMany(mappedBy = "pKey")
-    @JoinColumn(referencedColumnName = "C_PK")
+    @OneToMany(mappedBy = "pk")
     private List<User> users = new ArrayList<>();
 }

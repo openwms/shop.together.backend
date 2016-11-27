@@ -23,11 +23,11 @@ package io.interface21.shop2gether;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -40,18 +40,18 @@ import lombok.ToString;
 @Getter
 @ToString
 @EqualsAndHashCode
+@AllArgsConstructor
 @Entity
 class Owner extends User {
 
-    @OneToMany(cascade = CascadeType.MERGE, mappedBy = "pKey")
-    @JoinColumn(referencedColumnName = "C_PK")
+    @OneToMany(cascade = CascadeType.MERGE, mappedBy = "pk")
     private List<Item> items = new ArrayList<>();
 
     /** Dear JPA ... */
     protected Owner() {
     }
 
-    public Owner(String username, String phonenumber, String email) {
-        super(username, phonenumber, email);
+    public Owner(String username, String phonenumber, String email, boolean active) {
+        super(username, phonenumber, email, active);
     }
 }
