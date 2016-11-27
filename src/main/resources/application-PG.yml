@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    url: jdbc:postgresql:S2GDB
+    username: S2T
+    password: S2T
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database: postgresql
+    generate-ddl: true

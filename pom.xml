@@ -5,11 +5,9 @@
 
 	<groupId>io.interface21.shop2gether</groupId>
 	<artifactId>backend</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
-
+	<version>1.0.0-SNAPSHOT</version>
 	<name>backend</name>
-	<description>Demo project for Spring Boot</description>
+	<description>Backend to provide RESTful resources</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -22,19 +20,26 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
+        <ameba.version>1.8</ameba.version>
 	</properties>
 
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>io.interface21</groupId>
+				<artifactId>ameba-lib</artifactId>
+				<version>${ameba.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>io.interface21</groupId>
+				<artifactId>ameba-lib</artifactId>
+				<type>test-jar</type>
+				<version>${ameba.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
 	<dependencies>
-		<dependency>
-			<groupId>io.interface21</groupId>
-			<artifactId>ameba-lib</artifactId>
-			<version>1.8</version>
-		</dependency>
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<version>1.16.8</version>
-		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
@@ -61,9 +66,30 @@
 		</dependency>
 
 		<dependency>
+			<groupId>io.interface21</groupId>
+			<artifactId>ameba-lib</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 			<scope>runtime</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>io.interface21</groupId>
+			<artifactId>ameba-lib</artifactId>
+			<type>test-jar</type>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

@@ -21,7 +21,14 @@
  */
 package io.interface21.shop2gether;
 
+import static io.interface21.shop2gether.User.COLUMN_ACTIVE;
+import static io.interface21.shop2gether.User.COLUMN_EMAIL;
+import static io.interface21.shop2gether.User.COLUMN_USERNAME;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -31,7 +38,7 @@ import lombok.ToString;
 import org.ameba.integration.jpa.ApplicationEntity;
 
 /**
- * A User.
+ * An User is some authenticated human user of the system.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
@@ -41,7 +48,23 @@ import org.ameba.integration.jpa.ApplicationEntity;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Table(name = "T_USER",
+        uniqueConstraints = {
+                @UniqueConstraint(name = "UC_UNAME_ACTIVE", columnNames = {COLUMN_USERNAME, COLUMN_ACTIVE}),
+                @UniqueConstraint(name = "UC_EMAIL_ACTIVE", columnNames = {COLUMN_EMAIL, COLUMN_ACTIVE})
+        })
 class User extends ApplicationEntity {
 
-    private String username, phonenumber, email;
+    public static final String COLUMN_USERNAME = "C_USERNAME";
+    public static final String COLUMN_EMAIL = "C_EMAIL";
+    public static final String COLUMN_ACTIVE = "C_ACTIVE";
+
+    @Column(name = COLUMN_USERNAME)
+    private String username;
+    @Column(name = "C_PHONE")
+    private String phonenumber;
+    @Column(name = "C_EMAIL")
+    private String email;
+    @Column(name = COLUMN_ACTIVE)
+    private boolean active;
 }

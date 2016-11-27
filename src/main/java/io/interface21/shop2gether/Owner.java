@@ -23,6 +23,7 @@ package io.interface21.shop2gether;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +33,7 @@ import lombok.Getter;
 import lombok.ToString;
 
 /**
- * A Owner.
+ * An Owner is the actual Owner of {@link Item Items} and is also a valid {@link User User} of the system.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
@@ -42,7 +43,8 @@ import lombok.ToString;
 @Entity
 class Owner extends User {
 
-    @OneToMany(cascade = CascadeType.MERGE)
+    @OneToMany(cascade = CascadeType.MERGE, mappedBy = "pKey")
+    @JoinColumn(referencedColumnName = "C_PK")
     private List<Item> items = new ArrayList<>();
 
     /** Dear JPA ... */

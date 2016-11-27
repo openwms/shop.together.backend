@@ -21,8 +21,11 @@
  */
 package io.interface21.shop2gether;
 
+import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +37,7 @@ import lombok.ToString;
 import org.ameba.integration.jpa.ApplicationEntity;
 
 /**
- * A Item.
+ * An Item is the thing that is handled or dealed with in the application. Items can be shared between groups of users.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
@@ -44,8 +47,11 @@ import org.ameba.integration.jpa.ApplicationEntity;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Table(name ="T_ITEM")
+@DiscriminatorColumn(name = "C_TYPE")
 class Item extends ApplicationEntity {
 
-    @OneToMany
+    @OneToMany(mappedBy = "pKey")
+    @JoinColumn(referencedColumnName = "C_PK")
     private List<UserGroup> sharedWith = new ArrayList<>();
 }
