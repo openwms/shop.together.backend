@@ -24,8 +24,10 @@ package io.interface21.shop2gether;
 import javax.persistence.Entity;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.ameba.integration.jpa.ApplicationEntity;
 
 /**
@@ -33,9 +35,11 @@ import org.ameba.integration.jpa.ApplicationEntity;
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
+@Getter
+@ToString
+@EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
 @Entity
 class User extends ApplicationEntity {
 

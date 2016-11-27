@@ -24,22 +24,24 @@ package io.interface21.shop2gether;
 import javax.persistence.Entity;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 /**
  * A TextNote.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-@Data
+@Getter
+@ToString
+@EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 class TextNote extends Item {
 
-    private String title;
-    private String text;
-    private String color;
+    private String title, text, color;
     private boolean pinned = false;
 }
