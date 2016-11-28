@@ -50,6 +50,6 @@ import org.ameba.integration.jpa.ApplicationEntity;
 @DiscriminatorColumn(name = "C_TYPE")
 class Item extends ApplicationEntity {
 
-    @OneToMany(mappedBy = "pk")
+    @OneToMany
     private List<UserGroup> sharedWith = new ArrayList<>();
 }

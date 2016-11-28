@@ -21,29 +21,15 @@
  */
 package io.interface21.shop2gether;
 
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
-
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 /**
- * A TextNote.
+ * A UserGroupRepository.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-@Getter
-@ToString
-@EqualsAndHashCode
-@NoArgsConstructor
-@AllArgsConstructor
-@Entity
-@DiscriminatorValue("TNOTE")
-class TextNote extends Item {
+@RepositoryRestResource(collectionResourceRel = "usergroups", path = "usergroups")
+interface UserGroupRepository extends JpaRepository<UserGroup, Long> {
 
-    private String title, text, color;
-    private boolean pinned = false;
 }
