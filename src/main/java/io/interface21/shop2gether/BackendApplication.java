@@ -1,7 +1,5 @@
 package io.interface21.shop2gether;
 
-import java.util.Collections;
-
 import org.ameba.annotation.EnableAspects;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -26,7 +24,7 @@ public class BackendApplication {
 	CommandLineRunner clr(OwnerRepository repo, UserGroupRepository ugRepo) {
 		return  args -> {
 			Owner heiko = repo.save(new Owner("heiko", "4711", "heiko@home.com", true));
-			UserGroup ug = ugRepo.save(new UserGroup(heiko, "Family", Collections.emptyList()));
+			UserGroup ug = ugRepo.save(new UserGroup(heiko, "Family"));
 			TextNote title = new TextNote("Title", "1 x Eggs", null, false);
 			title.getSharedWith().add(ug);
 			heiko.getItems().add(title);
