@@ -1,7 +1,8 @@
 package io.interface21.shop2gether;
 
 import org.ameba.annotation.EnableAspects;
-import org.springframework.boot.CommandLineRunner;
+import org.ameba.mapping.BeanMapper;
+import org.ameba.mapping.DozerMapperImpl;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -20,15 +21,9 @@ public class BackendApplication {
         SpringApplication.run(BackendApplication.class, args);
     }
 
+    public
     @Bean
-    CommandLineRunner clr(OwnerRepository repo, UserGroupRepository ugRepo) {
-        return args -> {
-            Owner heiko = repo.save(new Owner("heiko", "4711", "heiko@home.com", true));
-            UserGroup ug = ugRepo.save(new UserGroup(heiko, "Family"));
-            TextNote title = new TextNote("Title", "1 x Eggs", "#cecece", false);
-            title.getSharedWith().add(ug);
-            heiko.getItems().add(title);
-            repo.save(heiko);
-        };
+    BeanMapper serviceMapper() {
+        return new DozerMapperImpl("META-INF/dozer/bean-mappings.xml");
     }
 }

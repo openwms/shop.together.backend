@@ -19,11 +19,11 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package io.interface21.shop2gether;
+package io.interface21.shop2gether.service;
 
-import static io.interface21.shop2gether.User.COLUMN_ACTIVE;
-import static io.interface21.shop2gether.User.COLUMN_EMAIL;
-import static io.interface21.shop2gether.User.COLUMN_USERNAME;
+import static io.interface21.shop2gether.service.User.COLUMN_ACTIVE;
+import static io.interface21.shop2gether.service.User.COLUMN_EMAIL;
+import static io.interface21.shop2gether.service.User.COLUMN_USERNAME;
 
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
@@ -60,12 +60,17 @@ import org.ameba.integration.jpa.ApplicationEntity;
 class User extends ApplicationEntity {
 
     public static final String COLUMN_USERNAME = "C_USERNAME";
+    public static final String COLUMN_PASSWORD = "C_PASSWORD";
     public static final String COLUMN_PHONE = "C_PHONE";
     public static final String COLUMN_EMAIL = "C_EMAIL";
     public static final String COLUMN_ACTIVE = "C_ACTIVE";
 
     @Column(name = COLUMN_USERNAME)
     private String username;
+
+    @Column(name = COLUMN_PASSWORD)
+    private String password;
+
     @Column(name = COLUMN_PHONE)
     private String phonenumber;
     @Column(name = COLUMN_EMAIL)

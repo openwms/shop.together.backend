@@ -19,17 +19,38 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package io.interface21.shop2gether;
+package io.interface21.shop2gether.service;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 /**
- * A UserGroupRepository.
+ * A TextNote.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-@RepositoryRestResource(collectionResourceRel = "usergroups", path = "usergroups")
-interface UserGroupRepository extends JpaRepository<UserGroup, Long> {
+@Getter
+@ToString
+@EqualsAndHashCode
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@DiscriminatorValue("TNOTE")
+class TextNote extends Item {
 
+    @Column(name = "C_TITLE")
+    private String title;
+    @Column(name = "C_TEXT")
+    private String text;
+    @Column(name = "C_COLOR")
+    private String color;
+    @Column(name = "C_PINNED")
+    private boolean pinned = false;
 }
