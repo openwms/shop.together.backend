@@ -26,6 +26,8 @@ import static io.interface21.shop2gether.User.COLUMN_EMAIL;
 import static io.interface21.shop2gether.User.COLUMN_USERNAME;
 
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -48,6 +50,8 @@ import org.ameba.integration.jpa.ApplicationEntity;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@DiscriminatorColumn(name = "C_TYPE")
+@DiscriminatorValue("USER")
 @Table(name = "T_USER",
         uniqueConstraints = {
                 @UniqueConstraint(name = "UC_UNAME_ACTIVE", columnNames = {COLUMN_USERNAME, COLUMN_ACTIVE}),
@@ -56,14 +60,15 @@ import org.ameba.integration.jpa.ApplicationEntity;
 class User extends ApplicationEntity {
 
     public static final String COLUMN_USERNAME = "C_USERNAME";
+    public static final String COLUMN_PHONE = "C_PHONE";
     public static final String COLUMN_EMAIL = "C_EMAIL";
     public static final String COLUMN_ACTIVE = "C_ACTIVE";
 
     @Column(name = COLUMN_USERNAME)
     private String username;
-    @Column(name = "C_PHONE")
+    @Column(name = COLUMN_PHONE)
     private String phonenumber;
-    @Column(name = "C_EMAIL")
+    @Column(name = COLUMN_EMAIL)
     private String email;
     @Column(name = COLUMN_ACTIVE)
     private boolean active;

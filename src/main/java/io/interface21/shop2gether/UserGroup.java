@@ -27,6 +27,7 @@ import static io.interface21.shop2gether.UserGroup.COLUMN_OWNER;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -56,7 +57,12 @@ class UserGroup extends ApplicationEntity {
     public static final String COLUMN_OWNER = "C_OWNER";
     public static final String COLUMN_NAME = "C_NAME";
 
-    public UserGroup(Owner owner, String name) {
+    /** Dear JPA...*/
+    protected UserGroup() {
+
+    }
+
+    UserGroup(Owner owner, String name) {
         this.owner = owner;
         this.name = name;
     }
@@ -67,5 +73,6 @@ class UserGroup extends ApplicationEntity {
     @Column(name = COLUMN_NAME)
     private String name;
     @OneToMany
+    @JoinTable(name = "T_UG_USER", joinColumns = {@JoinColumn(name = "C_UG_PK")}, inverseJoinColumns = @JoinColumn(name="C_U_PK"))
     private List<User> users = new ArrayList<>();
 }

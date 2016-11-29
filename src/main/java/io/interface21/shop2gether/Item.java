@@ -22,7 +22,10 @@
 package io.interface21.shop2gether;
 
 import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.ArrayList;
@@ -48,8 +51,10 @@ import org.ameba.integration.jpa.ApplicationEntity;
 @Entity
 @Table(name ="T_ITEM")
 @DiscriminatorColumn(name = "C_TYPE")
+@DiscriminatorValue("ITEM")
 class Item extends ApplicationEntity {
 
     @OneToMany
+    @JoinTable(name = "T_ITEM_UG", joinColumns = {@JoinColumn(name = "C_ITEM_PK")}, inverseJoinColumns = @JoinColumn(name="C_UG_PK"))
     private List<UserGroup> sharedWith = new ArrayList<>();
 }

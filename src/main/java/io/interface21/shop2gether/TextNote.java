@@ -21,6 +21,7 @@
  */
 package io.interface21.shop2gether;
 
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
@@ -44,6 +45,12 @@ import lombok.ToString;
 @DiscriminatorValue("TNOTE")
 class TextNote extends Item {
 
-    private String title, text, color;
+    @Column(name = "C_TITLE")
+    private String title;
+    @Column(name = "C_TEXT")
+    private String text;
+    @Column(name = "C_COLOR")
+    private String color;
+    @Column(name = "C_PINNED")
     private boolean pinned = false;
 }

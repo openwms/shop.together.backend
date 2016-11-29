@@ -16,19 +16,19 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableAspects
 public class BackendApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(BackendApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(BackendApplication.class, args);
+    }
 
-	@Bean
-	CommandLineRunner clr(OwnerRepository repo, UserGroupRepository ugRepo) {
-		return  args -> {
-			Owner heiko = repo.save(new Owner("heiko", "4711", "heiko@home.com", true));
-			UserGroup ug = ugRepo.save(new UserGroup(heiko, "Family"));
-			TextNote title = new TextNote("Title", "1 x Eggs", null, false);
-			title.getSharedWith().add(ug);
-			heiko.getItems().add(title);
-			repo.save(heiko);
-		};
-	}
+    @Bean
+    CommandLineRunner clr(OwnerRepository repo, UserGroupRepository ugRepo) {
+        return args -> {
+            Owner heiko = repo.save(new Owner("heiko", "4711", "heiko@home.com", true));
+            UserGroup ug = ugRepo.save(new UserGroup(heiko, "Family"));
+            TextNote title = new TextNote("Title", "1 x Eggs", "#cecece", false);
+            title.getSharedWith().add(ug);
+            heiko.getItems().add(title);
+            repo.save(heiko);
+        };
+    }
 }
