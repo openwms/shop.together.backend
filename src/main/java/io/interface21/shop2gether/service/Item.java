@@ -24,6 +24,8 @@ package io.interface21.shop2gether.service;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
@@ -50,6 +52,7 @@ import org.ameba.integration.jpa.ApplicationEntity;
 @AllArgsConstructor
 @Entity
 @Table(name ="T_ITEM")
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @DiscriminatorColumn(name = "C_TYPE")
 @DiscriminatorValue("ITEM")
 class Item extends ApplicationEntity {

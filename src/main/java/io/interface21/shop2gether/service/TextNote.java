@@ -24,6 +24,7 @@ package io.interface21.shop2gether.service;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -42,6 +43,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Table(name = "T_TEXT_NOTE")
 @DiscriminatorValue("TNOTE")
 class TextNote extends Item {
 

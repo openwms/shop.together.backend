@@ -21,12 +21,10 @@
  */
 package io.interface21.shop2gether;
 
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
-
 import java.util.Optional;
 
 import org.ameba.exception.NotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,22 +33,21 @@ import org.springframework.web.bind.annotation.RestController;
  * A UserController.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.0
- * @since 1.0
  */
 @RestController
 class UserController {
 
+    @Autowired
     private UserService service;
 
     @GetMapping(value = "/users", params = "username")
-    UserVO getUsersFor(@RequestParam("username") String username) {
+    UserVO getUserFor(@RequestParam("username") String username) {
         Optional<UserVO> userOpt = service.getUserByUsername(username);
         if (userOpt.isPresent()) {
 
             // enrich
             UserVO user = userOpt.get();
-            user.add(linkTo(methodOn(UserController.class).getUsersFor(username)).withRel("items"));
+            //user.add(linkTo(methodOn(UserController.class).getUserFor(username)).withRel("items"));
             return user;
         }
         throw new NotFoundException("No User with username found", "NOTFOUND", username);

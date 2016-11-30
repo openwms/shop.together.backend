@@ -56,7 +56,7 @@ class Owner extends User {
     protected Owner() {
     }
 
-    public Owner(String username, String phonenumber, String email, boolean active) {
+    Owner(String username, String phonenumber, String email, boolean active) {
         super(username, null, phonenumber, email, active);
     }
 }
