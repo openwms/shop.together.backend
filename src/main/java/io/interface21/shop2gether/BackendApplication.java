@@ -11,7 +11,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @SpringBootApplication
-@EnableJpaRepositories
+@EnableJpaRepositories(considerNestedRepositories = true)
 @EnableJpaAuditing
 @EnableTransactionManagement
 @EnableAspects

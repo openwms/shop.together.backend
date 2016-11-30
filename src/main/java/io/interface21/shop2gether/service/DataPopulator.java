@@ -36,7 +36,7 @@ import org.springframework.context.annotation.Configuration;
 class DataPopulator {
 
     @Bean
-    CommandLineRunner clr(OwnerRepository repo, UserGroupRepository ugRepo) {
+    CommandLineRunner clr(Repositories.OwnerRepository repo, Repositories.UserGroupRepository ugRepo) {
         return args -> {
             Owner heiko = repo.save(new Owner("heiko", "4711", "heiko@home.com", true));
             UserGroup ug = ugRepo.save(new UserGroup(heiko, "Family"));
