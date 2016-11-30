@@ -21,36 +21,14 @@
  */
 package io.interface21.shop2gether;
 
-import javax.persistence.Column;
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
-
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import org.ameba.http.AbstractBase;
 
 /**
- * A TextNote.
+ * A UserVO is the view representation of an User, a so called ViewObject.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-@Getter
-@ToString
-@EqualsAndHashCode
-@NoArgsConstructor
-@AllArgsConstructor
-@Entity
-@DiscriminatorValue("TNOTE")
-class TextNote extends Item {
+public class UserVO extends AbstractBase {
 
-    @Column(name = "C_TITLE")
-    private String title;
-    @Column(name = "C_TEXT")
-    private String text;
-    @Column(name = "C_COLOR")
-    private String color;
-    @Column(name = "C_PINNED")
-    private boolean pinned = false;
+    private String username;
 }

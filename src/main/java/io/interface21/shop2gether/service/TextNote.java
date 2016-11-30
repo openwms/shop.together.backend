@@ -19,28 +19,21 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package io.interface21.shop2gether;
-
-import static io.interface21.shop2gether.User.COLUMN_ACTIVE;
-import static io.interface21.shop2gether.User.COLUMN_EMAIL;
-import static io.interface21.shop2gether.User.COLUMN_USERNAME;
+package io.interface21.shop2gether.service;
 
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.ameba.integration.jpa.ApplicationEntity;
 
 /**
- * An User is some authenticated human user of the system.
+ * A TextNote.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
@@ -50,26 +43,16 @@ import org.ameba.integration.jpa.ApplicationEntity;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@DiscriminatorColumn(name = "C_TYPE")
-@DiscriminatorValue("USER")
-@Table(name = "T_USER",
-        uniqueConstraints = {
-                @UniqueConstraint(name = "UC_UNAME_ACTIVE", columnNames = {COLUMN_USERNAME, COLUMN_ACTIVE}),
-                @UniqueConstraint(name = "UC_EMAIL_ACTIVE", columnNames = {COLUMN_EMAIL, COLUMN_ACTIVE})
-        })
-class User extends ApplicationEntity {
+@Table(name = "T_TEXT_NOTE")
+@DiscriminatorValue("TNOTE")
+class TextNote extends Item {
 
-    public static final String COLUMN_USERNAME = "C_USERNAME";
-    public static final String COLUMN_PHONE = "C_PHONE";
-    public static final String COLUMN_EMAIL = "C_EMAIL";
-    public static final String COLUMN_ACTIVE = "C_ACTIVE";
-
-    @Column(name = COLUMN_USERNAME)
-    private String username;
-    @Column(name = COLUMN_PHONE)
-    private String phonenumber;
-    @Column(name = COLUMN_EMAIL)
-    private String email;
-    @Column(name = COLUMN_ACTIVE)
-    private boolean active;
+    @Column(name = "C_TITLE")
+    private String title;
+    @Column(name = "C_TEXT")
+    private String text;
+    @Column(name = "C_COLOR")
+    private String color;
+    @Column(name = "C_PINNED")
+    private boolean pinned = false;
 }

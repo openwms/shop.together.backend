@@ -19,42 +19,60 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package io.interface21.shop2gether;
+package io.interface21.shop2gether.service;
 
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorValue;
+import static io.interface21.shop2gether.service.UserGroup.COLUMN_NAME;
+import static io.interface21.shop2gether.service.UserGroup.COLUMN_OWNER;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import java.util.ArrayList;
 import java.util.List;
 
-import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.ameba.integration.jpa.ApplicationEntity;
 
 /**
- * An Item is the thing that is handled or dealed with in the application. Items can be shared between groups of users.
+ * A UserGroup.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
 @Getter
 @ToString
 @EqualsAndHashCode
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
-@Table(name ="T_ITEM")
-@DiscriminatorColumn(name = "C_TYPE")
-@DiscriminatorValue("ITEM")
-class Item extends ApplicationEntity {
+@Table(name = "T_USER_GROUP", uniqueConstraints = {
+        @UniqueConstraint(name = "UC_OWNER_NAME", columnNames = {COLUMN_OWNER, COLUMN_NAME})
+})
+class UserGroup extends ApplicationEntity {
 
+    public static final String COLUMN_OWNER = "C_OWNER";
+    public static final String COLUMN_NAME = "C_NAME";
+
+    /** Dear JPA...*/
+    protected UserGroup() {
+
+    }
+
+    UserGroup(Owner owner, String name) {
+        this.owner = owner;
+        this.name = name;
+    }
+
+    @OneToOne
+    @JoinColumn(name = COLUMN_OWNER)
+    private Owner owner;
+    @Column(name = COLUMN_NAME)
+    private String name;
     @OneToMany
-    @JoinTable(name = "T_ITEM_UG", joinColumns = {@JoinColumn(name = "C_ITEM_PK")}, inverseJoinColumns = @JoinColumn(name="C_UG_PK"))
-    private List<UserGroup> sharedWith = new ArrayList<>();
+    @JoinTable(name = "T_UG_USER", joinColumns = {@JoinColumn(name = "C_UG_PK")}, inverseJoinColumns = @JoinColumn(name="C_U_PK"))
+    private List<User> users = new ArrayList<>();
 }

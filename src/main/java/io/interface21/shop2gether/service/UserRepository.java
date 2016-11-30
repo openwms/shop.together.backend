@@ -19,17 +19,18 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package io.interface21.shop2gether;
+package io.interface21.shop2gether.service;
+
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 /**
- * A OwnerRepository.
+ * A UserRepository.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-@RepositoryRestResource(collectionResourceRel = "owners", path = "owners")
-interface OwnerRepository extends JpaRepository<Owner, Long> {
+interface UserRepository extends JpaRepository<User, Long> {
 
+    Optional<User> findByUsername(String username);
 }
