@@ -21,46 +21,35 @@
  */
 package io.interface21.shop2gether.service;
 
-import java.util.Optional;
-
-import io.interface21.shop2gether.UserService;
-import io.interface21.shop2gether.UserVO;
+import io.interface21.shop2gether.OwnerService;
+import io.interface21.shop2gether.OwnerVO;
 import org.ameba.annotation.TxService;
 import org.ameba.exception.NotFoundException;
 import org.ameba.mapping.BeanMapper;
 
 /**
- * A UserServiceImpl is a transactional Spring managed service that deals with {@link UserVO UserVO} instances.
+ * A OwnerServiceImpl is a Spring managed transactional service that deals with OwnerVO instances.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
 @TxService
-class UserServiceImpl implements UserService {
+class OwnerServiceImpl implements OwnerService {
 
     private final BeanMapper mapper;
-    private final UserRepository userRepository;
+    private final Repositories.OwnerRepository repository;
 
-    UserServiceImpl(BeanMapper mapper, UserRepository userRepository) {
+    public OwnerServiceImpl(BeanMapper mapper, Repositories.OwnerRepository repository) {
         this.mapper = mapper;
-        this.userRepository = userRepository;
+        this.repository = repository;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Optional<UserVO> getUserByUsername(String username) {
-        Optional<User> user = userRepository.findByUsername(username);
-        return user.isPresent() ? Optional.of(mapper.map(user.get(), UserVO.class)) : Optional.empty();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public UserVO getUserById(Long id) {
-        User user = userRepository.findOne(id);
-        NotFoundException.throwIfNull(user, String.format("User with id %s not found", id));
-        return mapper.map(user, UserVO.class);
+    public OwnerVO getById(Long id) {
+        Owner owner = repository.findOne(id);
+        NotFoundException.throwIfNull(owner, String.format("Owner with id %s does not exist", id));
+        return mapper.map(owner, OwnerVO.class);
     }
 }

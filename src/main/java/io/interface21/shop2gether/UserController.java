@@ -21,11 +21,13 @@
  */
 package io.interface21.shop2gether;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 import org.ameba.exception.NotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -37,12 +39,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 class UserController {
 
-    @Autowired
-    private UserService service;
+    private final UserService userService;
+    private final OwnerService ownerService;
+
+    UserController(UserService userService, OwnerService ownerService) {
+        this.userService = userService;
+        this.ownerService = ownerService;
+    }
 
     @GetMapping(value = "/users", params = "username")
     UserVO getUserFor(@RequestParam("username") String username) {
-        Optional<UserVO> userOpt = service.getUserByUsername(username);
+        Optional<UserVO> userOpt = userService.getUserByUsername(username);
         if (userOpt.isPresent()) {
 
             // enrich
@@ -51,5 +58,11 @@ class UserController {
             return user;
         }
         throw new NotFoundException("No User with username found", "NOTFOUND", username);
+    }
+
+    @GetMapping(value = "/users/{id}/items")
+    List<ItemVO> getItemFor(@PathVariable Long id) {
+        List<ItemVO> items = ownerService.getById(id).getItems();
+        return items ==  null ? Collections.emptyList() : items;
     }
 }

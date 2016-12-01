@@ -21,16 +21,14 @@
  */
 package io.interface21.shop2gether;
 
-import java.util.Optional;
-
 /**
- * A UserService.
+ * A OwnerService.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @version 1.0
+ * @since 1.0
  */
-public interface UserService {
+public interface OwnerService {
 
-    Optional<UserVO> getUserByUsername(String username);
-
-    UserVO getUserById(Long id);
+    OwnerVO getById(Long id);
 }

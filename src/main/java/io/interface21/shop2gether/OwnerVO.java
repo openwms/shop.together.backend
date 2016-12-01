@@ -21,16 +21,26 @@
  */
 package io.interface21.shop2gether;
 
-import java.util.Optional;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
+import org.ameba.http.AbstractBase;
 
 /**
- * A UserService.
+ * A OwnerVO.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-public interface UserService {
+@Getter
+@ToString
+@EqualsAndHashCode
+public class OwnerVO extends AbstractBase implements Serializable {
 
-    Optional<UserVO> getUserByUsername(String username);
-
-    UserVO getUserById(Long id);
+    @JsonIgnore
+    private List<ItemVO> items = new ArrayList<>();
 }
