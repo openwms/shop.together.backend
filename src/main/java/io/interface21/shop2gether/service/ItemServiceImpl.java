@@ -21,36 +21,32 @@
  */
 package io.interface21.shop2gether.service;
 
+import io.interface21.shop2gether.ItemService;
 import io.interface21.shop2gether.ItemVO;
-import io.interface21.shop2gether.OwnerService;
-import io.interface21.shop2gether.OwnerVO;
 import org.ameba.annotation.TxService;
 import org.ameba.exception.NotFoundException;
 import org.ameba.mapping.BeanMapper;
 
 /**
- * A OwnerServiceImpl is a Spring managed transactional service that deals with OwnerVO instances.
+ * A ItemServiceImpl.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
 @TxService
-class OwnerServiceImpl<T extends ItemVO> implements OwnerService<T> {
+class ItemServiceImpl implements ItemService {
 
     private final BeanMapper mapper;
-    private final Repositories.OwnerRepository repository;
+    private final Repositories.ItemRepository repository;
 
-    public OwnerServiceImpl(BeanMapper mapper, Repositories.OwnerRepository repository) {
+    ItemServiceImpl(BeanMapper mapper, Repositories.ItemRepository repository) {
         this.mapper = mapper;
         this.repository = repository;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
-    public OwnerVO<T> getById(Long id) {
-        Owner owner = repository.findOne(id);
-        NotFoundException.throwIfNull(owner, String.format("Owner with id %s does not exist", id));
-        return mapper.map(owner, OwnerVO.class);
+    public ItemVO getById(Long id) {
+        Item item = repository.findOne(id);
+        NotFoundException.throwIfNull(item, String.format("No Item with id %s exists!", id));
+        return mapper.map(item, ItemVO.class);
     }
 }

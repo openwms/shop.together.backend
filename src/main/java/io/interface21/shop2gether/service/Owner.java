@@ -30,20 +30,11 @@ import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
 
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.ToString;
-
 /**
  * An Owner is the actual Owner of {@link Item Items} and is also a valid {@link User User} of the system.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-@Getter
-@ToString
-@EqualsAndHashCode
-@AllArgsConstructor
 @Entity
 @DiscriminatorValue("OWNER")
 class Owner extends User {
@@ -56,7 +47,16 @@ class Owner extends User {
     protected Owner() {
     }
 
+    public Owner(String username, String password, String phonenumber, String email, boolean active, List<Item> items) {
+        super(username, password, phonenumber, email, active);
+        this.items = items;
+    }
+
     Owner(String username, String phonenumber, String email, boolean active) {
         super(username, null, phonenumber, email, active);
+    }
+
+    public List<Item> getItems() {
+        return items;
     }
 }

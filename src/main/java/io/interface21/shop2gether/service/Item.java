@@ -21,6 +21,7 @@
  */
 package io.interface21.shop2gether.service;
 
+import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -57,7 +58,7 @@ import org.ameba.integration.jpa.ApplicationEntity;
 @DiscriminatorValue("ITEM")
 class Item extends ApplicationEntity {
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.MERGE)
     @JoinTable(name = "T_ITEM_UG", joinColumns = {@JoinColumn(name = "C_ITEM_PK")}, inverseJoinColumns = @JoinColumn(name="C_UG_PK"))
     private List<UserGroup> sharedWith = new ArrayList<>();
 }

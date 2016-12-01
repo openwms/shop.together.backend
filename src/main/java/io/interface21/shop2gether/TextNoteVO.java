@@ -22,22 +22,16 @@
 package io.interface21.shop2gether;
 
 import java.io.Serializable;
-import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.ameba.http.AbstractBase;
 
 /**
- * A OwnerVO.
+ * A TextNoteVO.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-public class OwnerVO<T extends ItemVO> extends AbstractBase implements Serializable {
+public class TextNoteVO extends UserVO implements Serializable {
 
-    @JsonIgnore
-    private List<T> items;
-
-    List<T> getItems() {
-        return items;
-    }
+    public String title;
+    public String text;
+    public String color;
+    public boolean pinned;
 }

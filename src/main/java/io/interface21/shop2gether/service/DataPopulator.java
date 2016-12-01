@@ -40,10 +40,17 @@ class DataPopulator {
         return args -> {
             Owner heiko = repo.save(new Owner("heiko", "4711", "heiko@home.com", true));
             UserGroup ug = ugRepo.save(new UserGroup(heiko, "Family"));
-            TextNote title = new TextNote("Title", "1 x Eggs", "#cecece", false);
-            title.getSharedWith().add(ug);
-            heiko.getItems().add(title);
+
+            TextNote text1 = new TextNote("Shoppinglist 1", "1 x Eggs; 2 x Milk", "#cecece", false);
+            TextNote text2 = new TextNote("Shoppinglist 2", "Toothbrush", "#ffffff", false);
+
+            heiko.getItems().add(text1);
+            heiko.getItems().add(text2);
+
             repo.save(heiko);
+            text1.getSharedWith().add(ug);
+            text2.getSharedWith().add(ug);
+
         };
     }
 

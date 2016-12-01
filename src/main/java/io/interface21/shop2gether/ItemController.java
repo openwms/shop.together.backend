@@ -21,23 +21,27 @@
  */
 package io.interface21.shop2gether;
 
-import java.io.Serializable;
-import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.ameba.http.AbstractBase;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
- * A OwnerVO.
+ * A ItemController.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-public class OwnerVO<T extends ItemVO> extends AbstractBase implements Serializable {
+@RestController
+class ItemController {
 
-    @JsonIgnore
-    private List<T> items;
+    private final ItemService itemService;
 
-    List<T> getItems() {
-        return items;
+    ItemController(ItemService itemService) {
+        this.itemService = itemService;
     }
+
+    @GetMapping("/items/{id}")
+    ItemVO getItemFor(@PathVariable Long id) {
+        return itemService.getById(id);
+    }
+
 }

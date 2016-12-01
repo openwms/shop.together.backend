@@ -21,15 +21,30 @@
  */
 package io.interface21.shop2gether;
 
+import java.io.Serializable;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import org.ameba.http.AbstractBase;
 
 /**
  * A ItemVO.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.0
- * @since 1.0
  */
-class ItemVO extends AbstractBase {
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.PROPERTY,
+        property = "_type")
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = TextNoteVO.class, name = "tnote")
+})public class ItemVO extends AbstractBase implements Serializable {
 
+    private Long persistentKey;
+    public List<UserGroupVO> sharedWith;
+
+    public Long getPersistentKey() {
+        return persistentKey;
+    }
 }

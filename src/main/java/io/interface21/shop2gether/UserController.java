@@ -21,13 +21,10 @@
  */
 package io.interface21.shop2gether;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 
 import org.ameba.exception.NotFoundException;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -40,11 +37,9 @@ import org.springframework.web.bind.annotation.RestController;
 class UserController {
 
     private final UserService userService;
-    private final OwnerService ownerService;
 
-    UserController(UserService userService, OwnerService ownerService) {
+    UserController(UserService userService) {
         this.userService = userService;
-        this.ownerService = ownerService;
     }
 
     @GetMapping(value = "/users", params = "username")
@@ -58,11 +53,5 @@ class UserController {
             return user;
         }
         throw new NotFoundException("No User with username found", "NOTFOUND", username);
-    }
-
-    @GetMapping(value = "/users/{id}/items")
-    List<ItemVO> getItemFor(@PathVariable Long id) {
-        List<ItemVO> items = ownerService.getById(id).getItems();
-        return items ==  null ? Collections.emptyList() : items;
     }
 }

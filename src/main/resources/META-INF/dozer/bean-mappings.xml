@@ -19,4 +19,45 @@
         </field>
     </mapping>
 
+    <mapping>
+        <class-a>io.interface21.shop2gether.service.Owner</class-a>
+        <class-b>io.interface21.shop2gether.OwnerVO</class-b>
+        <field>
+            <a is-accessible="true">items</a>
+            <b is-accessible="true">items</b>
+            <a-hint>io.interface21.shop2gether.service.TextNote</a-hint>
+            <b-hint>io.interface21.shop2gether.TextNoteVO</b-hint>
+        </field>
+    </mapping>
+
+    <mapping>
+        <class-a>io.interface21.shop2gether.service.Item</class-a>
+        <class-b>io.interface21.shop2gether.ItemVO</class-b>
+        <field>
+            <a is-accessible="true">sharedWith</a>
+            <b is-accessible="true">sharedWith</b>
+        </field>
+    </mapping>
+
+    <mapping>
+        <class-a>io.interface21.shop2gether.service.TextNote</class-a>
+        <class-b>io.interface21.shop2gether.TextNoteVO</class-b>
+        <field>
+            <a is-accessible="true">title</a>
+            <b is-accessible="true">title</b>
+        </field>
+        <field>
+            <a is-accessible="true">text</a>
+            <b is-accessible="true">text</b>
+        </field>
+        <field>
+            <a is-accessible="true">color</a>
+            <b is-accessible="true">color</b>
+        </field>
+        <field>
+            <a is-accessible="true">pinned</a>
+            <b is-accessible="true">pinned</b>
+        </field>
+    </mapping>
+
 </mappings>

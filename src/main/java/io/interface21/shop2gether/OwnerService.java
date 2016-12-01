@@ -25,10 +25,8 @@ package io.interface21.shop2gether;
  * A OwnerService.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.0
- * @since 1.0
  */
-public interface OwnerService {
+public interface OwnerService<T extends ItemVO> {
 
-    OwnerVO getById(Long id);
+    OwnerVO<T> getById(Long id);
 }

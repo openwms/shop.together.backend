@@ -21,8 +21,8 @@
  */
 package io.interface21.shop2gether;
 
-import java.util.Collections;
-import java.util.List;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,17 +34,22 @@ import org.springframework.web.bind.annotation.RestController;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
 @RestController
-class OwnerController {
+class OwnerController<T extends ItemVO> {
 
-    private final OwnerService ownerService;
+    private final OwnerService<T> ownerService;
 
-    OwnerController(OwnerService ownerService) {
+    OwnerController(OwnerService<T> ownerService) {
         this.ownerService = ownerService;
     }
 
-    @GetMapping(value = "/users/{id}/items")
-    List<ItemVO> getItemFor(@PathVariable Long id) {
-        List<ItemVO> items = ownerService.getById(id).getItems();
-        return items == null ? Collections.emptyList() : items;
+    @GetMapping("/owners/{id}")
+    OwnerVO getOwnerFor(@PathVariable Long id) {
+        OwnerVO<T> owner = ownerService.getById(id);
+        if (!owner.getItems().isEmpty()) {
+
+            // enrich
+            owner.getItems().forEach(i -> linkTo(methodOn(ItemController.class).getItemFor(i.getPersistentKey())).withRel("items"));
+        }
+        return owner;
     }
 }

@@ -30,5 +30,5 @@ import org.ameba.http.AbstractBase;
  */
 public class UserVO extends AbstractBase {
 
-    private String username;
+    public String username;
 }
