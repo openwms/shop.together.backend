@@ -5,6 +5,15 @@ identified aggregates and exposed those as RESTful resources. The model looks li
 
 ![DM][1]
 
+# Flow
+
+What is the flow how to deal with this API?
+
+## Login
+
+First we need to get over the login procedure and populate the security context.
+
+
 # Development
 
 Build and run locally with a PostgreSQL database

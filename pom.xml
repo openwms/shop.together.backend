@@ -59,9 +59,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-rest</artifactId>
         </dependency>
+
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-hateoas</artifactId>
+            <groupId>de.escalon.hypermedia</groupId>
+            <artifactId>spring-hateoas-ext</artifactId>
+            <version>0.3.1</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

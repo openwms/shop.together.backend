@@ -1,23 +1,18 @@
 /*
- * openwms.org, the Open Warehouse Management System.
- * Copyright (C) 2014 Heiko Scherrer
+ * Shop2gether Backend.
  *
- * This file is part of openwms.org.
+ * This software module including the design and software principals used is and remains
+ * the property of Heiko Scherrer (the initial author of the project)
+ * and is submitted with the understanding that it is not to be reproduced nor copied in
+ * whole or in part, nor licensed or otherwise provided or communicated to any third party
+ * without their prior written consent. It must not be used in any way detrimental to the
+ * interests of both authors. Acceptance of this module will be construed as an agreement
+ * to the above.
  *
- * openwms.org is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as 
- * published by the Free Software Foundation; either version 2 of the
- * License, or (at your option) any later version.
- *
- * openwms.org is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this software. If not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
- * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ * All rights of Heiko Scherrer remain reserved. Shop2gether Backend
+ * is a registered trademark of Heiko Scherrer. Other products and
+ * company names mentioned herein may be trademarks or trade names of their respective owners.
+ * Specifications are subject to change without notice.
  */
 package io.interface21.shop2gether;
 
@@ -25,19 +20,23 @@ import java.io.Serializable;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.ameba.http.AbstractBase;
 
 /**
  * A OwnerVO.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-public class OwnerVO<T extends ItemVO> extends AbstractBase implements Serializable {
+public class OwnerVO<T extends ItemVO> extends UserVO implements Serializable {
 
     @JsonIgnore
     private List<T> items;
 
     List<T> getItems() {
         return items;
+    }
+
+    @Override
+    public String toString() {
+        return "OwnerVO with username " + super.toString();
     }
 }
