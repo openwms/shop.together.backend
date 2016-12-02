@@ -50,7 +50,7 @@ import org.ameba.integration.jpa.ApplicationEntity;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @DiscriminatorColumn(name = "C_TYPE")
 @DiscriminatorValue("ITEM")
-class Item extends ApplicationEntity {
+abstract class Item extends ApplicationEntity {
 
     @OneToMany
     @JoinTable(name = "T_ITEM_UG", joinColumns = {@JoinColumn(name = "C_ITEM_PK")}, inverseJoinColumns = @JoinColumn(name="C_UG_PK"))
