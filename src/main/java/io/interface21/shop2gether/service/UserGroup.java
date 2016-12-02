@@ -29,10 +29,9 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.ToString;
 import org.ameba.integration.jpa.ApplicationEntity;
 
 /**
@@ -41,8 +40,6 @@ import org.ameba.integration.jpa.ApplicationEntity;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
 @Getter
-@ToString
-@EqualsAndHashCode
 @Entity
 @Table(name = "T_USER_GROUP", uniqueConstraints = {
         @UniqueConstraint(name = "UC_OWNER_NAME", columnNames = {COLUMN_OWNER, COLUMN_NAME})
@@ -70,4 +67,27 @@ class UserGroup extends ApplicationEntity {
     @OneToMany
     @JoinTable(name = "T_UG_USER", joinColumns = {@JoinColumn(name = "C_UG_PK")}, inverseJoinColumns = @JoinColumn(name="C_U_PK"))
     private List<User> users = new ArrayList<>();
+
+    @Override
+    public String toString() {
+        return "UserGroup{" +
+                "owner=" + owner +
+                ", name='" + name + '\'' +
+                ", users=" + users +
+                "} " + super.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserGroup userGroup = (UserGroup) o;
+        return Objects.equals(owner, userGroup.owner) &&
+                Objects.equals(name, userGroup.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(owner, name);
+    }
 }

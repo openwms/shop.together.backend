@@ -31,13 +31,15 @@ import org.springframework.context.annotation.Configuration;
 class DataPopulator {
 
     @Bean
-    CommandLineRunner clr(Repositories.OwnerRepository repo, Repositories.UserGroupRepository ugRepo) {
+    CommandLineRunner clr(Repositories.OwnerRepository repo, Repositories.UserGroupRepository ugRepo, Repositories.TextNoteRepository tnRepo) {
         return args -> {
             Owner heiko = repo.save(new Owner("heiko", "4711", "heiko@home.com", true));
             UserGroup ug = ugRepo.save(new UserGroup(heiko, "Family"));
 
             TextNote text1 = new TextNote("Shoppinglist 1", "1 x Eggs; 2 x Milk", "#cecece", false);
+            text1 = tnRepo.save(text1);
             TextNote text2 = new TextNote("Shoppinglist 2", "Toothbrush", "#ffffff", false);
+            text2 = tnRepo.save(text2);
 
             heiko.getItems().add(text1);
             heiko.getItems().add(text2);
@@ -45,6 +47,8 @@ class DataPopulator {
             repo.save(heiko);
             text1.getSharedWith().add(ug);
             text2.getSharedWith().add(ug);
+            text1 = tnRepo.save(text1);
+//            text2 = tnRepo.save(text2);
 
         };
     }

@@ -19,6 +19,7 @@ package io.interface21.shop2gether;
 import java.io.Serializable;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import org.ameba.http.AbstractBase;
@@ -37,10 +38,15 @@ import org.ameba.http.AbstractBase;
 })public class ItemVO extends AbstractBase implements Serializable {
 
     private Long persistentKey;
+    @JsonIgnore
     public List<UserGroupVO> sharedWith;
 
     public Long getPersistentKey() {
         return persistentKey;
+    }
+
+    public List<UserGroupVO> getSharedWith() {
+        return sharedWith;
     }
 
     @Override

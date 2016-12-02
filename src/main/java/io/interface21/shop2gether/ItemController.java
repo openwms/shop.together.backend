@@ -16,6 +16,7 @@
  */
 package io.interface21.shop2gether;
 
+import org.springframework.hateoas.Link;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,7 +37,23 @@ class ItemController {
 
     @GetMapping("/items/{id}")
     ItemVO getItemFor(@PathVariable Long id) {
-        return itemService.getById(id);
+        ItemVO item = itemService.getById(id);
+        return item;
     }
 
+    @GetMapping("/items/{id}/usergroups")
+    ItemVO getUserGroupsForItems(@PathVariable Long id) {
+        ItemVO item = getItemFor(id);
+        if (!item.getSharedWith().isEmpty()) {
+
+            // enrich
+            item.getSharedWith().forEach(i -> {
+                item.add(new Link("http://localhost:8080/items/" + id + "/usergroups/" + i.getPk(), "usergroups"));
+
+                // todo: until this bug is not fixed we have to stick on the line above instead... https://github.com/spring-projects/spring-hateoas/issues/169
+//                owner.add(linkTo(methodOn(ItemController.class).getItemFor(i.getPersistentKey())).withRel("_items"));
+            });
+        }
+        return item;
+    }
 }

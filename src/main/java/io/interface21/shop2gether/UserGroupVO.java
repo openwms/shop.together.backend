@@ -27,4 +27,9 @@ import org.ameba.http.AbstractBase;
  */
 public class UserGroupVO extends AbstractBase implements Serializable {
 
+    private Long pk;
+
+    public Long getPk() {
+        return pk;
+    }
 }

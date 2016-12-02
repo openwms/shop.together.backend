@@ -20,6 +20,15 @@
     </mapping>
 
     <mapping>
+        <class-a>io.interface21.shop2gether.service.UserGroup</class-a>
+        <class-b>io.interface21.shop2gether.UserGroupVO</class-b>
+        <field>
+            <a is-accessible="true">pk</a>
+            <b is-accessible="true">pk</b>
+        </field>
+    </mapping>
+
+    <mapping>
         <class-a>io.interface21.shop2gether.service.Owner</class-a>
         <class-b>io.interface21.shop2gether.OwnerVO</class-b>
         <field>
