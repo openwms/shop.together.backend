@@ -35,20 +35,15 @@ class ItemController {
         this.itemService = itemService;
     }
 
-    @GetMapping("/items/{id}")
-    ItemVO getItemFor(@PathVariable Long id) {
-        ItemVO item = itemService.getById(id);
-        return item;
-    }
 
-    @GetMapping("/items/{id}/usergroups")
+    @GetMapping("/items/{id}")
     ItemVO getUserGroupsForItems(@PathVariable Long id) {
-        ItemVO item = getItemFor(id);
+        ItemVO item = itemService.getById(id);
         if (!item.getSharedWith().isEmpty()) {
 
             // enrich
             item.getSharedWith().forEach(i -> {
-                item.add(new Link("http://localhost:8080/items/" + id + "/usergroups/" + i.getPk(), "usergroups"));
+                item.add(new Link("http://localhost:8080/usergroups/" + i.getPk(), "usergroups"));
 
                 // todo: until this bug is not fixed we have to stick on the line above instead... https://github.com/spring-projects/spring-hateoas/issues/169
 //                owner.add(linkTo(methodOn(ItemController.class).getItemFor(i.getPersistentKey())).withRel("_items"));
@@ -56,4 +51,5 @@ class ItemController {
         }
         return item;
     }
+
 }
