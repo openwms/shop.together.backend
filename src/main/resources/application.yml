@@ -6,4 +6,6 @@ spring:
 security:
   user:
     password: sa
+  basic:
+    enabled: false
 
