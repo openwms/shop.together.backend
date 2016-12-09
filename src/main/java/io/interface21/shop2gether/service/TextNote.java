@@ -21,7 +21,6 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,7 +35,6 @@ import lombok.ToString;
 @ToString
 @EqualsAndHashCode
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "T_TEXT_NOTE")
 @DiscriminatorValue("TNOTE")
@@ -50,4 +48,12 @@ class TextNote extends Item {
     private String color;
     @Column(name = "C_PINNED")
     private boolean pinned = false;
+
+    public TextNote(String title, String text, String color, boolean pinned) {
+        super();
+        this.title = title;
+        this.text = text;
+        this.color = color;
+        this.pinned = pinned;
+    }
 }

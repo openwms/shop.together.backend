@@ -2,6 +2,11 @@ spring:
   data:
     rest:
       basePath: /api
+  jpa:
+    database: h2
+    generate-ddl: true
+    hibernate:
+      ddl-auto: create-drop
 
 security:
   user:
