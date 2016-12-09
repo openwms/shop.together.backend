@@ -36,17 +36,25 @@ class DataPopulator {
             Owner heiko = repo.save(new Owner("heiko", "4711", "heiko@home.com", true));
             UserGroup ug = ugRepo.save(new UserGroup(heiko, "Family"));
 
-            TextNote text1 = new TextNote("Shoppinglist 1", "1 x Eggs\n2 x Milk\n1x Peanutbutter", "#E9E74A", false);
+            TextNote text1 = new TextNote("Shoppinglist 1", "1 x 10 Eggs\n2 x Milk\n1 x Peanutbutter\n3 x Oranges\n1 big Pineapple\nSome cheese\n1pd. Meatballs", "#E9E74A", false);
             text1 = tnRepo.save(text1);
-            TextNote text2 = new TextNote("Shoppinglist 2", "Toothbrush", "#ffffff", false);
+            TextNote text2 = new TextNote("Shoppinglist 2", "Toothbrush", "#EE5E9F", false);
             text2 = tnRepo.save(text2);
+            TextNote text3 = new TextNote("Postoffice Today", "Letter to post office\n10 x Stamps\nAsk for next delivery", "#FFDD2A", false);
+            text3 = tnRepo.save(text3);
+            TextNote text4 = new TextNote("From the hardware store", "1000 wood screws and anchors\nBacklight for mower\nIs there any good metal saw\n10in.x15in. piece of wood", "#FFDD2A", false);
+            text4 = tnRepo.save(text4);
 
             heiko.getItems().add(text1);
             heiko.getItems().add(text2);
+            heiko.getItems().add(text3);
+            heiko.getItems().add(text4);
 
             repo.save(heiko);
             text1.getSharedWith().add(ug);
             text2.getSharedWith().add(ug);
+            text3.getSharedWith().add(ug);
+            text4.getSharedWith().add(ug);
             text1 = tnRepo.save(text1);
 //            text2 = tnRepo.save(text2);
 

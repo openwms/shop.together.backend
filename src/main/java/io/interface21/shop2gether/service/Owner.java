@@ -22,6 +22,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +35,7 @@ import java.util.List;
 @DiscriminatorValue("OWNER")
 class Owner extends User {
 
+    @OrderBy("createDt")
     @OneToMany(cascade = CascadeType.MERGE)
     @JoinTable(name = "T_OWNER_ITEM", joinColumns = {@JoinColumn(name = "C_OWNER_PK")}, inverseJoinColumns = @JoinColumn(name="C_ITEM_PK"))
     private List<Item> items = new ArrayList<>();
