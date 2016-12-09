@@ -6,6 +6,3 @@ spring:
     driver-class-name: org.postgresql.Driver
   jpa:
     database: postgresql
-    generate-ddl: true
-    hibernate:
-      ddl-auto: create-drop
