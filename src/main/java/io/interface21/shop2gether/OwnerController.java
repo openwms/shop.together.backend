@@ -42,7 +42,7 @@ class OwnerController<T extends ItemVO> {
 
             // enrich
             owner.getItems().forEach(i -> {
-                owner.add(new Link("http://localhost:8080/items/" + i.getPersistentKey(), "items"));
+                owner.add(new Link("https://shop2gether.herokuapp.com/items/" + i.getPersistentKey(), "items"));
 
                 // todo: until this bug is not fixed we have to stick on the line above instead... https://github.com/spring-projects/spring-hateoas/issues/169
 //                owner.add(linkTo(methodOn(ItemController.class).getItemFor(i.getPersistentKey())).withRel("_items"));
