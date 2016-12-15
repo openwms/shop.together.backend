@@ -57,7 +57,7 @@ class OwnerController<T extends ItemVO> {
     void save(@PathVariable Long id, @RequestBody OwnerVO owner) {
         OwnerVO<T> saved = ownerService.getById(id);
         saved.username = owner.username;
-        saved.phoneNo = owner.phoneNo;
+        saved.phonenumber = owner.phonenumber;
         ownerService.save(saved);
     }
 }

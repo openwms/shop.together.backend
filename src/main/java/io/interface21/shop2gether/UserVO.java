@@ -26,7 +26,7 @@ import org.ameba.http.AbstractBase;
 public class UserVO extends AbstractBase {
 
     public String username;
-    public String phoneNo;
+    public String phonenumber;
 
     @Override
     public String toString() {
