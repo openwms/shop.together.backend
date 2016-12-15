@@ -19,6 +19,8 @@ package io.interface21.shop2gether;
 import org.springframework.hateoas.Link;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -49,5 +51,13 @@ class OwnerController<T extends ItemVO> {
             });
         }
         return owner;
+    }
+
+    @PostMapping("/owners/{id}")
+    void save(@PathVariable Long id, @RequestBody OwnerVO owner) {
+        OwnerVO<T> saved = ownerService.getById(id);
+        saved.username = owner.username;
+        saved.phoneNo = owner.phoneNo;
+        ownerService.save(saved);
     }
 }

@@ -24,4 +24,6 @@ package io.interface21.shop2gether;
 public interface OwnerService<T extends ItemVO> {
 
     OwnerVO<T> getById(Long id);
+
+    OwnerVO<T> save(OwnerVO<T> saved);
 }
