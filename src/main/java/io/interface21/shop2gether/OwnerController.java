@@ -55,9 +55,6 @@ class OwnerController<T extends ItemVO> {
 
     @PostMapping("/owners/{id}")
     void save(@PathVariable Long id, @RequestBody OwnerVO owner) {
-        OwnerVO<T> saved = ownerService.getById(id);
-        saved.username = owner.username;
-        saved.phonenumber = owner.phonenumber;
-        ownerService.save(saved);
+        ownerService.save(id, owner);
     }
 }

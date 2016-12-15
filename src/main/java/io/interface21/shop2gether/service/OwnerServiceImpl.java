@@ -47,7 +47,14 @@ class OwnerServiceImpl<T extends ItemVO> implements OwnerService<T> {
     }
 
     @Override
-    public OwnerVO<T> save(OwnerVO<T> saved) {
-        return mapper.map(repository.save(mapper.map(saved, Owner.class)), OwnerVO.class);
+    public OwnerVO<T> save(Long id, OwnerVO<T> owner) {
+
+        Owner saved = repository.findOne(id);
+        NotFoundException.throwIfNull(owner, String.format("Owner with id %s does not exist", id));
+
+        saved.setUsername(owner.username);
+        saved.setPhonenumber(owner.phonenumber);
+        saved = repository.save(saved);
+        return mapper.map(saved, OwnerVO.class);
     }
 }

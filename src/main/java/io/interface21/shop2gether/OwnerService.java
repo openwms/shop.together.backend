@@ -25,5 +25,5 @@ public interface OwnerService<T extends ItemVO> {
 
     OwnerVO<T> getById(Long id);
 
-    OwnerVO<T> save(OwnerVO<T> saved);
+    OwnerVO<T> save(Long id, OwnerVO<T> saved);
 }

@@ -72,4 +72,12 @@ class User extends ApplicationEntity {
     private String email;
     @Column(name = COLUMN_ACTIVE)
     private boolean active;
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPhonenumber(String phonenumber) {
+        this.phonenumber = phonenumber;
+    }
 }
