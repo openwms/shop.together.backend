@@ -137,7 +137,19 @@ abstract class Item {
     @JoinTable(name = "T_ITEM_UG", joinColumns = {@JoinColumn(name = "C_ITEM_PK")}, inverseJoinColumns = @JoinColumn(name="C_UG_PK"))
     private List<UserGroup> sharedWith = new ArrayList<>();
 
+    /** If this item is shared with others thi is set to false, if it is a private item (not shared) it is true. */
+    private boolean shared;
+
+    /** Shared with the list of UserGroups. */
     public Item(List<UserGroup> sharedWith) {
         this.sharedWith = sharedWith;
+    }
+
+    public boolean isShared() {
+        return shared;
+    }
+
+    public void setShared(boolean shared) {
+        this.shared = shared;
     }
 }
