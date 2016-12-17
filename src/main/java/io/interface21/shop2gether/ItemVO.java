@@ -38,6 +38,7 @@ import org.ameba.http.AbstractBase;
 })public abstract class ItemVO extends AbstractBase implements Serializable {
 
     private Long persistentKey;
+    private boolean shareable;
     @JsonIgnore
     public List<UserGroupVO> sharedWith;
 

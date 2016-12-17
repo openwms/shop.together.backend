@@ -51,6 +51,10 @@
             <b is-accessible="true">sharedWith</b>
         </field>
         <field>
+            <a is-accessible="true">shareable</a>
+            <b is-accessible="true">shareable</b>
+        </field>
+        <field>
             <a is-accessible="true">pk</a>
             <b is-accessible="true">persistentKey</b>
         </field>

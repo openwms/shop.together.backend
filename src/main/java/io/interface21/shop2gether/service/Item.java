@@ -138,18 +138,18 @@ abstract class Item {
     private List<UserGroup> sharedWith = new ArrayList<>();
 
     /** If this item is shared with others thi is set to false, if it is a private item (not shared) it is true. */
-    private boolean shared;
+    private boolean shareable = true;
 
     /** Shared with the list of UserGroups. */
     public Item(List<UserGroup> sharedWith) {
         this.sharedWith = sharedWith;
     }
 
-    public boolean isShared() {
-        return shared;
+    public boolean isShareable() {
+        return shareable;
     }
 
-    public void setShared(boolean shared) {
-        this.shared = shared;
+    public void setShareable(boolean shared) {
+        this.shareable = shareable;
     }
 }
