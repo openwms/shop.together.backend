@@ -50,6 +50,14 @@ import org.ameba.http.AbstractBase;
         return sharedWith;
     }
 
+    public boolean isShareable() {
+        return shareable;
+    }
+
+    public void setShareable(boolean shareable) {
+        this.shareable = shareable;
+    }
+
     @Override
     public String toString() {
         return "ItemVO{" +

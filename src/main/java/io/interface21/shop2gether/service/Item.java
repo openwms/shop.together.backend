@@ -138,6 +138,7 @@ abstract class Item {
     private List<UserGroup> sharedWith = new ArrayList<>();
 
     /** If this item is shared with others thi is set to false, if it is a private item (not shared) it is true. */
+    @Column(name = "C_SHAREABLE")
     private boolean shareable = true;
 
     /** Shared with the list of UserGroups. */
