@@ -20,6 +20,8 @@ import static io.interface21.shop2gether.service.User.COLUMN_ACTIVE;
 import static io.interface21.shop2gether.service.User.COLUMN_EMAIL;
 import static io.interface21.shop2gether.service.User.COLUMN_USERNAME;
 
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorValue;
@@ -27,6 +29,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import io.interface21.shop2gether.Coordinate;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -72,6 +75,10 @@ class User extends ApplicationEntity {
     private String email;
     @Column(name = COLUMN_ACTIVE)
     private boolean active;
+    @AttributeOverrides({
+            @AttributeOverride(name = "longitude", column = @Column(name = "C_HOME_LONG")),
+            @AttributeOverride(name = "latitude", column = @Column(name = "C_HOME_LATI"))})
+    private Coordinate home;
 
     public void setUsername(String username) {
         this.username = username;

@@ -27,6 +27,7 @@ public class UserVO extends AbstractBase {
 
     public String username;
     public String phonenumber;
+    public Coordinate home;
 
     @Override
     public String toString() {

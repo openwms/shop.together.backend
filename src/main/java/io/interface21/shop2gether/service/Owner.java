@@ -26,6 +26,8 @@ import javax.persistence.OrderBy;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.interface21.shop2gether.Coordinate;
+
 /**
  * An Owner is the actual Owner of {@link Item Items} and is also a valid {@link User User} of the system.
  *
@@ -44,18 +46,11 @@ class Owner extends User {
     protected Owner() {
     }
 
-    public Owner(String username, String password, String phonenumber, String email, boolean active, List<Item> items) {
-        super(username, password, phonenumber, email, active);
-        this.items = items;
-    }
-
-    Owner(String username, String phonenumber, String email, boolean active) {
-        super(username, null, phonenumber, email, active);
+    Owner(String username, String phonenumber, String email, boolean active, Coordinate homeCoords) {
+        super(username, null, phonenumber, email, active, homeCoords);
     }
 
     public List<Item> getItems() {
         return items;
     }
-
-
 }

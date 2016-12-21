@@ -16,6 +16,7 @@
  */
 package io.interface21.shop2gether.service;
 
+import io.interface21.shop2gether.Coordinate;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -33,7 +34,7 @@ class DataPopulator {
     @Bean
     CommandLineRunner clr(Repositories.OwnerRepository repo, Repositories.UserGroupRepository ugRepo, Repositories.TextNoteRepository tnRepo) {
         return args -> {
-            Owner heiko = repo.save(new Owner("heiko", "4711", "heiko@home.com", true));
+            Owner heiko = repo.save(new Owner("heiko", "4711", "heiko@home.com", true, new Coordinate("7.347954", "49.451332")));
             UserGroup ug = ugRepo.save(new UserGroup(heiko, "Family"));
 
             TextNote text1 = new TextNote("Shoppinglist 1", "1 x 10 Eggs\n2 x Milk\n1 x Peanutbutter\n3 x Oranges\n1 big Pineapple\nSome cheese\n1pd. Meatballs", "#E9E74A", false);

@@ -38,7 +38,7 @@ import org.ameba.http.AbstractBase;
 })public abstract class ItemVO extends AbstractBase implements Serializable {
 
     private Long persistentKey;
-    private boolean shareable;
+    public boolean shareable;
     @JsonIgnore
     public List<UserGroupVO> sharedWith;
 
@@ -50,18 +50,11 @@ import org.ameba.http.AbstractBase;
         return sharedWith;
     }
 
-    public boolean isShareable() {
-        return shareable;
-    }
-
-    public void setShareable(boolean shareable) {
-        this.shareable = shareable;
-    }
-
     @Override
     public String toString() {
         return "ItemVO{" +
                 "persistentKey=" + persistentKey +
+                ", shareable=" + shareable +
                 ", sharedWith=" + sharedWith +
                 "} " + super.toString();
     }
