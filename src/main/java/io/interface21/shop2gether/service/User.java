@@ -25,6 +25,7 @@ import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorValue;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -75,6 +76,7 @@ class User extends ApplicationEntity {
     private String email;
     @Column(name = COLUMN_ACTIVE)
     private boolean active;
+    @Embedded
     @AttributeOverrides({
             @AttributeOverride(name = "longitude", column = @Column(name = "C_HOME_LONG")),
             @AttributeOverride(name = "latitude", column = @Column(name = "C_HOME_LATI")),
