@@ -21,6 +21,10 @@
             <a is-accessible="true">phonenumber</a>
             <b is-accessible="true">phonenumber</b>
         </field>
+        <field>
+            <a is-accessible="true">home</a>
+            <b is-accessible="true">home</b>
+        </field>
     </mapping>
 
     <mapping>
