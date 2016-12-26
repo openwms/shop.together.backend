@@ -23,6 +23,8 @@ package io.interface21.shop2gether;
 
 import javax.persistence.Embeddable;
 
+import java.io.Serializable;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -41,10 +43,10 @@ import lombok.NoArgsConstructor;
 @Getter
 @EqualsAndHashCode
 @Embeddable
-public class Coordinate {
+public class Coordinate implements Serializable {
 
-    private double longitude;
-    private double latitude;
-    private double longitudeDelta;
-    private double latitudeDelta;
+    public double longitude;
+    public double latitude;
+    public double longitudeDelta;
+    public double latitudeDelta;
 }
