@@ -43,6 +43,8 @@ import lombok.NoArgsConstructor;
 @Embeddable
 public class Coordinate {
 
-    private String longitude;
-    private String latitude;
+    private double longitude;
+    private double latitude;
+    private double longitudeDelta;
+    private double latitudeDelta;
 }

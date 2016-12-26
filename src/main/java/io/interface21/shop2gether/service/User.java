@@ -77,7 +77,10 @@ class User extends ApplicationEntity {
     private boolean active;
     @AttributeOverrides({
             @AttributeOverride(name = "longitude", column = @Column(name = "C_HOME_LONG")),
-            @AttributeOverride(name = "latitude", column = @Column(name = "C_HOME_LATI"))})
+            @AttributeOverride(name = "latitude", column = @Column(name = "C_HOME_LATI")),
+            @AttributeOverride(name = "longitudeDelta", column = @Column(name = "C_HOME_LONG_D")),
+            @AttributeOverride(name = "latitudeDelta", column = @Column(name = "C_HOME_LATI_D"))
+    })
     private Coordinate home;
 
     public void setUsername(String username) {
