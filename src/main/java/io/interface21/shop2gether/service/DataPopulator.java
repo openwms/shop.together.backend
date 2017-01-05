@@ -16,6 +16,8 @@
  */
 package io.interface21.shop2gether.service;
 
+import javax.persistence.EntityManager;
+
 import io.interface21.shop2gether.Coordinate;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -32,8 +34,11 @@ import org.springframework.context.annotation.Configuration;
 class DataPopulator {
 
     @Bean
-    CommandLineRunner clr(Repositories.OwnerRepository repo, Repositories.UserGroupRepository ugRepo, Repositories.TextNoteRepository tnRepo) {
+    CommandLineRunner clr(Repositories.OwnerRepository repo, Repositories.UserGroupRepository ugRepo, Repositories.TextNoteRepository tnRepo, EntityManager em) {
         return args -> {
+            em.createNativeQuery("CREATE ALIAS IF NOT EXISTS SPATIAL_INIT FOR\n" +
+                    " \"org.h2gis.h2spatialext.CreateSpatialExtension.initSpatialExtension\";\n" +
+                    " CALL SPATIAL_INIT();");
             Owner heiko = repo.save(new Owner("heiko", "4711", "heiko@home.com", true, new Coordinate(7.347954, 49.451332, 0.0421, 0.0922)));
             UserGroup ug = ugRepo.save(new UserGroup(heiko, "Family"));
 

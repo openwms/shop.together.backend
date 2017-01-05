@@ -16,6 +16,7 @@
  */
 package io.interface21.shop2gether.service;
 
+import javax.persistence.EntityManager;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -28,6 +29,7 @@ import io.interface21.shop2gether.UserVO;
 import org.ameba.annotation.TxService;
 import org.ameba.exception.NotFoundException;
 import org.ameba.mapping.BeanMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.geo.Point;
 import org.springframework.data.geo.Polygon;
 
