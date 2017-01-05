@@ -35,7 +35,8 @@ import org.ameba.http.AbstractBase;
         property = "_type")
 @JsonSubTypes({
         @JsonSubTypes.Type(value = TextNoteVO.class, name = "tnote")
-})public abstract class ItemVO extends AbstractBase implements Serializable {
+})
+public abstract class ItemVO extends AbstractBase implements Serializable {
 
     private Long persistentKey;
     public boolean shareable;

@@ -44,7 +44,7 @@ import org.ameba.integration.jpa.ApplicationEntity;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
 @Getter
-@ToString
+@ToString(exclude = "password")
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
@@ -66,10 +66,8 @@ class User extends ApplicationEntity {
 
     @Column(name = COLUMN_USERNAME)
     private String username;
-
     @Column(name = COLUMN_PASSWORD)
     private String password;
-
     @Column(name = COLUMN_PHONE)
     private String phonenumber;
     @Column(name = COLUMN_EMAIL)
