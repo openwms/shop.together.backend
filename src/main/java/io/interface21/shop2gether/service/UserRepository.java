@@ -19,7 +19,7 @@ package io.interface21.shop2gether.service;
 import java.util.List;
 import java.util.Optional;
 
-import io.interface21.shop2gether.Coordinate;
+import org.springframework.data.geo.Polygon;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -33,6 +33,6 @@ interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findByUsername(String username);
 
-    @Query(value = "SELECT * FROM T_USER WHERE C_HOME_POS = :area", nativeQuery = true)
-    List<User> findUsersWithin(@Param("area") String area);
+    @Query(value = "select u from User u where within(u.homePosition, :area) = true")
+    List<User> findUsersWithin(@Param("area") Polygon area);
 }

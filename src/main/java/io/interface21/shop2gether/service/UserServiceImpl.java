@@ -20,6 +20,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import io.interface21.shop2gether.Coordinate;
 import io.interface21.shop2gether.UserService;
@@ -27,6 +28,8 @@ import io.interface21.shop2gether.UserVO;
 import org.ameba.annotation.TxService;
 import org.ameba.exception.NotFoundException;
 import org.ameba.mapping.BeanMapper;
+import org.springframework.data.geo.Point;
+import org.springframework.data.geo.Polygon;
 
 /**
  * A UserServiceImpl is a transactional Spring managed service that deals with {@link UserVO UserVO} instances.
@@ -68,7 +71,9 @@ class UserServiceImpl implements UserService {
      */
     @Override
     public List<UserVO> findUsersWithin(LinkedList<Coordinate> area) {
-        List<User> users = userRepository.findUsersWithin(Coordinate.toPolygonString(area));
+        List<Point> points = area.stream().map(coord->new Point(coord.getLongitude(), coord.getLatitude())).collect(Collectors.toList());
+        Polygon polygon = new Polygon(points);
+        List<User> users = userRepository.findUsersWithin(polygon);
         return users == null ? Collections.emptyList() : mapper.map(users, UserVO.class);
     }
 }
