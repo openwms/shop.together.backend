@@ -16,6 +16,8 @@
  */
 package io.interface21.shop2gether;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
 
 import org.ameba.exception.NotFoundException;
@@ -48,5 +50,10 @@ class UserController {
             return user;
         }
         throw new NotFoundException("No User with username found", "NOTFOUND", username);
+    }
+
+    @GetMapping(value = "/users", params = "username")
+    List<UserVO> getByCoordinateWindow(LinkedList<Coordinate> polygon) {
+        return userService.findUsersWithin(polygon);
     }
 }

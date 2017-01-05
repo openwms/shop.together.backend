@@ -7,10 +7,10 @@ spring:
     generate-ddl: true
     hibernate:
       ddl-auto: create-drop
+    database-platform: org.hibernate.spatial.dialect.h2geodb.GeoDBDialect
 
 security:
   user:
     password: sa
   basic:
     enabled: false
-

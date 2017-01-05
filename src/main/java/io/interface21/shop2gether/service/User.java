@@ -31,12 +31,12 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 import io.interface21.shop2gether.Coordinate;
-import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.ameba.integration.jpa.ApplicationEntity;
+import org.geolatte.geom.Point;
 
 /**
  * An User is some authenticated human user of the system.
@@ -47,17 +47,17 @@ import org.ameba.integration.jpa.ApplicationEntity;
 @ToString(exclude = "password")
 @EqualsAndHashCode
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @DiscriminatorColumn(name = "C_TYPE")
 @DiscriminatorValue("USER")
-@Table(name = "T_USER",
+@Table(name = User.TABLE_NAME,
         uniqueConstraints = {
                 @UniqueConstraint(name = "UC_UNAME_ACTIVE", columnNames = {COLUMN_USERNAME, COLUMN_ACTIVE}),
                 @UniqueConstraint(name = "UC_EMAIL_ACTIVE", columnNames = {COLUMN_EMAIL, COLUMN_ACTIVE})
         })
 class User extends ApplicationEntity {
 
+    public static final String TABLE_NAME = "T_USER";
     public static final String COLUMN_USERNAME = "C_USERNAME";
     public static final String COLUMN_PASSWORD = "C_PASSWORD";
     public static final String COLUMN_PHONE = "C_PHONE";
@@ -82,6 +82,17 @@ class User extends ApplicationEntity {
             @AttributeOverride(name = "latitudeDelta", column = @Column(name = "C_HOME_LATI_D"))
     })
     private Coordinate home;
+
+    @Column(name = "C_HOME_POS")
+    private Point homePosition;
+
+    protected User(String username, String phonenumber, String email, boolean active, Coordinate homeCoords) {
+        this.username = username;
+        this.phonenumber = phonenumber;
+        this.email = email;
+        this.active = active;
+        this.home = homeCoords;
+    }
 
     public void setUsername(String username) {
         this.username = username;

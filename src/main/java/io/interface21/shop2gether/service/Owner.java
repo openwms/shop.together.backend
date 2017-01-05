@@ -24,6 +24,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import io.interface21.shop2gether.Coordinate;
@@ -42,12 +43,14 @@ class Owner extends User {
     @JoinTable(name = "T_OWNER_ITEM", joinColumns = {@JoinColumn(name = "C_OWNER_PK")}, inverseJoinColumns = @JoinColumn(name="C_ITEM_PK"))
     private List<Item> items = new ArrayList<>();
 
+    private LinkedList<Coordinate> interestedArea = new LinkedList<>();
+
     /** Dear JPA ... */
     protected Owner() {
     }
 
     Owner(String username, String phonenumber, String email, boolean active, Coordinate homeCoords) {
-        super(username, null, phonenumber, email, active, homeCoords);
+        super(username, phonenumber, email, active, homeCoords);
     }
 
     public List<Item> getItems() {

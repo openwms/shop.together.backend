@@ -16,8 +16,12 @@
  */
 package io.interface21.shop2gether.service;
 
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
 
+import io.interface21.shop2gether.Coordinate;
 import io.interface21.shop2gether.UserService;
 import io.interface21.shop2gether.UserVO;
 import org.ameba.annotation.TxService;
@@ -57,5 +61,14 @@ class UserServiceImpl implements UserService {
         User user = userRepository.findOne(id);
         NotFoundException.throwIfNull(user, String.format("User with id %s not found", id));
         return mapper.map(user, UserVO.class);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<UserVO> findUsersWithin(LinkedList<Coordinate> area) {
+        List<User> users = userRepository.findUsersWithin(Coordinate.toPolygonString(area));
+        return users == null ? Collections.emptyList() : mapper.map(users, UserVO.class);
     }
 }

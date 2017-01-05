@@ -21,41 +21,27 @@
  */
 package io.interface21.shop2gether;
 
-import javax.persistence.Embeddable;
-import java.io.Serializable;
 import java.util.LinkedList;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import org.junit.Test;
 
 /**
- * A Coordinate.
+ * A CoordinateTest.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 1.0
  * @since 1.0
  */
-@NoArgsConstructor(access = AccessLevel.PACKAGE)
-@AllArgsConstructor
-@Getter
-@Setter
-@EqualsAndHashCode
-@Embeddable
-public class Coordinate implements Serializable {
+public class CoordinateTest {
 
-    public double longitude;
-    public double latitude;
-    public double longitudeDelta;
-    public double latitudeDelta;
-
-    public static String toPolygonString(LinkedList<Coordinate> coords) {
-        StringBuilder sb = new StringBuilder("POLYGON ((");
-        coords.stream().forEachOrdered(c -> sb.append(c.getLongitude()).append(" ").append(c.getLatitude()).append(", "));
-        sb.append("))");
-        return sb.toString();
+    public @Test void testTranslation() {
+        LinkedList<Coordinate> coords = new LinkedList<>();
+        coords.add(new Coordinate(1.0, 1.0, 0, 0));
+        coords.add(new Coordinate(2.0, 1.0, 0, 0));
+        coords.add(new Coordinate(1.0, 2.0, 0, 0));
+        coords.add(new Coordinate(2.0, 2.0, 0, 0));
+        String res = Coordinate.toPolygonString(coords);
+        System.out.println(res);
     }
+
 }
