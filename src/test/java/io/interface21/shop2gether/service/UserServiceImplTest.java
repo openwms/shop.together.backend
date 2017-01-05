@@ -21,13 +21,16 @@
  */
 package io.interface21.shop2gether.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.LinkedList;
+import java.util.List;
 
 import io.interface21.shop2gether.BackendApplication;
 import io.interface21.shop2gether.Coordinate;
 import io.interface21.shop2gether.UserService;
+import io.interface21.shop2gether.UserVO;
 import org.ameba.app.BaseConfiguration;
-import org.ameba.integration.jpa.BaseEntityTest;
 import org.ameba.integration.jpa.IntegrationTestConfig;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -65,6 +68,8 @@ public class UserServiceImplTest {
         area.add(new Coordinate(2.0, 1.0, 0, 0));
         area.add(new Coordinate(1.0, 2.0, 0, 0));
         area.add(new Coordinate(2.0, 2.0, 0, 0));
-        srv.findUsersWithin(area);
+        List<UserVO> result = srv.findUsersWithin(area);
+
+        assertThat(result).hasSize(1);
     }
 }
