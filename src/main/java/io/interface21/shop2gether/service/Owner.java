@@ -49,8 +49,12 @@ class Owner extends User {
     protected Owner() {
     }
 
-    Owner(String username, String phonenumber, String email, boolean active, Coordinate homeCoords) {
-        super(username, phonenumber, email, active, homeCoords);
+    public Owner(String username, String email) {
+        super(username, email);
+    }
+
+    public Owner(String username, String email, Coordinate homePosition) {
+        super(username, email, homePosition);
     }
 
     public List<Item> getItems() {

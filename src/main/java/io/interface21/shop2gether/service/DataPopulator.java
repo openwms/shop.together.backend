@@ -36,11 +36,15 @@ class DataPopulator {
     @Bean
     CommandLineRunner clr(Repositories.OwnerRepository repo, Repositories.UserGroupRepository ugRepo, Repositories.TextNoteRepository tnRepo, EntityManager em) {
         return args -> {
-            em.createNativeQuery("CREATE ALIAS IF NOT EXISTS SPATIAL_INIT FOR\n" +
-                    " \"org.h2gis.h2spatialext.CreateSpatialExtension.initSpatialExtension\";\n" +
-                    " CALL SPATIAL_INIT();");
-            Owner heiko = repo.save(new Owner("heiko", "4711", "heiko@home.com", true, new Coordinate(7.347954, 49.451332, 0.0421, 0.0922)));
+            Owner heiko = new Owner("heiko", "heiko@home.com", new Coordinate(7.347954, 49.451332, 0.0421, 0.0922));
+            heiko.setPhonenumber("4711");
+            repo.save(heiko);
             UserGroup ug = ugRepo.save(new UserGroup(heiko, "Family"));
+
+            Owner rudi = new Owner("rudi", "rudi@home.com", new Coordinate(7.347959, 49.451335, 0.0421, 0.0922));
+            heiko.setPhonenumber("0815");
+            repo.save(rudi);
+            ug.add(rudi);
 
             TextNote text1 = new TextNote("Shoppinglist 1", "1 x 10 Eggs\n2 x Milk\n1 x Peanutbutter\n3 x Oranges\n1 big Pineapple\nSome cheese\n1pd. Meatballs", "#E9E74A", false);
             text1 = tnRepo.save(text1);

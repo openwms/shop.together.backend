@@ -16,22 +16,21 @@
  */
 package io.interface21.shop2gether.service;
 
-import javax.persistence.EntityManager;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.vividsolutions.jts.geom.GeometryFactory;
+import com.vividsolutions.jts.geom.LinearRing;
+import com.vividsolutions.jts.geom.Polygon;
 import io.interface21.shop2gether.Coordinate;
 import io.interface21.shop2gether.UserService;
 import io.interface21.shop2gether.UserVO;
 import org.ameba.annotation.TxService;
 import org.ameba.exception.NotFoundException;
 import org.ameba.mapping.BeanMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.geo.Point;
-import org.springframework.data.geo.Polygon;
 
 /**
  * A UserServiceImpl is a transactional Spring managed service that deals with {@link UserVO UserVO} instances.
@@ -73,9 +72,13 @@ class UserServiceImpl implements UserService {
      */
     @Override
     public List<UserVO> findUsersWithin(LinkedList<Coordinate> area) {
-        List<Point> points = area.stream().map(coord->new Point(coord.getLongitude(), coord.getLatitude())).collect(Collectors.toList());
-        Polygon polygon = new Polygon(points);
-        List<User> users = userRepository.findUsersWithin(polygon);
+        List<com.vividsolutions.jts.geom.Coordinate> points =
+                area.stream()
+                        .map(coord->new com.vividsolutions.jts.geom.Coordinate(coord.getLongitude(), coord.getLatitude()))
+                        .collect(Collectors.toList());
+        GeometryFactory fact = new GeometryFactory();
+        LinearRing linear = fact.createLinearRing(points.toArray(new com.vividsolutions.jts.geom.Coordinate[]{}));
+        List<User> users = userRepository.findUsersWithin(new Polygon(linear, null, fact));
         return users == null ? Collections.emptyList() : mapper.map(users, UserVO.class);
     }
 }

@@ -8,6 +8,7 @@ spring:
     hibernate:
       ddl-auto: create-drop
     database-platform: org.hibernate.spatial.dialect.h2geodb.GeoDBDialect
+    show-sql: false
 
 security:
   user:

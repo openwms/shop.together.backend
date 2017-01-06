@@ -16,12 +16,15 @@
  */
 package io.interface21.shop2gether;
 
+import javax.validation.constraints.NotNull;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
 import org.ameba.exception.NotFoundException;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -40,7 +43,7 @@ class UserController {
     }
 
     @GetMapping(value = "/users", params = "username")
-    UserVO getUserFor(@RequestParam("username") String username) {
+    UserVO getUserFor(@RequestParam("username") @NotNull String username) {
         Optional<UserVO> userOpt = userService.getUserByUsername(username);
         if (userOpt.isPresent()) {
 
@@ -52,8 +55,9 @@ class UserController {
         throw new NotFoundException("No User with username found", "NOTFOUND", username);
     }
 
-    @GetMapping(value = "/users", params = "username")
-    List<UserVO> getByCoordinateWindow(LinkedList<Coordinate> polygon) {
-        return userService.findUsersWithin(polygon);
+    /* Hack: We use a POST here to pass complex objects. */
+    @PostMapping(value = "/users")
+    List<UserVO> getByCoordinateWindow(@RequestBody @NotNull List<Coordinate> area) {
+        return userService.findUsersWithin(new LinkedList<>(area));
     }
 }

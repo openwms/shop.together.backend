@@ -68,6 +68,16 @@ class UserGroup extends ApplicationEntity {
     @JoinTable(name = "T_UG_USER", joinColumns = {@JoinColumn(name = "C_UG_PK")}, inverseJoinColumns = @JoinColumn(name="C_U_PK"))
     private List<User> users = new ArrayList<>();
 
+    /**
+     * Add a User to this UserGroup.
+     *
+     * @param user The User to add
+     * @return see {@link List#add(Object)}
+     */
+    public boolean add(User user) {
+        return this.users.add(user);
+    }
+
     @Override
     public String toString() {
         return "UserGroup{" +

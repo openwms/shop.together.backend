@@ -27,16 +27,21 @@ import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotNull;
 
+import com.vividsolutions.jts.geom.GeometryFactory;
+import com.vividsolutions.jts.geom.Point;
 import io.interface21.shop2gether.Coordinate;
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.ameba.integration.jpa.ApplicationEntity;
-import org.geolatte.geom.Point;
 
 /**
  * An User is some authenticated human user of the system.
@@ -47,6 +52,7 @@ import org.geolatte.geom.Point;
 @ToString(exclude = "password")
 @EqualsAndHashCode
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @DiscriminatorColumn(name = "C_TYPE")
 @DiscriminatorValue("USER")
@@ -64,16 +70,17 @@ class User extends ApplicationEntity {
     public static final String COLUMN_EMAIL = "C_EMAIL";
     public static final String COLUMN_ACTIVE = "C_ACTIVE";
 
-    @Column(name = COLUMN_USERNAME)
+    @Column(name = COLUMN_USERNAME, nullable = false)
     private String username;
     @Column(name = COLUMN_PASSWORD)
     private String password;
     @Column(name = COLUMN_PHONE)
     private String phonenumber;
-    @Column(name = COLUMN_EMAIL)
+    @Column(name = COLUMN_EMAIL, nullable = false)
+    @NotNull
     private String email;
     @Column(name = COLUMN_ACTIVE)
-    private boolean active;
+    private boolean active = true;
     @Embedded
     @AttributeOverrides({
             @AttributeOverride(name = "longitude", column = @Column(name = "C_HOME_LONG")),
@@ -83,15 +90,25 @@ class User extends ApplicationEntity {
     })
     private Coordinate home;
 
+    /** Homeposition internally used for querying. */
     @Column(name = "C_HOME_POS")
     private Point homePosition;
 
-    protected User(String username, String phonenumber, String email, boolean active, Coordinate homeCoords) {
+    public User(String username, String email) {
         this.username = username;
-        this.phonenumber = phonenumber;
         this.email = email;
-        this.active = active;
-        this.home = homeCoords;
+    }
+
+    public User(String username, String email, Coordinate homePosition) {
+        this.username = username;
+        this.email = email;
+        this.home = homePosition;
+    }
+
+    @PrePersist
+    @PreUpdate
+    protected void onPostConstruct() {
+        this.homePosition = new GeometryFactory().createPoint(new com.vividsolutions.jts.geom.Coordinate(home.getLongitude(), home.getLatitude()));
     }
 
     public void setUsername(String username) {
@@ -100,5 +117,9 @@ class User extends ApplicationEntity {
 
     public void setPhonenumber(String phonenumber) {
         this.phonenumber = phonenumber;
+    }
+
+    public void setHomePosition(Coordinate homePosition) {
+        this.home = homePosition;
     }
 }

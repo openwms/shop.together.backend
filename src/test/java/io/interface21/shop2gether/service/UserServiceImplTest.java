@@ -57,17 +57,20 @@ public class UserServiceImplTest {
     @Autowired private UserService srv;
     @Autowired private TestEntityManager em;
 
-    public @Test void testWithinArea() {
-        User foreigner = new User("foreigner", "", "", true, new Coordinate(0,0,0,0));
-        User friend1 = new User("friend1", "", "", true, new Coordinate(1.1,0.1,0,0));
+    public
+    @Test
+    void testWithinArea() {
+        User foreigner = new User("foreigner", "nofriend@mine", new Coordinate(0, 0, 0, 0));
+        User friend1 = new User("friend1", "friend@mine", new Coordinate(1.1, 1.1, 0, 0));
         em.persist(foreigner);
-        //em.persist(friend1);
+        em.persist(friend1);
 
         LinkedList<Coordinate> area = new LinkedList<>();
-        area.add(new Coordinate(1.0, 1.0, 0, 0));
-        area.add(new Coordinate(2.0, 1.0, 0, 0));
-        area.add(new Coordinate(1.0, 2.0, 0, 0));
-        area.add(new Coordinate(2.0, 2.0, 0, 0));
+        area.add(new Coordinate(1, 1, 0, 0));
+        area.add(new Coordinate(2, 1, 0, 0));
+        area.add(new Coordinate(2, 2, 0, 0));
+        area.add(new Coordinate(1, 2, 0, 0));
+        area.add(new Coordinate(1, 1, 0, 0));
         List<UserVO> result = srv.findUsersWithin(area);
 
         assertThat(result).hasSize(1);

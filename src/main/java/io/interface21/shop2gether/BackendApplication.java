@@ -19,7 +19,6 @@ package io.interface21.shop2gether;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import org.ameba.annotation.EnableAspects;
 import org.ameba.mapping.BeanMapper;
 import org.ameba.mapping.DozerMapperImpl;
 import org.springframework.boot.SpringApplication;
@@ -36,7 +35,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableJpaRepositories(considerNestedRepositories = true)
 @EnableJpaAuditing
 @EnableTransactionManagement
-@EnableAspects
+//EnableAspects
 public class BackendApplication {
 
     public static void main(String[] args) {
