@@ -4,6 +4,7 @@ spring:
     username: S2G
     password: S2G
     driver-class-name: org.postgresql.Driver
+    initialize: false
   jpa:
     database: postgresql
     database-platform: org.hibernate.spatial.dialect.postgis.PostgisDialect
