@@ -45,8 +45,6 @@ import org.springframework.test.context.junit4.SpringRunner;
  * A UserServiceImplTest.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.0
- * @since 1.0
  */
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -74,5 +72,6 @@ public class UserServiceImplTest {
         List<UserVO> result = srv.findUsersWithin(area);
 
         assertThat(result).hasSize(1);
+        assertThat(result.get(0).username).isEqualTo("friend1");
     }
 }
