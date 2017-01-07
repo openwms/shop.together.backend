@@ -36,15 +36,20 @@ class DataPopulator {
     @Bean
     CommandLineRunner clr(Repositories.OwnerRepository repo, Repositories.UserGroupRepository ugRepo, Repositories.TextNoteRepository tnRepo, EntityManager em) {
         return args -> {
-            Owner heiko = new Owner("heiko", "heiko@home.com", new Coordinate(7.347954, 49.451332, 0.0421, 0.0922));
+            Owner heiko = new Owner("heiko", "heiko@home.com", new Coordinate(7.350166, 49.450632, 0.0421, 0.0922));
             heiko.setPhonenumber("4711");
             repo.save(heiko);
             UserGroup ug = ugRepo.save(new UserGroup(heiko, "Family"));
 
-            Owner rudi = new Owner("rudi", "rudi@home.com", new Coordinate(7.347959, 49.451335, 0.0421, 0.0922));
+            Owner luente = new Owner("Antikatelier Luending", "luente@home.com", new Coordinate(7.350690, 49.448634, 0.0421, 0.0922));
             heiko.setPhonenumber("0815");
-            repo.save(rudi);
-            ug.add(rudi);
+            repo.save(luente);
+            ug.add(luente);
+
+            Owner roland = new Owner("Metzgerei Reis", "bulle-rolland@home.com", new Coordinate(7.350548, 49.448233, 0.0421, 0.0922));
+            heiko.setPhonenumber("42");
+            repo.save(roland);
+            ug.add(roland);
 
             TextNote text1 = new TextNote("Shoppinglist 1", "1 x 10 Eggs\n2 x Milk\n1 x Peanutbutter\n3 x Oranges\n1 big Pineapple\nSome cheese\n1pd. Meatballs", "#E9E74A", false);
             text1 = tnRepo.save(text1);
