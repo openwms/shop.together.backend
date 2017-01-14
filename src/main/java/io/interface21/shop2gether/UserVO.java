@@ -31,6 +31,10 @@ public class UserVO extends AbstractBase {
 
     @Override
     public String toString() {
-        return username;
+        return "UserVO{" +
+                "username='" + username + '\'' +
+                ", phonenumber='" + phonenumber + '\'' +
+                ", home=" + home +
+                "} " + super.toString();
     }
 }

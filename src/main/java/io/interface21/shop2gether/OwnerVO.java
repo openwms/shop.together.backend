@@ -37,6 +37,6 @@ public class OwnerVO<T extends ItemVO> extends UserVO implements Serializable {
 
     @Override
     public String toString() {
-        return "OwnerVO with username " + super.toString();
+        return "OwnerVO with data from UserVO " + super.toString();
     }
 }
