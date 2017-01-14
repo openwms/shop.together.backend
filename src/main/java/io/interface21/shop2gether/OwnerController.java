@@ -16,6 +16,8 @@
  */
 package io.interface21.shop2gether;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.hateoas.Link;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,6 +34,7 @@ import org.springframework.web.bind.annotation.RestController;
 class OwnerController<T extends ItemVO> {
 
     private final OwnerService<T> ownerService;
+    private static final Logger LOGGER = LoggerFactory.getLogger(OwnerController.class);
 
     OwnerController(OwnerService<T> ownerService) {
         this.ownerService = ownerService;
@@ -55,6 +58,7 @@ class OwnerController<T extends ItemVO> {
 
     @PostMapping("/owners/{id}")
     void save(@PathVariable Long id, @RequestBody OwnerVO owner) {
+        LOGGER.debug("Updating owner with record [{}]", owner);
         ownerService.save(id, owner);
     }
 }
