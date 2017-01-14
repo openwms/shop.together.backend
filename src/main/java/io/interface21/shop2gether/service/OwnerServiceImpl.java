@@ -34,18 +34,24 @@ class OwnerServiceImpl<T extends ItemVO> implements OwnerService<T> {
     private final BeanMapper mapper;
     private final Repositories.OwnerRepository repository;
 
-    public OwnerServiceImpl(BeanMapper mapper, Repositories.OwnerRepository repository) {
+    OwnerServiceImpl(BeanMapper mapper, Repositories.OwnerRepository repository) {
         this.mapper = mapper;
         this.repository = repository;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public OwnerVO<T> getById(Long id) {
+    public OwnerVO<T> findById(Long id) {
         Owner owner = repository.findOne(id);
         NotFoundException.throwIfNull(owner, String.format("Owner with id %s does not exist", id));
         return mapper.map(owner, OwnerVO.class);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public OwnerVO<T> save(Long id, OwnerVO<T> owner) {
 
@@ -54,6 +60,7 @@ class OwnerServiceImpl<T extends ItemVO> implements OwnerService<T> {
 
         saved.setUsername(owner.username);
         saved.setPhonenumber(owner.phonenumber);
+        saved.setHomePosition(owner.home);
         saved = repository.save(saved);
         return mapper.map(saved, OwnerVO.class);
     }

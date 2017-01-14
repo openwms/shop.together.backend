@@ -17,13 +17,28 @@
 package io.interface21.shop2gether;
 
 /**
- * A OwnerService.
+ * An OwnerService is a component private business service that deals with Owners.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
 public interface OwnerService<T extends ItemVO> {
 
-    OwnerVO<T> getById(Long id);
+    /**
+     * Find and return an OwnerVO identified by it's persistent identifier.
+     *
+     * @param id The persistent identifier
+     * @return The OwnerVO instance
+     * @throws org.ameba.exception.NotFoundException If no OwnerVO found
+     */
+    OwnerVO<T> findById(Long id);
 
+    /**
+     * Save dedicated values of the passed OwnerVO instance to the instance identified by it's persistent identifier.
+     *
+     * @param id The persistient identifier of the instance to update
+     * @param saved Stores the actual values to be updated
+     * @return The updated instance
+     * @throws org.ameba.exception.NotFoundException If no OwnerVO found
+     */
     OwnerVO<T> save(Long id, OwnerVO<T> saved);
 }

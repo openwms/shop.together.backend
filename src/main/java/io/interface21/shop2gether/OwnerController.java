@@ -42,7 +42,7 @@ class OwnerController<T extends ItemVO> {
 
     @GetMapping("/owners/{id}")
     OwnerVO getOwnerFor(@PathVariable Long id) {
-        OwnerVO<T> owner = ownerService.getById(id);
+        OwnerVO<T> owner = ownerService.findById(id);
         if (!owner.getItems().isEmpty()) {
 
             // enrich
