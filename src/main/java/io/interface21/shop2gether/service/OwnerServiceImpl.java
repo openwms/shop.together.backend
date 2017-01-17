@@ -53,15 +53,36 @@ class OwnerServiceImpl<T extends ItemVO> implements OwnerService<T> {
      * {@inheritDoc}
      */
     @Override
-    public OwnerVO<T> save(Long id, OwnerVO<T> owner) {
+    public OwnerVO<T> save(Long id, OwnerVO<T> toSave) {
+        Owner saved = getOwner(id);
 
-        Owner saved = repository.findOne(id);
-        NotFoundException.throwIfNull(owner, String.format("Owner with id %s does not exist", id));
-
-        saved.setUsername(owner.username);
-        saved.setPhonenumber(owner.phonenumber);
-        saved.setHomePosition(owner.home);
+        saved.setUsername(toSave.username);
+        saved.setPhonenumber(toSave.phonenumber);
+        saved.setHomePosition(toSave.home);
         saved = repository.save(saved);
         return mapper.map(saved, OwnerVO.class);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public OwnerVO<T> save(Long id, ItemVO item) {
+        Owner saved = getOwner(id);
+        Item toSave = mapper.map(item, Item.class);
+        if (toSave.isNew()) {
+            saved.getItems().add(toSave);
+        } else {
+            throw new UnsupportedOperationException("Not yet implemented");
+            //saved.getItem(item.getPersistentKey()).ifPresent(i->i.);
+        }
+        saved = repository.save(saved);
+        return mapper.map(saved, OwnerVO.class);
+    }
+
+    private Owner getOwner(Long id) {
+        Owner saved = repository.findOne(id);
+        NotFoundException.throwIfNull(saved, String.format("Owner with id %s does not exist", id));
+        return saved;
     }
 }

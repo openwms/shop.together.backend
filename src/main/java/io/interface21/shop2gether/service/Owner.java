@@ -26,6 +26,7 @@ import javax.persistence.OrderBy;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 import io.interface21.shop2gether.Coordinate;
 
@@ -59,5 +60,9 @@ class Owner extends User {
 
     public List<Item> getItems() {
         return items;
+    }
+
+    public Optional<Item> getItem(Long persistentKey) {
+        return items.stream().filter(i -> i.getPk().equals(persistentKey)).findFirst();
     }
 }

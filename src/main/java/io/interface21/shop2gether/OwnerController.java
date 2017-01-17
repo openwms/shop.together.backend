@@ -61,4 +61,10 @@ class OwnerController<T extends ItemVO> {
         LOGGER.debug("Updating owner with record [{}]", owner);
         ownerService.save(id, owner);
     }
+
+    @PostMapping("/owners/{id}/items")
+    void saveItem(@PathVariable Long id, @RequestBody ItemVO item) {
+        LOGGER.debug("Updating owner, store item [{}]", item);
+        ownerService.save(id, item);
+    }
 }

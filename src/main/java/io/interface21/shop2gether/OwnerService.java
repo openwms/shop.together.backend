@@ -35,10 +35,12 @@ public interface OwnerService<T extends ItemVO> {
     /**
      * Save dedicated values of the passed OwnerVO instance to the instance identified by it's persistent identifier.
      *
-     * @param id The persistient identifier of the instance to update
-     * @param saved Stores the actual values to be updated
+     * @param id The persistent identifier of the instance to update
+     * @param toSave Stores the actual values to be updated
      * @return The updated instance
      * @throws org.ameba.exception.NotFoundException If no OwnerVO found
      */
-    OwnerVO<T> save(Long id, OwnerVO<T> saved);
+    OwnerVO<T> save(Long id, OwnerVO<T> toSave);
+
+    OwnerVO<T> save(Long id, ItemVO item);
 }
