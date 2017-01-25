@@ -24,4 +24,11 @@ package io.interface21.shop2gether;
 public interface ItemService {
 
     ItemVO getById(Long id);
+
+    /**
+     * Delete item with the give unique id.
+     *
+     * @param id The persistent key
+     */
+    void delete(Long id);
 }

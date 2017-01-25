@@ -38,10 +38,21 @@ class ItemServiceImpl implements ItemService {
         this.repository = repository;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ItemVO getById(Long id) {
         Item item = repository.findOne(id);
         NotFoundException.throwIfNull(item, String.format("No Item with id %s exists!", id));
         return mapper.map(item, ItemVO.class);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void delete(Long id) {
+        repository.delete(id);
     }
 }
