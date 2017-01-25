@@ -22,6 +22,7 @@ import io.interface21.shop2gether.Coordinate;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 /**
  * A DataPopulator.
@@ -34,6 +35,7 @@ import org.springframework.context.annotation.Configuration;
 class DataPopulator {
 
     @Bean
+    @Profile("H2")
     CommandLineRunner clr(Repositories.OwnerRepository repo, Repositories.UserGroupRepository ugRepo, Repositories.TextNoteRepository tnRepo, EntityManager em) {
         return args -> {
             Owner heiko = new Owner("heiko", "heiko@home.com", new Coordinate(7.350166, 49.450632, 0.0421, 0.0922));
