@@ -78,6 +78,10 @@
             <a is-accessible="true">pinned</a>
             <b is-accessible="true">pinned</b>
         </field>
+        <field>
+            <a is-accessible="true">ol</a>
+            <b is-accessible="true">version</b>
+        </field>
     </mapping>
 
 </mappings>

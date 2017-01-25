@@ -16,12 +16,16 @@
  */
 package io.interface21.shop2gether.service;
 
+import static java.lang.String.format;
+
 import io.interface21.shop2gether.ItemVO;
 import io.interface21.shop2gether.OwnerService;
 import io.interface21.shop2gether.OwnerVO;
 import org.ameba.annotation.TxService;
 import org.ameba.exception.NotFoundException;
 import org.ameba.mapping.BeanMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A OwnerServiceImpl is a Spring managed transactional service that deals with OwnerVO instances.
@@ -31,6 +35,7 @@ import org.ameba.mapping.BeanMapper;
 @TxService
 class OwnerServiceImpl<T extends ItemVO> implements OwnerService<T> {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(OwnerServiceImpl.class);
     private final BeanMapper mapper;
     private final Repositories.OwnerRepository repository;
 
@@ -45,7 +50,7 @@ class OwnerServiceImpl<T extends ItemVO> implements OwnerService<T> {
     @Override
     public OwnerVO<T> findById(Long id) {
         Owner owner = repository.findOne(id);
-        NotFoundException.throwIfNull(owner, String.format("Owner with id %s does not exist", id));
+        NotFoundException.throwIfNull(owner, format("Owner with id %s does not exist", id));
         return mapper.map(owner, OwnerVO.class);
     }
 
@@ -71,10 +76,12 @@ class OwnerServiceImpl<T extends ItemVO> implements OwnerService<T> {
         Owner saved = getOwner(id);
         Item toSave = mapper.map(item, Item.class);
         if (toSave.isNew()) {
+            LOGGER.debug(format("Add new item to Owner [%d], Item [%s]", id, toSave));
             saved.getItems().add(toSave);
         } else {
-            throw new UnsupportedOperationException("Not yet implemented");
-            //saved.getItem(item.getPersistentKey()).ifPresent(i->i.);
+            LOGGER.debug(format("Update existing item of Owner [%d], Item [%s]", id, toSave));
+            saved.getItem(toSave.getPk()).orElseThrow(NotFoundException::new);
+            saved.getItems().add(toSave);
         }
         saved = repository.save(saved);
         return mapper.map(saved, OwnerVO.class);
@@ -82,7 +89,7 @@ class OwnerServiceImpl<T extends ItemVO> implements OwnerService<T> {
 
     private Owner getOwner(Long id) {
         Owner saved = repository.findOne(id);
-        NotFoundException.throwIfNull(saved, String.format("Owner with id %s does not exist", id));
+        NotFoundException.throwIfNull(saved, format("Owner with id %s does not exist", id));
         return saved;
     }
 }

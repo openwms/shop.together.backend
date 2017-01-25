@@ -40,6 +40,7 @@ public abstract class ItemVO extends AbstractBase implements Serializable {
 
     private Long persistentKey;
     public boolean shareable;
+    public long version;
     @JsonIgnore
     public List<UserGroupVO> sharedWith;
 
