@@ -38,7 +38,8 @@ class DataPopulator {
 
             TextNote text1 = new TextNote("Shoppinglist 1", "1 x 10 Eggs\n2 x Milk\n1 x Peanutbutter\n3 x Oranges\n1 big Pineapple\nSome cheese\n1pd. Meatballs", "#E9E74A", false);
             text1 = tnRepo.save(text1);
-            TextNote text2 = new TextNote("Shoppinglist 2", "Toothbrush", "#EE5E9F", false);
+            TextNote text2 = new TextNote("My secret list", "Toothbrush", "#EE5E9F", false);
+            text2.setShareable(false);
             text2 = tnRepo.save(text2);
             TextNote text3 = new TextNote("Postoffice Today", "Letter to post office\n10 x Stamps\nAsk for next delivery", "#FFDD2A", false);
             text3 = tnRepo.save(text3);
