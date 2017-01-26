@@ -1,20 +1,6 @@
-/*
- * Shop2gether Backend.
- *
- * This software module including the design and software principals used is and remains
- * the property of Heiko Scherrer (the initial author of the project)
- * and is submitted with the understanding that it is not to be reproduced nor copied in
- * whole or in part, nor licensed or otherwise provided or communicated to any third party
- * without their prior written consent. It must not be used in any way detrimental to the
- * interests of both authors. Acceptance of this module will be construed as an agreement
- * to the above.
- *
- * All rights of Heiko Scherrer remain reserved. Shop2gether Backend
- * is a registered trademark of Heiko Scherrer. Other products and
- * company names mentioned herein may be trademarks or trade names of their respective owners.
- * Specifications are subject to change without notice.
- */
 package io.interface21.shop2gether.service;
+
+import static java.lang.String.format;
 
 import io.interface21.shop2gether.ItemService;
 import io.interface21.shop2gether.ItemVO;
@@ -23,7 +9,7 @@ import org.ameba.exception.NotFoundException;
 import org.ameba.mapping.BeanMapper;
 
 /**
- * A ItemServiceImpl.
+ * A ItemServiceImpl is a transactional Spring managed service that deals with {@link ItemVO ItemVO} instances.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
@@ -44,7 +30,7 @@ class ItemServiceImpl implements ItemService {
     @Override
     public ItemVO getById(Long id) {
         Item item = repository.findOne(id);
-        NotFoundException.throwIfNull(item, String.format("No Item with id %s exists!", id));
+        NotFoundException.throwIfNull(item, format("No Item with id %s exists!", id));
         return mapper.map(item, ItemVO.class);
     }
 

@@ -1,20 +1,6 @@
-/*
- * Shop2gether Backend.
- *
- * This software module including the design and software principals used is and remains
- * the property of Heiko Scherrer (the initial author of the project)
- * and is submitted with the understanding that it is not to be reproduced nor copied in
- * whole or in part, nor licensed or otherwise provided or communicated to any third party
- * without their prior written consent. It must not be used in any way detrimental to the
- * interests of both authors. Acceptance of this module will be construed as an agreement
- * to the above.
- *
- * All rights of Heiko Scherrer remain reserved. Shop2gether Backend
- * is a registered trademark of Heiko Scherrer. Other products and
- * company names mentioned herein may be trademarks or trade names of their respective owners.
- * Specifications are subject to change without notice.
- */
 package io.interface21.shop2gether.service;
+
+import static java.lang.String.format;
 
 import java.util.Collections;
 import java.util.LinkedList;
@@ -41,9 +27,9 @@ import org.ameba.mapping.BeanMapper;
 class UserServiceImpl implements UserService {
 
     private final BeanMapper mapper;
-    private final UserRepository userRepository;
+    private final Repositories.UserRepository userRepository;
 
-    UserServiceImpl(BeanMapper mapper, UserRepository userRepository) {
+    UserServiceImpl(BeanMapper mapper, Repositories.UserRepository userRepository) {
         this.mapper = mapper;
         this.userRepository = userRepository;
     }
@@ -63,7 +49,7 @@ class UserServiceImpl implements UserService {
     @Override
     public UserVO getUserById(Long id) {
         User user = userRepository.findOne(id);
-        NotFoundException.throwIfNull(user, String.format("User with id %s not found", id));
+        NotFoundException.throwIfNull(user, format("User with id %s not found", id));
         return mapper.map(user, UserVO.class);
     }
 

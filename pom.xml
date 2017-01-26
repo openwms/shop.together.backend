@@ -109,21 +109,10 @@
             <artifactId>dozer</artifactId>
         </dependency>
 
-        <dependency>
+        <!--dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-
-        <!--dependency>
-            <groupId>org.orbisgis</groupId>
-            <artifactId>h2spatial-ext</artifactId>
-            <version>1.2.4</version>
         </dependency-->
 
         <dependency>

@@ -1,23 +1,8 @@
-/*
- * Shop2gether Backend.
- *
- * This software module including the design and software principals used is and remains
- * the property of Heiko Scherrer (the initial author of the project)
- * and is submitted with the understanding that it is not to be reproduced nor copied in
- * whole or in part, nor licensed or otherwise provided or communicated to any third party
- * without their prior written consent. It must not be used in any way detrimental to the
- * interests of both authors. Acceptance of this module will be construed as an agreement
- * to the above.
- *
- * All rights of Heiko Scherrer remain reserved. Shop2gether Backend
- * is a registered trademark of Heiko Scherrer. Other products and
- * company names mentioned herein may be trademarks or trade names of their respective owners.
- * Specifications are subject to change without notice.
- */
 package io.interface21.shop2gether.service;
 
 import static io.interface21.shop2gether.service.UserGroup.COLUMN_NAME;
 import static io.interface21.shop2gether.service.UserGroup.COLUMN_OWNER;
+import static io.interface21.shop2gether.service.UserGroup.TABLE_NAME;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -35,17 +20,18 @@ import lombok.Getter;
 import org.ameba.integration.jpa.ApplicationEntity;
 
 /**
- * A UserGroup.
+ * An UserGroup is used to group a set of Users in order to assign Items to them.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
 @Getter
 @Entity
-@Table(name = "T_USER_GROUP", uniqueConstraints = {
+@Table(name = TABLE_NAME, uniqueConstraints = {
         @UniqueConstraint(name = "UC_OWNER_NAME", columnNames = {COLUMN_OWNER, COLUMN_NAME})
 })
 class UserGroup extends ApplicationEntity {
 
+    public static final String TABLE_NAME = "T_USER_GROUP";
     public static final String COLUMN_OWNER = "C_OWNER";
     public static final String COLUMN_NAME = "C_NAME";
 

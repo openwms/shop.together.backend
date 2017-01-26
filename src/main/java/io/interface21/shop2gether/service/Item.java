@@ -1,19 +1,3 @@
-/*
- * Shop2gether Backend.
- *
- * This software module including the design and software principals used is and remains
- * the property of Heiko Scherrer (the initial author of the project)
- * and is submitted with the understanding that it is not to be reproduced nor copied in
- * whole or in part, nor licensed or otherwise provided or communicated to any third party
- * without their prior written consent. It must not be used in any way detrimental to the
- * interests of both authors. Acceptance of this module will be construed as an agreement
- * to the above.
- *
- * All rights of Heiko Scherrer remain reserved. Shop2gether Backend
- * is a registered trademark of Heiko Scherrer. Other products and
- * company names mentioned herein may be trademarks or trade names of their respective owners.
- * Specifications are subject to change without notice.
- */
 package io.interface21.shop2gether.service;
 
 import javax.persistence.Column;
@@ -54,12 +38,14 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @ToString
 @EqualsAndHashCode
 @Entity
-@Table(name ="T_ITEM")
+@Table(name = Item.TABLE_NAME)
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @DiscriminatorColumn(name = "C_TYPE")
 @DiscriminatorValue("ITEM")
 @EntityListeners(AuditingEntityListener.class)
 abstract class Item {
+
+    public static final String TABLE_NAME = "T_ITEM";
 
     @Id
     @Column(name = "C_PK")
@@ -134,7 +120,7 @@ abstract class Item {
     }
 
     @OneToMany
-    @JoinTable(name = "T_ITEM_UG", joinColumns = {@JoinColumn(name = "C_ITEM_PK")}, inverseJoinColumns = @JoinColumn(name="C_UG_PK"))
+    @JoinTable(name = "T_ITEM_UG", joinColumns = {@JoinColumn(name = "C_ITEM_PK")}, inverseJoinColumns = @JoinColumn(name = "C_UG_PK"))
     private List<UserGroup> sharedWith = new ArrayList<>();
 
     /** If this item is shared with others thi is set to false, if it is a private item (not shared) it is true. */
