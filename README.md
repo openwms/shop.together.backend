@@ -1,27 +1,27 @@
 # shop.together.backend
 
-The Shop2Gether backend is built with the less effort possible. We just discussed, sketched and implemented the domain model,
-identified aggregates and exposed those as RESTful resources. The business object, as well as persistency model (EO: Entity Objects) and view object (VO) model look like this:
+The Shop2Gether backend is built with less effort possible to back the Shop2Gether mobile application. We just discussed, sketched and implemented the domain model,
+identified aggregates and exposed those as RESTful resources. The business object model, the persistency model (EO: Entity Objects) and view object model (VO) look like this:
 
 ![DM][1]
 
 # Specialities
 
-- Spatial Query Support. To find other users in the interested area we need to have a database that supports spatial queries. H2 and PostgreSQL are good candidates for that. Spatial Query support
-in H2 is easy to activate, just add a library (org.orbisgis:h2gis-ext) and call a function to activate it [see](src/main/resources/schema-H2.sql)
-- Separation of View Model
+- Spatial Query Support. To find other users in the interested area the app requires a database that supports spatial queries. H2 and PostgreSQL are good candidates for that. Spatial Query support
+in H2 is much more easy to activate than in PostgreSQL - just add a library (org.orbisgis:h2gis-ext) and call a function to activate it [see](src/main/resources/schema-H2.sql)
+- Separation of view model and persistency model. Like we did in other projects, we start from the beginning with separate models for persistence and the public API. We use [Ameba](https://github.com/abraxas-labs/ameba-lib) and [Dozer](http://dozer.sourceforge.net/) for mapping between both.
 
 # Flow
 
-What is the flow how to deal with this API?
+What is the flow and how to deal with the API?
 
 ## Login
 
-First we need to get over the login procedure and populate the security context.
+First we need to get over the login procedure and populate the security context. // to be described
 
 ## Get Owner information
 
-After an user is authenticated, the client application may require more information about the authenticated user, so called Owner, and it's Items.
+After an user is authenticated, the client application may require more information about the authenticated user, so called Owner, and his Items.
 
 ```
 GET /owners/{id}
