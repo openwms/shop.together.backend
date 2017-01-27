@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 import io.interface21.shop2gether.Coordinate;
+import org.ameba.exception.NotFoundException;
 
 /**
  * An Owner is the actual Owner of {@link Item Items} and is also a valid {@link User User} of the system.
@@ -48,5 +49,10 @@ class Owner extends User {
 
     public Optional<Item> getItem(Long persistentKey) {
         return items.stream().filter(i -> i.getPk().equals(persistentKey)).findFirst();
+    }
+
+    public boolean updateItem(Item toSave) {
+        this.getItem(toSave.getPk()).orElseThrow(NotFoundException::new);
+        return this.getItems().add(toSave);
     }
 }

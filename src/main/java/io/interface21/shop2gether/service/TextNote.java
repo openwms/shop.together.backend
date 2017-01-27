@@ -16,7 +16,7 @@ import lombok.ToString;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
 @Getter
-@ToString
+@ToString(exclude = "text")
 @EqualsAndHashCode
 @NoArgsConstructor
 @Entity

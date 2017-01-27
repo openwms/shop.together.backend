@@ -13,6 +13,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 import javax.persistence.Temporal;
@@ -21,8 +22,8 @@ import javax.persistence.Version;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 import org.springframework.data.annotation.CreatedDate;
@@ -36,7 +37,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
  */
 @Getter
 @ToString
-@EqualsAndHashCode
 @Entity
 @Table(name = Item.TABLE_NAME)
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
@@ -52,6 +52,14 @@ abstract class Item {
     @GeneratedValue(strategy = GenerationType.TABLE, generator = "PkGenerator")
     @TableGenerator(table = "T_SEQUENCES", name = "PkGenerator")
     private Long pk;
+
+    /**
+     * Technical key field, independent from the underlying database, may assigned from application layer, remains the same over
+     * database migrations. An unique constraint or limitation to not-null is explicitly not defined here, because it is a matter of
+     * subclasses to defines those, if required.
+     */
+    @Column(name = "C_PID", nullable = false)
+    private String pKey;
 
     /** Optimistic locking field (Property name {@code version} might be used differently, hence lets call it {@code ol}). */
     @Version
@@ -72,6 +80,13 @@ abstract class Item {
 
     /** Dear JPA ... */
     protected Item() {
+    }
+
+    @PrePersist
+    protected void onPersist() {
+        if (this.pKey == null) {
+            this.pKey = UUID.randomUUID().toString();
+        }
     }
 
     /**
@@ -138,5 +153,33 @@ abstract class Item {
 
     public void setShareable(boolean shared) {
         this.shareable = shareable;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Item)) return false;
+
+        Item item = (Item) o;
+
+        if (pKey != null ? !pKey.equals(item.pKey) : item.pKey != null) return false;
+        if (pk != null ? !pk.equals(item.pk) : item.pk != null) return false;
+        if (ol != item.ol) return false;
+        if (shareable != item.shareable) return false;
+        if (createDt != null ? !createDt.equals(item.createDt) : item.createDt != null) return false;
+        if (lastModifiedDt != null ? !lastModifiedDt.equals(item.lastModifiedDt) : item.lastModifiedDt != null) return false;
+        return sharedWith != null ? sharedWith.equals(item.sharedWith) : item.sharedWith == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = pk != null ? pk.hashCode() : 0;
+        result = 31 * result + (pKey != null ? pKey.hashCode() : 0);
+        result = 31 * result + (int) (ol ^ (ol >>> 32));
+        result = 31 * result + (createDt != null ? createDt.hashCode() : 0);
+        result = 31 * result + (lastModifiedDt != null ? lastModifiedDt.hashCode() : 0);
+        result = 31 * result + (sharedWith != null ? sharedWith.hashCode() : 0);
+        result = 31 * result + (shareable ? 1 : 0);
+        return result;
     }
 }

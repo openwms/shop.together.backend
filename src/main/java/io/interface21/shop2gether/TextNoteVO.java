@@ -18,7 +18,6 @@ public class TextNoteVO extends ItemVO implements Serializable {
     public String toString() {
         return "TextNoteVO{" +
                 "title='" + title + '\'' +
-                ", text='" + text + '\'' +
                 ", color='" + color + '\'' +
                 ", pinned=" + pinned +
                 "} " + super.toString();
