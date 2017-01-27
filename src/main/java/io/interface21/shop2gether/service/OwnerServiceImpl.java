@@ -2,6 +2,8 @@ package io.interface21.shop2gether.service;
 
 import static java.lang.String.format;
 
+import javax.validation.constraints.NotNull;
+
 import io.interface21.shop2gether.ItemVO;
 import io.interface21.shop2gether.OwnerService;
 import io.interface21.shop2gether.OwnerVO;
@@ -43,7 +45,7 @@ class OwnerServiceImpl<T extends ItemVO> implements OwnerService<T> {
      */
     @Override
     public OwnerVO<T> save(Long id, OwnerVO<T> toSave) {
-        Owner saved = getOwner(id);
+        Owner saved = findOrDie(id);
 
         saved.setUsername(toSave.username);
         saved.setPhonenumber(toSave.phonenumber);
@@ -56,22 +58,21 @@ class OwnerServiceImpl<T extends ItemVO> implements OwnerService<T> {
      * {@inheritDoc}
      */
     @Override
-    public OwnerVO<T> save(Long id, ItemVO item) {
-        Owner saved = getOwner(id);
+    public OwnerVO<T> save(@NotNull Long id, @NotNull ItemVO item) {
+        Owner saved = findOrDie(id);
         Item toSave = mapper.map(item, Item.class);
         if (toSave.isNew()) {
             LOGGER.debug(format("Add new item to Owner [%d], Item [%s]", id, toSave));
             saved.getItems().add(toSave);
         } else {
             LOGGER.debug(format("Update existing item of Owner [%d], Item [%s]", id, toSave));
-            saved.getItem(toSave.getPk()).orElseThrow(NotFoundException::new);
-            saved.getItems().add(toSave);
+            saved.updateItem(toSave);
         }
         saved = repository.save(saved);
         return mapper.map(saved, OwnerVO.class);
     }
 
-    private Owner getOwner(Long id) {
+    private Owner findOrDie(Long id) {
         Owner saved = repository.findOne(id);
         NotFoundException.throwIfNull(saved, format("Owner with id %s does not exist", id));
         return saved;
