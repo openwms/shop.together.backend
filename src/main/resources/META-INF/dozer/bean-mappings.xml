@@ -63,6 +63,10 @@
             <b is-accessible="true">persistentKey</b>
         </field>
         <field>
+            <a is-accessible="true">pKey</a>
+            <b is-accessible="true">pKey</b>
+        </field>
+        <field>
             <a is-accessible="true">title</a>
             <b is-accessible="true">title</b>
         </field>
