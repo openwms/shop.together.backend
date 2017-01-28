@@ -51,7 +51,6 @@ class Owner extends User {
     }
 
     public void updateItem(Item toSave) {
-        Item saved = items.stream().filter(i -> i.getPk().equals(toSave.getPk())).findFirst().orElseThrow(NotFoundException::new);
-        saved.copyFrom(toSave);
+        items.stream().filter(i -> i.getPk().equals(toSave.getPk())).findFirst().orElseThrow(NotFoundException::new).copyFrom(toSave);
     }
 }

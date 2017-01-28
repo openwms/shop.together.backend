@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "T_TEXT_NOTE")
 @DiscriminatorValue("TNOTE")
-class TextNote extends Item {
+class TextNote extends Item<TextNote> {
 
     @Column(name = "C_TITLE")
     private String title;
@@ -38,14 +38,12 @@ class TextNote extends Item {
     }
 
     @Override
-    public void copyFrom(Item toSave) {
+    public void copyFrom(TextNote toSave) {
         super.copyFrom(toSave);
-        if (toSave instanceof TextNote) {
-            this.title = ((TextNote)toSave).title;
-            this.text = ((TextNote)toSave).text;
-            this.color = ((TextNote)toSave).color;
-            this.pinned = ((TextNote)toSave).pinned;
-        }
+        this.title = toSave.title;
+        this.text = toSave.text;
+        this.color = toSave.color;
+        this.pinned = toSave.pinned;
     }
 
     @Override
