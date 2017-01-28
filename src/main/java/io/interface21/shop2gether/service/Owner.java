@@ -1,5 +1,6 @@
 package io.interface21.shop2gether.service;
 
+import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -24,7 +25,7 @@ import org.ameba.exception.NotFoundException;
 class Owner extends User {
 
     @OrderBy("createDt")
-    @OneToMany
+    @OneToMany(cascade = CascadeType.MERGE)
     @JoinTable(name = "T_OWNER_ITEM", joinColumns = {@JoinColumn(name = "C_OWNER_PK")}, inverseJoinColumns = @JoinColumn(name="C_ITEM_PK"))
     private Set<Item> items = new HashSet<>();
 
