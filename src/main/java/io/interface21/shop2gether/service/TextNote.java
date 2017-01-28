@@ -5,10 +5,8 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 /**
  * A TextNote.
@@ -16,13 +14,11 @@ import lombok.ToString;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
 @Getter
-@ToString(exclude = "text")
-@EqualsAndHashCode
 @NoArgsConstructor
 @Entity
 @Table(name = "T_TEXT_NOTE")
 @DiscriminatorValue("TNOTE")
-class TextNote extends Item {
+class TextNote extends Item<TextNote> {
 
     @Column(name = "C_TITLE")
     private String title;
@@ -39,5 +35,23 @@ class TextNote extends Item {
         this.text = text;
         this.color = color;
         this.pinned = pinned;
+    }
+
+    @Override
+    public void copyFrom(TextNote toSave) {
+        super.copyFrom(toSave);
+        this.title = toSave.title;
+        this.text = toSave.text;
+        this.color = toSave.color;
+        this.pinned = toSave.pinned;
+    }
+
+    @Override
+    public String toString() {
+        return "TextNote{" +
+                "title='" + title + '\'' +
+                ", color='" + color + '\'' +
+                ", pinned=" + pinned +
+                "} " + super.toString();
     }
 }

@@ -24,7 +24,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-import lombok.Getter;
 import lombok.ToString;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -35,7 +34,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-@Getter
 @ToString
 @Entity
 @Table(name = Item.TABLE_NAME)
@@ -43,7 +41,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @DiscriminatorColumn(name = "C_TYPE")
 @DiscriminatorValue("ITEM")
 @EntityListeners(AuditingEntityListener.class)
-abstract class Item {
+abstract class Item<T extends Item>  {
 
     public static final String TABLE_NAME = "T_ITEM";
 
@@ -147,6 +145,14 @@ abstract class Item {
         this.sharedWith = sharedWith;
     }
 
+    public List<UserGroup> getSharedWith() {
+        return sharedWith;
+    }
+
+    public String getpKey() {
+        return pKey;
+    }
+
     public boolean isShareable() {
         return shareable;
     }
@@ -162,7 +168,11 @@ abstract class Item {
 
         Item item = (Item) o;
 
-        if (pKey != null ? !pKey.equals(item.pKey) : item.pKey != null) return false;
+        if (pKey != null) {
+            return pKey.equals(item.pKey);
+        } else {
+            if (item.pKey != null) return false;
+        }
         if (pk != null ? !pk.equals(item.pk) : item.pk != null) return false;
         if (ol != item.ol) return false;
         if (shareable != item.shareable) return false;
@@ -181,5 +191,10 @@ abstract class Item {
         result = 31 * result + (sharedWith != null ? sharedWith.hashCode() : 0);
         result = 31 * result + (shareable ? 1 : 0);
         return result;
+    }
+
+    public void copyFrom(T toSave) {
+        this.shareable = toSave.isShareable();
+        this.sharedWith = toSave.getSharedWith();
     }
 }

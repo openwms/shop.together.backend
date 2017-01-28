@@ -23,6 +23,7 @@ import org.ameba.http.AbstractBase;
 public abstract class ItemVO extends AbstractBase implements Serializable {
 
     private Long persistentKey;
+    public String pKey;
     public boolean shareable;
     public long version;
     @JsonIgnore
