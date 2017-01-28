@@ -1,16 +1,15 @@
 package io.interface21.shop2gether.service;
 
-import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import io.interface21.shop2gether.Coordinate;
 import org.ameba.exception.NotFoundException;
@@ -25,9 +24,9 @@ import org.ameba.exception.NotFoundException;
 class Owner extends User {
 
     @OrderBy("createDt")
-    @OneToMany(cascade = CascadeType.MERGE)
+    @OneToMany
     @JoinTable(name = "T_OWNER_ITEM", joinColumns = {@JoinColumn(name = "C_OWNER_PK")}, inverseJoinColumns = @JoinColumn(name="C_ITEM_PK"))
-    private List<Item> items = new ArrayList<>();
+    private Set<Item> items = new HashSet<>();
 
     private LinkedList<Coordinate> interestedArea = new LinkedList<>();
 
@@ -43,7 +42,7 @@ class Owner extends User {
         super(username, email, homePosition);
     }
 
-    public List<Item> getItems() {
+    public Set<Item> getItems() {
         return items;
     }
 
@@ -51,8 +50,8 @@ class Owner extends User {
         return items.stream().filter(i -> i.getPk().equals(persistentKey)).findFirst();
     }
 
-    public boolean updateItem(Item toSave) {
-        this.getItem(toSave.getPk()).orElseThrow(NotFoundException::new);
-        return this.getItems().add(toSave);
+    public void updateItem(Item toSave) {
+        Item saved = items.stream().filter(i -> i.getPk().equals(toSave.getPk())).findFirst().orElseThrow(NotFoundException::new);
+        saved.copyFrom(toSave);
     }
 }

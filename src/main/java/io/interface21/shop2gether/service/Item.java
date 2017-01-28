@@ -162,7 +162,11 @@ abstract class Item {
 
         Item item = (Item) o;
 
-        if (pKey != null ? !pKey.equals(item.pKey) : item.pKey != null) return false;
+        if (pKey != null) {
+            return pKey.equals(item.pKey);
+        } else {
+            if (item.pKey != null) return false;
+        }
         if (pk != null ? !pk.equals(item.pk) : item.pk != null) return false;
         if (ol != item.ol) return false;
         if (shareable != item.shareable) return false;
@@ -181,5 +185,10 @@ abstract class Item {
         result = 31 * result + (sharedWith != null ? sharedWith.hashCode() : 0);
         result = 31 * result + (shareable ? 1 : 0);
         return result;
+    }
+
+    public void copyFrom(Item toSave) {
+        this.shareable = toSave.shareable;
+        this.sharedWith = toSave.sharedWith;
     }
 }
