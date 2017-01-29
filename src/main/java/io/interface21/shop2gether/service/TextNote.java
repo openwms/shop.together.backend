@@ -27,7 +27,7 @@ class TextNote extends Item<TextNote> {
     @Column(name = "C_COLOR")
     private String color;
     @Column(name = "C_PINNED")
-    private boolean pinned = false;
+    private Boolean pinned;
 
     public TextNote(String title, String text, String color, boolean pinned) {
         super();
@@ -40,10 +40,14 @@ class TextNote extends Item<TextNote> {
     @Override
     public void copyFrom(TextNote toSave) {
         super.copyFrom(toSave);
-        this.title = toSave.title;
-        this.text = toSave.text;
-        this.color = toSave.color;
-        this.pinned = toSave.pinned;
+        if (toSave.title != null)
+            this.title = toSave.title;
+        if (toSave.text != null)
+            this.text = toSave.text;
+        if (toSave.color != null)
+            this.color = toSave.color;
+        if (toSave.pinned != null)
+            this.pinned = toSave.pinned;
     }
 
     @Override

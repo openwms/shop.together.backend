@@ -41,4 +41,15 @@ class ItemServiceImpl implements ItemService {
     public void delete(Long id) {
         repository.delete(id);
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void updatePartially(Long id, ItemVO itemVO) {
+        Item item = repository.findOne(id);
+        NotFoundException.throwIfNull(item, format("No Item with id %s exists!", id));
+        item.copyFrom(mapper.map(itemVO, Item.class));
+        repository.save(item);
+    }
 }

@@ -3,7 +3,9 @@ package io.interface21.shop2gether;
 import org.springframework.hateoas.Link;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -41,5 +43,10 @@ class ItemController {
     @DeleteMapping("/items/{id}")
     void delete(@PathVariable Long id) {
         itemService.delete(id);
+    }
+
+    @PatchMapping("/items/{id}")
+    void patch(@PathVariable Long id, @RequestBody ItemVO item) {
+        itemService.updatePartially(id, item);
     }
 }
