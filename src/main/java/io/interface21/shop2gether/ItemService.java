@@ -22,4 +22,6 @@ public interface ItemService {
      * @param id The persistent key
      */
     void delete(Long id);
+
+    void updatePartially(Long id, ItemVO item);
 }

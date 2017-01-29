@@ -41,7 +41,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @DiscriminatorColumn(name = "C_TYPE")
 @DiscriminatorValue("ITEM")
 @EntityListeners(AuditingEntityListener.class)
-abstract class Item<T extends Item>  {
+abstract class Item<T extends Item> {
 
     public static final String TABLE_NAME = "T_ITEM";
 
@@ -138,7 +138,7 @@ abstract class Item<T extends Item>  {
 
     /** If this item is shared with others thi is set to false, if it is a private item (not shared) it is true. */
     @Column(name = "C_SHAREABLE")
-    private boolean shareable = true;
+    private Boolean shareable;
 
     /** Shared with the list of UserGroups. */
     public Item(List<UserGroup> sharedWith) {
@@ -153,11 +153,11 @@ abstract class Item<T extends Item>  {
         return pKey;
     }
 
-    public boolean isShareable() {
+    public Boolean getShareable() {
         return shareable;
     }
 
-    public void setShareable(boolean shared) {
+    public void setShareable(Boolean shareable) {
         this.shareable = shareable;
     }
 
@@ -175,7 +175,7 @@ abstract class Item<T extends Item>  {
         }
         if (pk != null ? !pk.equals(item.pk) : item.pk != null) return false;
         if (ol != item.ol) return false;
-        if (shareable != item.shareable) return false;
+        if (shareable != null ? !shareable.equals(item.shareable) : item.shareable != null) return false;
         if (createDt != null ? !createDt.equals(item.createDt) : item.createDt != null) return false;
         if (lastModifiedDt != null ? !lastModifiedDt.equals(item.lastModifiedDt) : item.lastModifiedDt != null) return false;
         return sharedWith != null ? sharedWith.equals(item.sharedWith) : item.sharedWith == null;
@@ -189,12 +189,14 @@ abstract class Item<T extends Item>  {
         result = 31 * result + (createDt != null ? createDt.hashCode() : 0);
         result = 31 * result + (lastModifiedDt != null ? lastModifiedDt.hashCode() : 0);
         result = 31 * result + (sharedWith != null ? sharedWith.hashCode() : 0);
-        result = 31 * result + (shareable ? 1 : 0);
+        result = 31 * result + (shareable != null ? shareable.hashCode() : 0);
         return result;
     }
 
     public void copyFrom(T toSave) {
-        this.shareable = toSave.isShareable();
-        this.sharedWith = toSave.getSharedWith();
+        if (toSave.getShareable() != null)
+            this.shareable = toSave.getShareable();
+        if (toSave.getSharedWith() != null)
+            this.sharedWith = toSave.getSharedWith();
     }
 }
