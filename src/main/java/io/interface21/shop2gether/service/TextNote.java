@@ -29,7 +29,7 @@ class TextNote extends Item<TextNote> {
     @Column(name = "C_PINNED")
     private Boolean pinned;
 
-    public TextNote(String title, String text, String color, boolean pinned) {
+    public TextNote(String title, String text, String color, Boolean pinned) {
         super();
         this.title = title;
         this.text = text;
