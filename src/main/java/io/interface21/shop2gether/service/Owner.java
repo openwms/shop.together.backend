@@ -24,7 +24,7 @@ import org.ameba.exception.NotFoundException;
 @DiscriminatorValue("OWNER")
 class Owner extends User {
 
-    @OrderBy("lastModifiedDt")
+    @OrderBy("lastModifiedDt desc")
     @OneToMany(cascade = CascadeType.MERGE)
     @JoinTable(name = "T_OWNER_ITEM", joinColumns = {@JoinColumn(name = "C_OWNER_PK")}, inverseJoinColumns = @JoinColumn(name="C_ITEM_PK"))
     private Set<Item> items = new HashSet<>();
