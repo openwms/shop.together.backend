@@ -86,6 +86,10 @@
             <a is-accessible="true">ol</a>
             <b is-accessible="true">version</b>
         </field>
+        <field>
+            <a is-accessible="true">lastModifiedDt</a>
+            <b is-accessible="true">lastModified</b>
+        </field>
     </mapping>
 
 </mappings>

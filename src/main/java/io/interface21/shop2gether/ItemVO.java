@@ -1,6 +1,7 @@
 package io.interface21.shop2gether;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -26,6 +27,8 @@ public abstract class ItemVO extends AbstractBase implements Serializable {
     public String pKey;
     public boolean shareable;
     public long version;
+    public Date lastModified;
+
     @JsonIgnore
     public List<UserGroupVO> sharedWith;
 
