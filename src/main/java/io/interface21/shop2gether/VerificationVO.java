@@ -25,6 +25,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 /**
  * A VerificationVO.
@@ -45,4 +47,11 @@ public class VerificationVO implements Serializable{
         this.phonenumber = phonenumber;
     }
 
+    public boolean codeEquals(String verificationCode) {
+        return verificationCode == null && this.code == null || verificationCode != null && verificationCode.equals(code);
+    }
+
+    public boolean hasExpired(Date verificationCodeSent) {
+        return verificationCodeSent == null || TimeUnit.HOURS.toHours(new Date().getTime() - verificationCodeSent.getTime()) > 1;
+    }
 }

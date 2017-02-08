@@ -107,4 +107,13 @@ class User extends ApplicationEntity {
     public void setHomePosition(Coordinate homePosition) {
         this.home = homePosition;
     }
+
+    public void throwIfInvalid(VerificationVO verification) {
+        if (!verification.codeEquals(this.verificationCode)) {
+            throw new IllegalArgumentException("Verificationcode does not match the previously sent one");
+        }
+        if (!verification.hasExpired(this.verificationCodeSent)) {
+            throw new IllegalArgumentException("Verificationcode expired");
+        }
+    }
 }

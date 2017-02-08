@@ -45,7 +45,7 @@ class VerificationController {
     }
 
     @PostMapping("/verifications")
-    OwnerVO verify(@RequestBody @NotNull VerificationVO verification) {
+    UserVO verify(@RequestBody @NotNull VerificationVO verification) {
         return service.verify(verification);
     }
 }

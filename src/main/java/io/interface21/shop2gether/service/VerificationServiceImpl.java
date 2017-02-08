@@ -21,10 +21,11 @@
  */
 package io.interface21.shop2gether.service;
 
-import io.interface21.shop2gether.OwnerVO;
+import io.interface21.shop2gether.UserVO;
 import io.interface21.shop2gether.VerificationService;
 import io.interface21.shop2gether.VerificationVO;
 import org.ameba.annotation.TxService;
+import org.ameba.exception.NotFoundException;
 import org.ameba.mapping.BeanMapper;
 
 import java.util.Optional;
@@ -67,7 +68,9 @@ class VerificationServiceImpl implements VerificationService {
     }
 
     @Override
-    public OwnerVO verify(VerificationVO verification) {
-        return null;
+    public UserVO verify(VerificationVO verification) {
+        User user = userRepository.findByPhonenumber(verification.getPhonenumber()).orElseThrow(NotFoundException::new);
+        user.throwIfInvalid(verification);
+        return mapper.map(user, UserVO.class);
     }
 }

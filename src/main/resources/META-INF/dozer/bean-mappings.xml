@@ -14,6 +14,10 @@
         <class-a>io.interface21.shop2gether.service.User</class-a>
         <class-b>io.interface21.shop2gether.UserVO</class-b>
         <field>
+            <a is-accessible="true">pk</a>
+            <b is-accessible="true">persistentKey</b>
+        </field>
+        <field>
             <a is-accessible="true">username</a>
             <b is-accessible="true">username</b>
         </field>

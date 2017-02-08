@@ -30,5 +30,5 @@ public interface VerificationService {
 
     VerificationVO request(String phonenumber);
 
-    OwnerVO verify(VerificationVO verification);
+    UserVO verify(VerificationVO verification);
 }
