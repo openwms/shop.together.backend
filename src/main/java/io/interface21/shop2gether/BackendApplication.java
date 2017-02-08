@@ -20,7 +20,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableJpaRepositories(considerNestedRepositories = true)
 @EnableJpaAuditing
 @EnableTransactionManagement
-@EnableAspects
+@EnableAspects(propagateRootCause = true)
 public class BackendApplication {
 
     public static void main(String[] args) {
