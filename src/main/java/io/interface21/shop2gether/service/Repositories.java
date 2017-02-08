@@ -40,6 +40,8 @@ interface Repositories {
 
         Optional<User> findByUsername(String username);
 
+        Optional<User> findByPhonenumber(String phonenumber);
+
         @Query(value = "select u from User u where within(u.homePosition, :area) = true")
         List<User> findUsersWithin(@Param("area") Polygon area);
     }

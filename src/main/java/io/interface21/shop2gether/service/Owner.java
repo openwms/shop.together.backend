@@ -1,19 +1,13 @@
 package io.interface21.shop2gether.service;
 
-import javax.persistence.CascadeType;
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
+import io.interface21.shop2gether.Coordinate;
+import org.ameba.exception.NotFoundException;
+
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Optional;
 import java.util.Set;
-
-import io.interface21.shop2gether.Coordinate;
-import org.ameba.exception.NotFoundException;
 
 /**
  * An Owner is the actual Owner of {@link Item Items} and is also a valid {@link User User} of the system.
@@ -35,8 +29,8 @@ class Owner extends User {
     protected Owner() {
     }
 
-    public Owner(String username, String email) {
-        super(username, email);
+    public Owner(String username) {
+        super(username);
     }
 
     public Owner(String username, String email, Coordinate homePosition) {

@@ -9,8 +9,7 @@ import org.ameba.http.AbstractBase;
  */
 public class UserVO extends AbstractBase {
 
-    public String username;
-    public String phonenumber;
+    public String username, phonenumber, persistentKey;
     public Coordinate home;
 
     @Override
