@@ -97,11 +97,11 @@ class Owner extends ApplicationEntity {
     }
 
     public Optional<Item> getItem(Long persistentKey) {
-        return items.stream().filter(i -> i.getPk().equals(persistentKey)).findFirst();
+        return items.stream().filter(i -> i.getpKey().equals(persistentKey)).findFirst();
     }
 
     public void updateItem(Item toSave) {
-        items.stream().filter(i -> i.getPk().equals(toSave.getPk())).findFirst().orElseThrow(NotFoundException::new).copyFrom(toSave);
+        items.stream().filter(i -> i.getpKey().equals(toSave.getpKey())).findFirst().orElseThrow(NotFoundException::new).copyFrom(toSave);
     }
 
     void setVerification(VerificationVO verification) {
