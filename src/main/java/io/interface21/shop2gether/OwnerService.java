@@ -1,6 +1,7 @@
 package io.interface21.shop2gether;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * An OwnerService is a business service that deals with Owners.
@@ -36,4 +37,6 @@ public interface OwnerService<T extends ItemVO> {
      * @return The updated Owner instance
      */
     OwnerVO<T> save(@NotNull String pKey, @NotNull ItemVO item);
+
+    List<OwnerVO> findAll();
 }

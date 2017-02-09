@@ -24,7 +24,7 @@ class ItemController {
 
 
     @GetMapping("/items/{pKey}")
-    ItemVO getUserGroupsForItems(@PathVariable String pKey) {
+    ItemVO getItemFor(@PathVariable String pKey) {
         ItemVO item = itemService.getByPKey(pKey);
         if (!item.getSharedWith().isEmpty()) {
 

@@ -11,6 +11,8 @@ import org.slf4j.LoggerFactory;
 
 import javax.validation.constraints.NotNull;
 
+import java.util.List;
+
 import static java.lang.String.format;
 
 /**
@@ -73,5 +75,11 @@ class OwnerServiceImpl<T extends ItemVO> implements OwnerService<T> {
         }
         saved = repository.save(saved);
         return mapper.map(saved, OwnerVO.class);
+    }
+
+    @Override
+    public List<OwnerVO> findAll() {
+        List<Owner> owners = repository.findAll();
+        return mapper.map(owners, OwnerVO.class);
     }
 }

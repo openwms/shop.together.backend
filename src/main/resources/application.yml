@@ -11,13 +11,14 @@ spring:
     show-sql: false
   jackson:
     deserialization:
+      fail_on_unknown_properties: false
       accept_single_value_as_array: true
-    serialization-inclusion: always
     serialization:
       write_empty_json_arrays: true
-      WRITE_SINGLE_ELEM_ARRAYS_UNWRAPPED: true
+      write_single_elem_arrays_unwrapped: false
       indent_output: true
       write_null_map_values: true
+    default-property-inclusion: always
 
 security:
   user:

@@ -49,9 +49,10 @@ class DataPopulator {
             heiko.getItems().add(text1);
             heiko.getItems().add(text2);
             heiko.getItems().add(text3);
-            heiko.getItems().add(text4);
+            luente.getItems().add(text4);
 
             repo.save(heiko);
+            repo.save(luente);
             text1.getSharedWith().add(ug);
             text2.getSharedWith().add(ug);
             text3.getSharedWith().add(ug);
