@@ -1,12 +1,12 @@
 package io.interface21.shop2gether;
 
-import java.io.Serializable;
-import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import org.ameba.http.AbstractBase;
+
+import java.io.Serializable;
+import java.util.List;
 
 /**
  * An ItemVO is the View Object that represents an Item.
@@ -22,7 +22,7 @@ import org.ameba.http.AbstractBase;
 })
 public abstract class ItemVO extends AbstractBase implements Serializable {
 
-    private Long persistentKey;
+    private String persistentKey;
     public String pKey;
     public boolean shareable;
     public long version;
@@ -31,7 +31,7 @@ public abstract class ItemVO extends AbstractBase implements Serializable {
     @JsonIgnore
     public List<UserGroupVO> sharedWith;
 
-    public Long getPersistentKey() {
+    public String getPersistentKey() {
         return persistentKey;
     }
 
