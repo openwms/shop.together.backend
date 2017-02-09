@@ -34,7 +34,7 @@ class ItemServiceImpl implements ItemService {
     }
 
     private Item findOrDie(String pKey) {
-        return repository.findByPKey(pKey).orElseThrow(() -> new NotFoundException(format("Owner with id [%s] does not exist", pKey)));
+        return repository.findByPKey(pKey).orElseThrow(() -> new NotFoundException(format("Item with id [%s] does not exist", pKey)));
     }
 
     /**

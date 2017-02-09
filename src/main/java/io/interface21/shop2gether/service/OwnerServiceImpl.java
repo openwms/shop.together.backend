@@ -54,7 +54,7 @@ class OwnerServiceImpl<T extends ItemVO> implements OwnerService<T> {
     }
 
     private Owner findOrDie(String pKey) {
-        return repository.findByPKey(pKey).orElseThrow(() -> new NotFoundException(format("Owner with id %s does not exist", pKey)));
+        return repository.findByPKey(pKey).orElseThrow(() -> new NotFoundException(format("Owner with id [%s] does not exist", pKey)));
     }
 
     /**
@@ -65,10 +65,10 @@ class OwnerServiceImpl<T extends ItemVO> implements OwnerService<T> {
         Owner saved = findOrDie(pKey);
         Item toSave = mapper.map(item, Item.class);
         if (toSave.isNew()) {
-            LOGGER.debug(format("Add new item to Owner [%d], Item [%s]", pKey, toSave));
+            LOGGER.debug(format("Add new item to Owner [%s], Item [%s]", pKey, toSave));
             saved.getItems().add(toSave);
         } else {
-            LOGGER.debug(format("Update existing item of Owner [%d], Item [%s]", pKey, toSave));
+            LOGGER.debug(format("Update existing item of Owner [%s], Item [%s]", pKey, toSave));
             saved.updateItem(toSave);
         }
         saved = repository.save(saved);
