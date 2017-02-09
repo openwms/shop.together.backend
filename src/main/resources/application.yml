@@ -11,12 +11,12 @@ spring:
     show-sql: false
   jackson:
     deserialization:
-      ACCEPT_SINGLE_VALUE_AS_ARRAY: true
+      accept_single_value_as_array: true
     serialization-inclusion: always
     serialization:
-      WRITE_EMPTY_JSON_ARRAYS: true
-      INDENT_OUTPUT: true
-      WRITE_NULL_MAP_VALUES: true
+      write_empty_json_arrays: true
+      indent_output: true
+      write_null_map_values: true
 
 security:
   user:
