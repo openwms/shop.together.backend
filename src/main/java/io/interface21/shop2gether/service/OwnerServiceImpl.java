@@ -34,9 +34,8 @@ class OwnerServiceImpl<T extends ItemVO> implements OwnerService<T> {
      * {@inheritDoc}
      */
     @Override
-    public OwnerVO<T> findById(Long id) {
-        Owner owner = repository.findOne(id);
-        NotFoundException.throwIfNull(owner, format("Owner with id %s does not exist", id));
+    public OwnerVO<T> findByPKey(String pKey) {
+        Owner owner = findOrDie(pKey);
         return mapper.map(owner, OwnerVO.class);
     }
 
@@ -44,8 +43,8 @@ class OwnerServiceImpl<T extends ItemVO> implements OwnerService<T> {
      * {@inheritDoc}
      */
     @Override
-    public OwnerVO<T> save(Long id, OwnerVO<T> toSave) {
-        Owner saved = findOrDie(id);
+    public OwnerVO<T> save(String pKey, OwnerVO<T> toSave) {
+        Owner saved = findOrDie(pKey);
 
         saved.setUsername(toSave.username);
         saved.setPhonenumber(toSave.phonenumber);
@@ -54,27 +53,25 @@ class OwnerServiceImpl<T extends ItemVO> implements OwnerService<T> {
         return mapper.map(saved, OwnerVO.class);
     }
 
+    private Owner findOrDie(String pKey) {
+        return repository.findByPKey(pKey).orElseThrow(() -> new NotFoundException(format("Owner with id %s does not exist", pKey)));
+    }
+
     /**
      * {@inheritDoc}
      */
     @Override
-    public OwnerVO<T> save(@NotNull Long id, @NotNull ItemVO item) {
-        Owner saved = findOrDie(id);
+    public OwnerVO<T> save(@NotNull String pKey, @NotNull ItemVO item) {
+        Owner saved = findOrDie(pKey);
         Item toSave = mapper.map(item, Item.class);
         if (toSave.isNew()) {
-            LOGGER.debug(format("Add new item to Owner [%d], Item [%s]", id, toSave));
+            LOGGER.debug(format("Add new item to Owner [%d], Item [%s]", pKey, toSave));
             saved.getItems().add(toSave);
         } else {
-            LOGGER.debug(format("Update existing item of Owner [%d], Item [%s]", id, toSave));
+            LOGGER.debug(format("Update existing item of Owner [%d], Item [%s]", pKey, toSave));
             saved.updateItem(toSave);
         }
         saved = repository.save(saved);
         return mapper.map(saved, OwnerVO.class);
-    }
-
-    private Owner findOrDie(Long id) {
-        Owner saved = repository.findOne(id);
-        NotFoundException.throwIfNull(saved, format("Owner with id %s does not exist", id));
-        return saved;
     }
 }

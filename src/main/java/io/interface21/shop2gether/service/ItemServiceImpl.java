@@ -1,12 +1,12 @@
 package io.interface21.shop2gether.service;
 
-import static java.lang.String.format;
-
 import io.interface21.shop2gether.ItemService;
 import io.interface21.shop2gether.ItemVO;
 import org.ameba.annotation.TxService;
 import org.ameba.exception.NotFoundException;
 import org.ameba.mapping.BeanMapper;
+
+import static java.lang.String.format;
 
 /**
  * A ItemServiceImpl is a transactional Spring managed service that deals with {@link ItemVO ItemVO} instances.
@@ -28,27 +28,30 @@ class ItemServiceImpl implements ItemService {
      * {@inheritDoc}
      */
     @Override
-    public ItemVO getById(Long id) {
-        Item item = repository.findOne(id);
-        NotFoundException.throwIfNull(item, format("No Item with id %s exists!", id));
+    public ItemVO getByPKey(String pKey) {
+        Item item = findOrDie(pKey);
         return mapper.map(item, ItemVO.class);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void delete(Long id) {
-        repository.delete(id);
+    private Item findOrDie(String pKey) {
+        return repository.findByPKey(pKey).orElseThrow(() -> new NotFoundException(format("Owner with id [%s] does not exist", pKey)));
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void updatePartially(Long id, ItemVO itemVO) {
-        Item item = repository.findOne(id);
-        NotFoundException.throwIfNull(item, format("No Item with id %s exists!", id));
+    public void delete(String pKey) {
+        Item item = findOrDie(pKey);
+        repository.delete(item);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void updatePartially(String pKey, ItemVO itemVO) {
+        Item item = findOrDie(pKey);
         item.copyFrom(mapper.map(itemVO, Item.class));
         repository.save(item);
     }

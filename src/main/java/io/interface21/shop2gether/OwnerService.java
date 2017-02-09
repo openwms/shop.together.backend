@@ -12,28 +12,28 @@ public interface OwnerService<T extends ItemVO> {
     /**
      * Find and return an OwnerVO identified by it's persistent identifier.
      *
-     * @param id The persistent identifier
+     * @param pKey The persistent identifier
      * @return The OwnerVO instance
      * @throws org.ameba.exception.NotFoundException If no OwnerVO found
      */
-    OwnerVO<T> findById(Long id);
+    OwnerVO<T> findByPKey(String pKey);
 
     /**
      * Save dedicated values of the passed OwnerVO instance to the instance identified by it's persistent identifier.
      *
-     * @param id The persistent identifier of the instance to update
+     * @param pKey The persistent identifier of the instance to update
      * @param toSave Stores the actual values to be updated
      * @return The updated instance
      * @throws org.ameba.exception.NotFoundException If no OwnerVO found
      */
-    OwnerVO<T> save(Long id, OwnerVO<T> toSave);
+    OwnerVO<T> save(String pKey, OwnerVO<T> toSave);
 
     /**
      * Save an Item for an Owner identified by id.
      *
-     * @param id The persistent key of the Owner
+     * @param pKey The persistent key of the Owner
      * @param item The Item to add to the Owner
      * @return The updated Owner instance
      */
-    OwnerVO<T> save(@NotNull Long id, @NotNull ItemVO item);
+    OwnerVO<T> save(@NotNull String pKey, @NotNull ItemVO item);
 }

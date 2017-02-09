@@ -23,9 +23,9 @@ class ItemController {
     }
 
 
-    @GetMapping("/items/{id}")
-    ItemVO getUserGroupsForItems(@PathVariable Long id) {
-        ItemVO item = itemService.getById(id);
+    @GetMapping("/items/{pKey}")
+    ItemVO getUserGroupsForItems(@PathVariable String pKey) {
+        ItemVO item = itemService.getByPKey(pKey);
         if (!item.getSharedWith().isEmpty()) {
 
             // enrich
@@ -41,12 +41,12 @@ class ItemController {
 
 
     @DeleteMapping("/items/{id}")
-    void delete(@PathVariable Long id) {
+    void delete(@PathVariable String id) {
         itemService.delete(id);
     }
 
     @PatchMapping("/items/{id}")
-    void patch(@PathVariable Long id, @RequestBody ItemVO item) {
+    void patch(@PathVariable String id, @RequestBody ItemVO item) {
         itemService.updatePartially(id, item);
     }
 }

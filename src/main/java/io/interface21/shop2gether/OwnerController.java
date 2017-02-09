@@ -24,9 +24,9 @@ class OwnerController<T extends ItemVO> {
         this.ownerService = ownerService;
     }
 
-    @GetMapping("/owners/{id}")
-    OwnerVO getOwnerFor(@PathVariable Long id) {
-        OwnerVO<T> owner = ownerService.findById(id);
+    @GetMapping("/owners/{pKey}")
+    OwnerVO getOwnerFor(@PathVariable String pKey) {
+        OwnerVO<T> owner = ownerService.findByPKey(pKey);
         if (!owner.getItems().isEmpty()) {
 
             // enrich
@@ -40,15 +40,15 @@ class OwnerController<T extends ItemVO> {
         return owner;
     }
 
-    @PostMapping("/owners/{id}")
-    void save(@PathVariable Long id, @RequestBody OwnerVO owner) {
+    @PostMapping("/owners/{pKey}")
+    void save(@PathVariable String pKey, @RequestBody OwnerVO owner) {
         LOGGER.debug("Updating owner with record [{}]", owner);
-        ownerService.save(id, owner);
+        ownerService.save(pKey, owner);
     }
 
-    @PostMapping("/owners/{id}/items")
-    void saveItem(@PathVariable Long id, @RequestBody ItemVO item) {
+    @PostMapping("/owners/{pKey}/items")
+    void saveItem(@PathVariable String pKey, @RequestBody ItemVO item) {
         LOGGER.debug("Updating owner, store item [{}]", item);
-        ownerService.save(id, item);
+        ownerService.save(pKey, item);
     }
 }

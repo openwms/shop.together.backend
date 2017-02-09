@@ -10,18 +10,18 @@ public interface ItemService {
     /**
      * Find and return an Item identified by unique id.
      *
-     * @param id The persistent key
+     * @param pKey The persistent key
      * @return The Item, never {@literal null}
      * @throws org.ameba.exception.NotFoundException My throw in case of no Item found
      */
-    ItemVO getById(Long id);
+    ItemVO getByPKey(String pKey);
 
     /**
      * Delete item with the give unique id.
      *
-     * @param id The persistent key
+     * @param pKey The persistent key
      */
-    void delete(Long id);
+    void delete(String pKey);
 
-    void updatePartially(Long id, ItemVO item);
+    void updatePartially(String pKey, ItemVO item);
 }
