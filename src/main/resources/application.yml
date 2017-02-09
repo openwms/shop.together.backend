@@ -9,6 +9,14 @@ spring:
       ddl-auto: create-drop
     database-platform: org.hibernate.spatial.dialect.h2geodb.GeoDBDialect
     show-sql: false
+  jackson:
+    deserialization:
+      ACCEPT_SINGLE_VALUE_AS_ARRAY: true
+    serialization-inclusion: always
+    serialization:
+      WRITE_EMPTY_JSON_ARRAYS: true
+      INDENT_OUTPUT: true
+      WRITE_NULL_MAP_VALUES: true
 
 security:
   user:
