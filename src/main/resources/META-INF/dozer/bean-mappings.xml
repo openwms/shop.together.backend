@@ -23,7 +23,7 @@
         <class-a>io.interface21.shop2gether.service.Owner</class-a>
         <class-b>io.interface21.shop2gether.OwnerVO</class-b>
         <field>
-            <a is-accessible="true">pk</a>
+            <a is-accessible="true">pKey</a>
             <b is-accessible="true">persistentKey</b>
         </field>
         <field>
@@ -58,12 +58,8 @@
             <b is-accessible="true">shareable</b>
         </field>
         <field>
-            <a is-accessible="true">pk</a>
-            <b is-accessible="true">persistentKey</b>
-        </field>
-        <field>
             <a is-accessible="true">pKey</a>
-            <b is-accessible="true">pKey</b>
+            <b is-accessible="true">persistentKey</b>
         </field>
         <field>
             <a is-accessible="true">title</a>

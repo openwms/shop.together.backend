@@ -19,6 +19,7 @@ interface Repositories {
     @RepositoryRestResource(collectionResourceRel = "items", path = "items", exported = true)
     interface ItemRepository extends JpaRepository<Item, Long> {
 
+        <T extends Item> Optional<T> findByPKey(String pKey);
     }
 /*
     @RepositoryRestResource(collectionResourceRel = "owners", path = "owners")
@@ -44,5 +45,7 @@ interface Repositories {
 
         @Query(value = "select u from Owner u where within(u.homePosition, :area) = true")
         List<Owner> findUsersWithin(@Param("area") Polygon area);
+
+        Optional<Owner> findByPKey(String pKey);
     }
 }
