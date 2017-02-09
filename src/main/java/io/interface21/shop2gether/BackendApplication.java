@@ -39,6 +39,7 @@ public class BackendApplication {
     com.fasterxml.jackson.databind.ObjectMapper jackson2ObjectMapper() {
         com.fasterxml.jackson.databind.ObjectMapper om = new com.fasterxml.jackson.databind.ObjectMapper();
         om.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        om.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
         om.configure(SerializationFeature.WRITE_EMPTY_JSON_ARRAYS, true);
         om.configure(SerializationFeature.INDENT_OUTPUT, true);
         om.configure(SerializationFeature.WRITE_NULL_MAP_VALUES, true);
