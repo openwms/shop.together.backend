@@ -26,10 +26,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.LinkedList;
 import java.util.List;
 
-import io.interface21.shop2gether.BackendApplication;
-import io.interface21.shop2gether.Coordinate;
-import io.interface21.shop2gether.UserService;
-import io.interface21.shop2gether.UserVO;
+import io.interface21.shop2gether.*;
 import org.ameba.app.BaseConfiguration;
 import org.ameba.integration.jpa.IntegrationTestConfig;
 import org.junit.Test;
@@ -58,8 +55,8 @@ public class UserServiceImplTest {
     public
     @Test
     void testWithinArea() {
-        User foreigner = new User("foreigner", "nofriend@mine", new Coordinate(0, 0, 0, 0));
-        User friend1 = new User("friend1", "friend@mine", new Coordinate(1.1, 1.1, 0, 0));
+        Owner foreigner = new Owner("foreigner", "nofriend@mine", new Coordinate(0, 0, 0, 0));
+        Owner friend1 = new Owner("friend1", "friend@mine", new Coordinate(1.1, 1.1, 0, 0));
         em.persist(foreigner);
         em.persist(friend1);
 
@@ -69,7 +66,7 @@ public class UserServiceImplTest {
         area.add(new Coordinate(2, 2, 0, 0));
         area.add(new Coordinate(1, 2, 0, 0));
         area.add(new Coordinate(1, 1, 0, 0));
-        List<UserVO> result = srv.findUsersWithin(area);
+        List<OwnerVO> result = srv.findUsersWithin(area);
 
         assertThat(result).hasSize(1);
         assertThat(result.get(0).username).isEqualTo("friend1");

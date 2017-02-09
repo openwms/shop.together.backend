@@ -21,7 +21,7 @@
  */
 package io.interface21.shop2gether.service;
 
-import io.interface21.shop2gether.UserVO;
+import io.interface21.shop2gether.OwnerVO;
 import io.interface21.shop2gether.VerificationService;
 import io.interface21.shop2gether.VerificationVO;
 import org.ameba.annotation.TxService;
@@ -39,19 +39,19 @@ import java.util.Optional;
 class VerificationServiceImpl implements VerificationService {
 
     private final BeanMapper mapper;
-    private final Repositories.UserRepository userRepository;
+    private final Repositories.OwnerRepository ownerRepository;
     private final CodeGenerator codeGenerator;
 
-    VerificationServiceImpl(BeanMapper mapper, Repositories.UserRepository userRepository, CodeGenerator codeGenerator) {
+    VerificationServiceImpl(BeanMapper mapper, Repositories.OwnerRepository ownerRepository, CodeGenerator codeGenerator) {
         this.mapper = mapper;
-        this.userRepository = userRepository;
+        this.ownerRepository = ownerRepository;
         this.codeGenerator = codeGenerator;
     }
 
     @Override
     public VerificationVO request(String phonenumber) {
         VerificationVO verification = new VerificationVO(codeGenerator.generate(), phonenumber);
-        Optional<User> optUser = userRepository.findByPhonenumber(phonenumber);
+        Optional<Owner> optUser = ownerRepository.findByPhonenumber(phonenumber);
         if (optUser.isPresent()) {
             optUser.get().setVerification(verification);
         } else {
@@ -61,16 +61,16 @@ class VerificationServiceImpl implements VerificationService {
     }
 
     private void createUser(String phonenumber, VerificationVO verification) {
-        User user = new User(phonenumber);
+        Owner user = new Owner(phonenumber);
         user.setPhonenumber(phonenumber);
         user.setVerification(verification);
-        userRepository.save(user);
+        ownerRepository.save(user);
     }
 
     @Override
-    public UserVO verify(VerificationVO verification) {
-        User user = userRepository.findByPhonenumber(verification.getPhonenumber()).orElseThrow(NotFoundException::new);
+    public OwnerVO verify(VerificationVO verification) {
+        Owner user = ownerRepository.findByPhonenumber(verification.getPhonenumber()).orElseThrow(NotFoundException::new);
         user.throwIfInvalid(verification);
-        return mapper.map(user, UserVO.class);
+        return mapper.map(user, OwnerVO.class);
     }
 }

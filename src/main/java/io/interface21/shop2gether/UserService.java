@@ -11,9 +11,9 @@ import java.util.Optional;
  */
 public interface UserService {
 
-    Optional<UserVO> getUserByUsername(String username);
+    Optional<OwnerVO> getUserByUsername(String username);
 
-    UserVO getUserById(Long id);
+    OwnerVO getUserById(Long id);
 
-    List<UserVO> findUsersWithin(LinkedList<Coordinate> area);
+    List<OwnerVO> findUsersWithin(LinkedList<Coordinate> area);
 }

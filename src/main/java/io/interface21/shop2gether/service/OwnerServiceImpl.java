@@ -1,9 +1,5 @@
 package io.interface21.shop2gether.service;
 
-import static java.lang.String.format;
-
-import javax.validation.constraints.NotNull;
-
 import io.interface21.shop2gether.ItemVO;
 import io.interface21.shop2gether.OwnerService;
 import io.interface21.shop2gether.OwnerVO;
@@ -12,6 +8,10 @@ import org.ameba.exception.NotFoundException;
 import org.ameba.mapping.BeanMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.validation.constraints.NotNull;
+
+import static java.lang.String.format;
 
 /**
  * A OwnerServiceImpl is a Spring managed transactional service that deals with OwnerVO instances.

@@ -20,12 +20,12 @@ interface Repositories {
     interface ItemRepository extends JpaRepository<Item, Long> {
 
     }
-
+/*
     @RepositoryRestResource(collectionResourceRel = "owners", path = "owners")
     interface OwnerRepository extends JpaRepository<Owner, Long> {
 
     }
-
+*/
     @RepositoryRestResource(collectionResourceRel = "textitems", path = "textitems", exported = false)
     interface TextNoteRepository extends JpaRepository<TextNote, Long> {
 
@@ -36,13 +36,13 @@ interface Repositories {
 
     }
 
-    interface UserRepository extends JpaRepository<User, Long> {
+    interface OwnerRepository extends JpaRepository<Owner, Long> {
 
-        Optional<User> findByUsername(String username);
+        Optional<Owner> findByUsername(String username);
 
-        Optional<User> findByPhonenumber(String phonenumber);
+        Optional<Owner> findByPhonenumber(String phonenumber);
 
-        @Query(value = "select u from User u where within(u.homePosition, :area) = true")
-        List<User> findUsersWithin(@Param("area") Polygon area);
+        @Query(value = "select u from Owner u where within(u.homePosition, :area) = true")
+        List<Owner> findUsersWithin(@Param("area") Polygon area);
     }
 }

@@ -1,23 +1,14 @@
 package io.interface21.shop2gether.service;
 
-import static io.interface21.shop2gether.service.UserGroup.COLUMN_NAME;
-import static io.interface21.shop2gether.service.UserGroup.COLUMN_OWNER;
-import static io.interface21.shop2gether.service.UserGroup.TABLE_NAME;
+import lombok.Getter;
+import org.ameba.integration.jpa.ApplicationEntity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import lombok.Getter;
-import org.ameba.integration.jpa.ApplicationEntity;
+import static io.interface21.shop2gether.service.UserGroup.*;
 
 /**
  * An UserGroup is used to group a set of Users in order to assign Items to them.
@@ -52,7 +43,7 @@ class UserGroup extends ApplicationEntity {
     private String name;
     @OneToMany
     @JoinTable(name = "T_UG_USER", joinColumns = {@JoinColumn(name = "C_UG_PK")}, inverseJoinColumns = @JoinColumn(name="C_U_PK"))
-    private List<User> users = new ArrayList<>();
+    private List<Owner> users = new ArrayList<>();
 
     /**
      * Add a User to this UserGroup.
@@ -60,7 +51,7 @@ class UserGroup extends ApplicationEntity {
      * @param user The User to add
      * @return see {@link List#add(Object)}
      */
-    public boolean add(User user) {
+    public boolean add(Owner user) {
         return this.users.add(user);
     }
 
