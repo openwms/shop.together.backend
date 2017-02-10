@@ -21,12 +21,10 @@
  */
 package io.interface21.shop2gether.service;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.LinkedList;
-import java.util.List;
-
-import io.interface21.shop2gether.*;
+import io.interface21.shop2gether.BackendApplication;
+import io.interface21.shop2gether.Coordinate;
+import io.interface21.shop2gether.OwnerVO;
+import io.interface21.shop2gether.UserService;
 import org.ameba.app.BaseConfiguration;
 import org.ameba.integration.jpa.IntegrationTestConfig;
 import org.junit.Test;
@@ -37,6 +35,11 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.LinkedList;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * A UserServiceImplTest.
@@ -49,8 +52,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 @ComponentScan(basePackageClasses = {BackendApplication.class, BaseConfiguration.class})
 public class UserServiceImplTest {
 
-    @Autowired private UserService srv;
-    @Autowired private TestEntityManager em;
+    @Autowired
+    private UserService srv;
+    @Autowired
+    private TestEntityManager em;
 
     public
     @Test

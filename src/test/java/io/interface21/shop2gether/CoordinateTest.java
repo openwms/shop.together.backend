@@ -21,9 +21,9 @@
  */
 package io.interface21.shop2gether;
 
-import java.util.LinkedList;
-
 import org.junit.Test;
+
+import java.util.LinkedList;
 
 /**
  * A CoordinateTest.
@@ -32,7 +32,9 @@ import org.junit.Test;
  */
 public class CoordinateTest {
 
-    public @Test void testTranslation() {
+    public
+    @Test
+    void testTranslation() {
         LinkedList<Coordinate> coords = new LinkedList<>();
         coords.add(new Coordinate(1.0, 1.0, 0, 0));
         coords.add(new Coordinate(2.0, 1.0, 0, 0));

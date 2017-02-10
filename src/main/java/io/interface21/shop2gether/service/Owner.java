@@ -4,7 +4,10 @@ import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.Point;
 import io.interface21.shop2gether.Coordinate;
 import io.interface21.shop2gether.VerificationVO;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
 import org.ameba.exception.NotFoundException;
 import org.ameba.integration.jpa.ApplicationEntity;
 
@@ -12,9 +15,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.*;
 
-import static io.interface21.shop2gether.service.Owner.COLUMN_ACTIVE;
-import static io.interface21.shop2gether.service.Owner.COLUMN_EMAIL;
-import static io.interface21.shop2gether.service.Owner.COLUMN_USERNAME;
+import static io.interface21.shop2gether.service.Owner.*;
 
 /**
  * An Owner is the actual Owner of {@link Item Items} and is the user of the system.
@@ -73,12 +74,14 @@ class Owner extends ApplicationEntity {
 
     @OrderBy("lastModifiedDt desc")
     @OneToMany(cascade = CascadeType.MERGE)
-    @JoinTable(name = "T_OWNER_ITEM", joinColumns = {@JoinColumn(name = "C_OWNER_PK")}, inverseJoinColumns = @JoinColumn(name="C_ITEM_PK"))
+    @JoinTable(name = "T_OWNER_ITEM", joinColumns = {@JoinColumn(name = "C_OWNER_PK")}, inverseJoinColumns = @JoinColumn(name = "C_ITEM_PK"))
     private Set<Item> items = new HashSet<>();
 
     private LinkedList<Coordinate> interestedArea = new LinkedList<>();
 
-    /** Dear JPA ... */
+    /**
+     * Dear JPA ...
+     */
     protected Owner() {
     }
 
@@ -92,6 +95,7 @@ class Owner extends ApplicationEntity {
         this.email = email;
         this.home = homePosition;
     }
+
     public Set<Item> getItems() {
         return items;
     }

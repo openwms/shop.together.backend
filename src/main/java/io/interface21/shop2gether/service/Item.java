@@ -1,33 +1,15 @@
 package io.interface21.shop2gether.service;
 
-import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.OneToMany;
-import javax.persistence.PrePersist;
-import javax.persistence.Table;
-import javax.persistence.TableGenerator;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.Version;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
-
 import lombok.ToString;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * An Item is the thing that is handled or dealed with in the application. Items can be shared between groups of users.
@@ -59,24 +41,32 @@ abstract class Item<T extends Item> {
     @Column(name = "C_PID", nullable = false)
     private String pKey;
 
-    /** Optimistic locking field (Property name {@code version} might be used differently, hence lets call it {@code ol}). */
+    /**
+     * Optimistic locking field (Property name {@code version} might be used differently, hence lets call it {@code ol}).
+     */
     @Version
     @Column(name = "C_OL")
     private long ol;
 
-    /** Timestamp when the database record was inserted. */
+    /**
+     * Timestamp when the database record was inserted.
+     */
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "C_CREATED")
     @CreatedDate
     private Date createDt;
 
-    /** Timestamp when the database record was updated the last time. */
+    /**
+     * Timestamp when the database record was updated the last time.
+     */
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "C_UPDATED")
     @LastModifiedDate
     private Date lastModifiedDt;
 
-    /** Dear JPA ... */
+    /**
+     * Dear JPA ...
+     */
     protected Item() {
     }
 
@@ -136,11 +126,15 @@ abstract class Item<T extends Item> {
     @JoinTable(name = "T_ITEM_UG", joinColumns = {@JoinColumn(name = "C_ITEM_PK")}, inverseJoinColumns = @JoinColumn(name = "C_UG_PK"))
     private List<UserGroup> sharedWith = new ArrayList<>();
 
-    /** If this item is shared with others thi is set to false, if it is a private item (not shared) it is true. */
+    /**
+     * If this item is shared with others thi is set to false, if it is a private item (not shared) it is true.
+     */
     @Column(name = "C_SHAREABLE")
     private Boolean shareable;
 
-    /** Shared with the list of UserGroups. */
+    /**
+     * Shared with the list of UserGroups.
+     */
     public Item(List<UserGroup> sharedWith) {
         this.sharedWith = sharedWith;
     }
@@ -175,9 +169,12 @@ abstract class Item<T extends Item> {
         }
         if (pk != null ? !pk.equals(item.pk) : item.pk != null) return false;
         if (ol != item.ol) return false;
-        if (shareable != null ? !shareable.equals(item.shareable) : item.shareable != null) return false;
-        if (createDt != null ? !createDt.equals(item.createDt) : item.createDt != null) return false;
-        if (lastModifiedDt != null ? !lastModifiedDt.equals(item.lastModifiedDt) : item.lastModifiedDt != null) return false;
+        if (shareable != null ? !shareable.equals(item.shareable) : item.shareable != null)
+            return false;
+        if (createDt != null ? !createDt.equals(item.createDt) : item.createDt != null)
+            return false;
+        if (lastModifiedDt != null ? !lastModifiedDt.equals(item.lastModifiedDt) : item.lastModifiedDt != null)
+            return false;
         return sharedWith != null ? sharedWith.equals(item.sharedWith) : item.sharedWith == null;
     }
 

@@ -26,7 +26,9 @@ class UserGroup extends ApplicationEntity {
     public static final String COLUMN_OWNER = "C_OWNER";
     public static final String COLUMN_NAME = "C_NAME";
 
-    /** Dear JPA...*/
+    /**
+     * Dear JPA...
+     */
     protected UserGroup() {
 
     }
@@ -42,7 +44,7 @@ class UserGroup extends ApplicationEntity {
     @Column(name = COLUMN_NAME)
     private String name;
     @OneToMany
-    @JoinTable(name = "T_UG_USER", joinColumns = {@JoinColumn(name = "C_UG_PK")}, inverseJoinColumns = @JoinColumn(name="C_U_PK"))
+    @JoinTable(name = "T_UG_USER", joinColumns = {@JoinColumn(name = "C_UG_PK")}, inverseJoinColumns = @JoinColumn(name = "C_U_PK"))
     private List<Owner> users = new ArrayList<>();
 
     /**

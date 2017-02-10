@@ -1,15 +1,10 @@
 package io.interface21.shop2gether;
 
+import lombok.*;
+
 import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.LinkedList;
-
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 /**
  * A Coordinate.

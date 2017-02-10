@@ -10,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.validation.constraints.NotNull;
-
 import java.util.List;
 
 import static java.lang.String.format;
@@ -52,6 +51,7 @@ class OwnerServiceImpl<T extends ItemVO> implements OwnerService<T> {
         saved.setPhonenumber(toSave.phonenumber);
         saved.setHomePosition(toSave.home);
         saved = repository.save(saved);
+        LOGGER.debug("Updated user: " + saved);
         return mapper.map(saved, OwnerVO.class);
     }
 

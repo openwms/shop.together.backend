@@ -1,8 +1,8 @@
 package io.interface21.shop2gether;
 
-import java.io.Serializable;
-
 import org.ameba.http.AbstractBase;
+
+import java.io.Serializable;
 
 /**
  * A UserGroupVO is the View Object that represents an UserGroup.

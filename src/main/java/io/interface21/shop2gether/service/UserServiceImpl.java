@@ -61,7 +61,7 @@ class UserServiceImpl implements UserService {
     public List<OwnerVO> findUsersWithin(LinkedList<Coordinate> area) {
         List<com.vividsolutions.jts.geom.Coordinate> points =
                 area.stream()
-                        .map(coord->new com.vividsolutions.jts.geom.Coordinate(coord.getLongitude(), coord.getLatitude()))
+                        .map(coord -> new com.vividsolutions.jts.geom.Coordinate(coord.getLongitude(), coord.getLatitude()))
                         .collect(Collectors.toList());
         GeometryFactory fact = new GeometryFactory();
         LinearRing linear = fact.createLinearRing(points.toArray(new com.vividsolutions.jts.geom.Coordinate[]{}));

@@ -1,9 +1,9 @@
 package io.interface21.shop2gether;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * A OwnerVO is the View Object that represents an Owner.

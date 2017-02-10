@@ -35,7 +35,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Getter
 @Setter
-public class VerificationVO implements Serializable{
+public class VerificationVO implements Serializable {
 
     private String code, phonenumber;
 

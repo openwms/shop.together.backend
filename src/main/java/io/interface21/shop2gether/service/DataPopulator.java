@@ -1,11 +1,11 @@
 package io.interface21.shop2gether.service;
 
-import javax.persistence.EntityManager;
-
 import io.interface21.shop2gether.Coordinate;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import javax.persistence.EntityManager;
 
 /**
  * A DataPopulator used to generate some test data. Disable in production

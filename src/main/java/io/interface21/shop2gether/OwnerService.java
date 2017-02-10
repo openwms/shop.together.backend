@@ -15,14 +15,15 @@ public interface OwnerService<T extends ItemVO> {
      *
      * @param pKey The persistent identifier
      * @return The OwnerVO instance
-     * @throws org.ameba.exception.NotFoundException If no OwnerVO found
+     * @throws org.ameba.exception.NotFoundException If OwnerVO not found
      */
     OwnerVO<T> findByPKey(String pKey);
 
     /**
-     * Save dedicated values of the passed OwnerVO instance to the instance identified by it's persistent identifier.
+     * Update an existing OwnerVO instance, identified by it's persistent identifier,
+     * with values from .
      *
-     * @param pKey The persistent identifier of the instance to update
+     * @param pKey   The persistent identifier of the instance to update
      * @param toSave Stores the actual values to be updated
      * @return The updated instance
      * @throws org.ameba.exception.NotFoundException If no OwnerVO found
