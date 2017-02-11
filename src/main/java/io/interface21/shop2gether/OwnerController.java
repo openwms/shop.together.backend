@@ -28,12 +28,7 @@ class OwnerController<T extends ItemVO> {
     OwnerVO getOwnerFor(@PathVariable String pKey) {
         OwnerVO<T> owner = ownerService.findByPKey(pKey);
         if (!owner.getItems().isEmpty()) {
-
-            // enrich
             owner.getItems().forEach(i -> {
-                //owner.add(new Link("https://shop2gether.herokuapp.com/items/" + i.getPersistentKey(), "items"));
-
-                // todo: until this bug is not fixed we're stuck on the line above instead... https://github.com/spring-projects/spring-hateoas/issues/169
                 owner.add(linkTo(methodOn(ItemController.class).getItemFor(i.getPersistentKey())).withRel("_items"));
             });
         }

@@ -31,10 +31,10 @@ public interface OwnerService<T extends ItemVO> {
     OwnerVO<T> save(String pKey, OwnerVO<T> toSave);
 
     /**
-     * Save an Item for an Owner identified by id.
+     * Save an Item of an Owner.
      *
      * @param pKey The persistent key of the Owner
-     * @param item The Item to add to the Owner
+     * @param item The Item to the Owner to added or updated
      * @return The updated Owner instance
      */
     OwnerVO<T> save(@NotNull String pKey, @NotNull ItemVO item);

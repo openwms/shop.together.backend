@@ -3,6 +3,8 @@ package io.interface21.shop2gether.service;
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.Point;
 import io.interface21.shop2gether.Coordinate;
+import io.interface21.shop2gether.ItemVO;
+import io.interface21.shop2gether.OwnerVO;
 import io.interface21.shop2gether.VerificationVO;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -141,5 +143,11 @@ class Owner extends ApplicationEntity {
         if (!verification.hasExpired(this.verificationCodeSent)) {
             throw new IllegalArgumentException("Verificationcode expired");
         }
+    }
+
+    public <T extends ItemVO> void copyFrom(OwnerVO<T> toSave) {
+        this.username = toSave.username;
+        this.phonenumber = toSave.phonenumber;
+        this.home = toSave.home;
     }
 }

@@ -36,8 +36,7 @@ class OwnerServiceImpl<T extends ItemVO> implements OwnerService<T> {
      */
     @Override
     public OwnerVO<T> findByPKey(String pKey) {
-        Owner owner = findOrDie(pKey);
-        return mapper.map(owner, OwnerVO.class);
+        return mapper.map(findOrDie(pKey), OwnerVO.class);
     }
 
     /**
@@ -46,12 +45,8 @@ class OwnerServiceImpl<T extends ItemVO> implements OwnerService<T> {
     @Override
     public OwnerVO<T> save(String pKey, OwnerVO<T> toSave) {
         Owner saved = findOrDie(pKey);
-
-        saved.setUsername(toSave.username);
-        saved.setPhonenumber(toSave.phonenumber);
-        saved.setHomePosition(toSave.home);
+        saved.copyFrom(toSave);
         saved = repository.save(saved);
-        LOGGER.debug("Updated user: " + saved);
         return mapper.map(saved, OwnerVO.class);
     }
 
