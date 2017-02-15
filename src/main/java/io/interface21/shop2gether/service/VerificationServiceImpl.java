@@ -27,6 +27,8 @@ import io.interface21.shop2gether.VerificationVO;
 import org.ameba.annotation.TxService;
 import org.ameba.exception.NotFoundException;
 import org.ameba.mapping.BeanMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Optional;
 
@@ -38,6 +40,7 @@ import java.util.Optional;
 @TxService
 class VerificationServiceImpl implements VerificationService {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(VerificationServiceImpl.class);
     private final BeanMapper mapper;
     private final Repositories.OwnerRepository ownerRepository;
     private final CodeGenerator codeGenerator;
