@@ -40,4 +40,12 @@ public interface OwnerService<T extends ItemVO> {
     OwnerVO<T> save(@NotNull String pKey, @NotNull ItemVO item);
 
     List<OwnerVO> findAll();
+
+    /**
+     * Delete an Owner identified by its persistent key {@code pKey}.
+     *
+     * @param pKey The persistent identifier
+     * @return The pKey if deleted or an empty String if if did not already exist
+     */
+    String delete(String pKey);
 }

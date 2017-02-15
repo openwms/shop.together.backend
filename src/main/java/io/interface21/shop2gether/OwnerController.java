@@ -51,4 +51,10 @@ class OwnerController<T extends ItemVO> {
         LOGGER.debug("Updating owner, store item [{}]", item);
         ownerService.save(pKey, item);
     }
+
+    @DeleteMapping("/owners/{pKey}")
+    String delete(@PathVariable String pKey) {
+        LOGGER.debug("Deleting owner with pKey [{}]", pKey);
+        return ownerService.delete(pKey);
+    }
 }
