@@ -24,40 +24,43 @@ package io.interface21.shop2gether.service;
 import org.ameba.exception.IntegrationLayerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.mail.MailException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Repository;
 
 /**
- * A VerificationSenderImpl.
+ * A SMSVerificationSenderImpl.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.0
- * @since 1.0
  */
 @Repository
-class SendgridVerificationSenderImpl implements VerificationSender {
+class SMSVerificationSenderImpl implements VerificationSender {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SendgridVerificationSenderImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SMSVerificationSenderImpl.class);
     private final MailSender mailSender;
-    private final SimpleMailMessage templateMessage;
+    @Value("${mail.from}")
+    private String from;
+    @Value("${mail.toHost}")
+    private String toHost;
 
-    public SendgridVerificationSenderImpl(MailSender mailSender, SimpleMailMessage templateMessage) {
+    public SMSVerificationSenderImpl(MailSender mailSender) {
         this.mailSender = mailSender;
-        this.templateMessage = templateMessage;
     }
 
+    @Async
     @Override
     public void send(String verification, String receiptId) {
-        SimpleMailMessage msg = new SimpleMailMessage(this.templateMessage);
-        msg.setTo(receiptId+"@sendgrid.com");
+        SimpleMailMessage msg = new SimpleMailMessage();
+        msg.setFrom(from);
+        msg.setTo(receiptId+"@"+toHost);
+        msg.setSubject(verification);
         msg.setText(verification);
-        try{
+        try {
             this.mailSender.send(msg);
-        }
-        catch (MailException ex) {
-            LOGGER.error(ex.getMessage(), e);
+        } catch (Exception ex) {
+            LOGGER.error(ex.getMessage(), ex);
             throw new IntegrationLayerException(ex.getMessage());
         }
     }
