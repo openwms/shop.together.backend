@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
-import java.util.Optional;
 
 import static java.lang.String.format;
 
@@ -84,11 +83,9 @@ class OwnerServiceImpl<T extends ItemVO> implements OwnerService<T> {
      */
     @Override
     public String delete(String pKey) {
-        Optional<Owner> existing = repository.findByPKey(pKey);
-        if (existing.isPresent()) {
-            repository.delete(existing.get());
-            return pKey;
-        }
-        return "";
+        Owner existing = repository.findByPKey(pKey).orElseThrow
+                (NotFoundException::new);
+        repository.delete(existing);
+        return pKey;
     }
 }

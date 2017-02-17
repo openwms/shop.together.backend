@@ -44,11 +44,13 @@ class VerificationServiceImpl implements VerificationService {
     private final BeanMapper mapper;
     private final Repositories.OwnerRepository ownerRepository;
     private final CodeGenerator codeGenerator;
+    private final VerificationSender sender;
 
-    VerificationServiceImpl(BeanMapper mapper, Repositories.OwnerRepository ownerRepository, CodeGenerator codeGenerator) {
+    VerificationServiceImpl(BeanMapper mapper, Repositories.OwnerRepository ownerRepository, CodeGenerator codeGenerator, VerificationSender sender) {
         this.mapper = mapper;
         this.ownerRepository = ownerRepository;
         this.codeGenerator = codeGenerator;
+        this.sender = sender;
     }
 
     @Override
@@ -58,8 +60,10 @@ class VerificationServiceImpl implements VerificationService {
         if (optUser.isPresent()) {
             optUser.get().setVerification(verification);
         } else {
+            LOGGER.debug("New user with phonenumber [{}] needs to be created", phonenumber);
             createUser(phonenumber, verification);
         }
+        sender.send(verification.getCode(), verification.getPhonenumber());
         return verification;
     }
 
