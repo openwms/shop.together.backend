@@ -54,8 +54,8 @@ class SMSVerificationSenderImpl implements VerificationSender {
     public void send(String verification, String receiptId) {
         SimpleMailMessage msg = new SimpleMailMessage();
         msg.setFrom(from);
-        msg.setTo(receiptId+"@"+toHost);
-        msg.setSubject(verification);
+        msg.setTo(receiptId + "@" + toHost);
+        msg.setSubject("Your Loobo verification code is");
         msg.setText(verification);
         try {
             this.mailSender.send(msg);
