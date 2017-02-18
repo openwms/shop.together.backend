@@ -98,6 +98,21 @@ class Owner extends ApplicationEntity {
         this.home = homePosition;
     }
 
+    private Owner(Builder builder) {
+        this.username = builder.username;
+        this.phonenumber = builder.phonenumber;
+        this.email = builder.email;
+        this.home = builder.home;
+        this.verificationCode = builder.verificationCode;
+        if (this.verificationCode != null) {
+            this.verificationCodeSent = new Date();
+        }
+    }
+
+    public static Builder newBuilder() {
+        return new Builder();
+    }
+
     public Set<Item> getItems() {
         return items;
     }
@@ -110,7 +125,7 @@ class Owner extends ApplicationEntity {
         items.stream().filter(i -> i.getpKey().equals(toSave.getpKey())).findFirst().orElseThrow(NotFoundException::new).copyFrom(toSave);
     }
 
-    void setVerification(VerificationVO verification) {
+    void verificationSent(VerificationVO verification) {
         this.verificationCode = verification.getCode();
         this.phonenumber = verification.getPhonenumber();
         this.verificationCodeSent = new Date();
@@ -124,16 +139,8 @@ class Owner extends ApplicationEntity {
         }
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     public void setPhonenumber(String phonenumber) {
         this.phonenumber = phonenumber;
-    }
-
-    public void setHomePosition(Coordinate homePosition) {
-        this.home = homePosition;
     }
 
     public void throwIfInvalid(VerificationVO verification) {
@@ -149,5 +156,84 @@ class Owner extends ApplicationEntity {
         this.username = toSave.username;
         this.phonenumber = toSave.phonenumber;
         this.home = toSave.home;
+    }
+
+
+    /**
+     * {@code Owner} builder static inner class.
+     */
+    public static final class Builder {
+        private String username;
+        private String phonenumber;
+        private String email;
+        private Coordinate home;
+        private String verificationCode;
+
+        private Builder() {
+        }
+
+        /**
+         * Sets the {@code username} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param val the {@code username} to set
+         * @return a reference to this Builder
+         */
+        public Builder withUsername(String val) {
+            this.username = val;
+            return this;
+        }
+
+        /**
+         * Sets the {@code phonenumber} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param val the {@code phonenumber} to set
+         * @return a reference to this Builder
+         */
+        public Builder withPhonenumber(String val) {
+            this.phonenumber = val;
+            return this;
+        }
+
+        /**
+         * Sets the {@code email} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param val the {@code email} to set
+         * @return a reference to this Builder
+         */
+        public Builder withEmail(String val) {
+            this.email = val;
+            return this;
+        }
+
+        /**
+         * Sets the {@code home} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param val the {@code home} to set
+         * @return a reference to this Builder
+         */
+        public Builder withHome(Coordinate val) {
+            this.home = val;
+            return this;
+        }
+
+        /**
+         * Sets the {@code verificationCode} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param val the {@code verificationCode} to set
+         * @return a reference to this Builder
+         */
+        public Builder withVerificationCode(String val) {
+            this.verificationCode = val;
+            return this;
+        }
+
+        /**
+         * Returns a {@code Owner} built from the parameters previously set.
+         *
+         * @return a {@code Owner} built with parameters of this {@code Owner.Builder}
+         */
+        public Owner build() {
+            return new Owner(this);
+        }
     }
 }
