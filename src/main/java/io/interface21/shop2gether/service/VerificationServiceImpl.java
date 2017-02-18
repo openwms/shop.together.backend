@@ -63,8 +63,7 @@ class VerificationServiceImpl implements VerificationService {
             LOGGER.debug("New user with phonenumber [{}] needs to be created", phonenumber);
             createUser(phonenumber, verification);
         }
-        // TODO [openwms]: 18/02/17 Activate sender here and remove code from result object
-        //sender.send(verification.getCode(), verification.getPhonenumber());
+        sender.send(verification.getCode(), verification.getPhonenumber());
         return verification;
     }
 
