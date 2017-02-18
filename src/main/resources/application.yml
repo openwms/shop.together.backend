@@ -19,9 +19,15 @@ spring:
       indent_output: true
       write_null_map_values: true
     default-property-inclusion: always
+  mail:
+    port: 465
+    protocol: smtps
+    test-connection: true
 
 security:
   user:
     password: sa
   basic:
     enabled: false
+logging:
+  config: classpath:logback.xml

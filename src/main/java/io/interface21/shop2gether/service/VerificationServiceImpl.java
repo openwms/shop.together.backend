@@ -44,11 +44,13 @@ class VerificationServiceImpl implements VerificationService {
     private final BeanMapper mapper;
     private final Repositories.OwnerRepository ownerRepository;
     private final CodeGenerator codeGenerator;
+    private final VerificationSender sender;
 
-    VerificationServiceImpl(BeanMapper mapper, Repositories.OwnerRepository ownerRepository, CodeGenerator codeGenerator) {
+    VerificationServiceImpl(BeanMapper mapper, Repositories.OwnerRepository ownerRepository, CodeGenerator codeGenerator, VerificationSender sender) {
         this.mapper = mapper;
         this.ownerRepository = ownerRepository;
         this.codeGenerator = codeGenerator;
+        this.sender = sender;
     }
 
     @Override
@@ -56,17 +58,22 @@ class VerificationServiceImpl implements VerificationService {
         VerificationVO verification = new VerificationVO(codeGenerator.generate(), phonenumber);
         Optional<Owner> optUser = ownerRepository.findByPhonenumber(phonenumber);
         if (optUser.isPresent()) {
-            optUser.get().setVerification(verification);
+            optUser.get().verificationSent(verification);
         } else {
+            LOGGER.debug("New user with phonenumber [{}] needs to be created", phonenumber);
             createUser(phonenumber, verification);
         }
+        // TODO [openwms]: 18/02/17 Activate sender here and remove code from result object
+        //sender.send(verification.getCode(), verification.getPhonenumber());
         return verification;
     }
 
     private void createUser(String phonenumber, VerificationVO verification) {
-        Owner user = new Owner(phonenumber);
-        user.setPhonenumber(phonenumber);
-        user.setVerification(verification);
+        Owner user = Owner.newBuilder()
+                .withUsername(phonenumber)
+                .withPhonenumber(phonenumber)
+                .withVerificationCode(verification.getCode())
+                .build();
         ownerRepository.save(user);
     }
 
