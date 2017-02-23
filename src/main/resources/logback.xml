@@ -7,6 +7,13 @@
     <include resource="logback-appenders.xml"/>
     <include resource="logback-loggers.xml"/>
 
+    <appender name="mooo" class="ch.qos.logback.classic.net.SyslogAppender">
+        <syslogHost>openwms.mooo.com</syslogHost>
+        <facility>SYSLOG</facility>
+        <port>514</port>
+        <suffixPattern>java %d{ISO8601,UTC} %p %t %c %M - %m%n</suffixPattern>
+    </appender>
+
     <logger name="io.interface21" level="DEBUG"/>
     <logger name="org.dozer" level="ERROR"/>
     <logger name="org.hibernate.SQL" level="OFF"/>
