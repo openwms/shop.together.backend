@@ -24,6 +24,7 @@ package io.interface21.shop2gether.service;
 import org.ameba.exception.IntegrationLayerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
@@ -39,7 +40,8 @@ import org.springframework.stereotype.Repository;
 class SMSVerificationSenderImpl implements VerificationSender {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SMSVerificationSenderImpl.class);
-    private final MailSender mailSender;
+    @Autowired
+    private MailSender mailSender;
     @Value("${mail.from}")
     private String from;
     @Value("${mail.toHost}")

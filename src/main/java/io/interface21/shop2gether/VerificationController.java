@@ -21,7 +21,11 @@
  */
 package io.interface21.shop2gether;
 
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.constraints.NotNull;
 
@@ -33,18 +37,19 @@ import javax.validation.constraints.NotNull;
 @RestController
 class VerificationController {
 
+    static final String RESOURCE_PLURAL = "/verifications";
     private final VerificationService service;
 
     VerificationController(VerificationService service) {
         this.service = service;
     }
 
-    @GetMapping("/verifications/{phonenumber}")
+    @GetMapping(RESOURCE_PLURAL + "/{phonenumber}")
     VerificationVO request(@PathVariable @NotNull String phonenumber) {
         return service.request(phonenumber);
     }
 
-    @PostMapping("/verifications")
+    @PostMapping(RESOURCE_PLURAL)
     UserVO verify(@RequestBody @NotNull VerificationVO verification) {
         return service.verify(verification);
     }

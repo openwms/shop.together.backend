@@ -19,14 +19,23 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package io.interface21.shop2gether;
+package io.interface21.shop2gether.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
- * A OwnerControllerDocumentation.
+ * A RepoAccessor.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.0
- * @since 1.0
  */
-class OwnerControllerDocumentation extends DocumentationBase {
+@Component
+public class RepoAccessor {
+
+    @Autowired
+    private Repositories.OwnerRepository ownerRepository;
+
+    public Repositories.OwnerRepository getOwnerRepository() {
+        return ownerRepository;
+    }
 }
