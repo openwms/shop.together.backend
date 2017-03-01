@@ -36,7 +36,7 @@ import static io.interface21.shop2gether.service.Owner.*;
 @Entity
 class Owner extends ApplicationEntity {
 
-    public static final String TABLE_NAME = "T_USER";
+    public static final String TABLE_NAME = "T_OWNER";
     public static final String COLUMN_USERNAME = "C_USERNAME";
     public static final String COLUMN_PASSWORD = "C_PASSWORD";
     public static final String COLUMN_PHONE = "C_PHONE";
@@ -66,7 +66,7 @@ class Owner extends ApplicationEntity {
     /**
      * Homeposition internally used for querying.
      */
-    @Column(name = "C_HOME_POS")
+    @Column(name = "C_HOME_POS", length = 2048)
     private Point homePosition;
     @Column(name = "C_CODE")
     private String verificationCode;
