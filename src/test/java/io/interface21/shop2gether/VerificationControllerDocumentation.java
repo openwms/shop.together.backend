@@ -22,10 +22,8 @@
 package io.interface21.shop2gether;
 
 import org.junit.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.mail.MailSender;
-import org.springframework.test.context.ActiveProfiles;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -38,8 +36,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-@SpringBootTest
-@ActiveProfiles("H2")
 public class VerificationControllerDocumentation extends DocumentationBase {
 
     @MockBean

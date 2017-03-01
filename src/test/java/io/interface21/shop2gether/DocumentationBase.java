@@ -29,8 +29,9 @@ import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.restdocs.JUnitRestDocumentation;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -45,6 +46,8 @@ import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.docu
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
 @RunWith(SpringRunner.class)
+@SpringBootTest
+@ActiveProfiles("H2")
 public class DocumentationBase {
 
     protected static final Logger LOGGER = LoggerFactory.getLogger("DOCUMENTATION");
