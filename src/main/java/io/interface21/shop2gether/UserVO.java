@@ -1,5 +1,6 @@
 package io.interface21.shop2gether;
 
+import lombok.Getter;
 import org.ameba.http.AbstractBase;
 
 /**
@@ -7,6 +8,7 @@ import org.ameba.http.AbstractBase;
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
+@Getter
 public class UserVO extends AbstractBase {
 
     public String username, phonenumber, persistentKey;

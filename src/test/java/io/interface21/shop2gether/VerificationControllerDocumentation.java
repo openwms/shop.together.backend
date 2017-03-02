@@ -25,8 +25,11 @@ import org.junit.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.mail.MailSender;
 
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.core.Is.is;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
@@ -40,8 +43,12 @@ public class VerificationControllerDocumentation extends DocumentationBase {
 
     @MockBean
     private MailSender mailSender;
+    private final OwnerService ownerService;
+    private static final String PHONENUMBER = "0815";
 
-    private static final String PHONENUMBER = "any";
+    public VerificationControllerDocumentation(OwnerService ownerService) {
+        this.ownerService = ownerService;
+    }
 
     public final
     @Test
@@ -50,8 +57,10 @@ public class VerificationControllerDocumentation extends DocumentationBase {
                 PHONENUMBER
         ))
                 .andExpect(status().isOk())
-                .andDo(document("verification-getfor-phonenumber"
-                ))
-        ;
+                .andExpect(jsonPath("code", notNullValue()))
+                .andExpect(jsonPath("phonenumber", is(PHONENUMBER)))
+                .andDo(document("verification-getfor-phonenumber"));
+
+        ownerService.findAll().get(0);
     }
 }
