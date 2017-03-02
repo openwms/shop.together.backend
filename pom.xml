@@ -26,8 +26,7 @@
         <dozer.version>5.5.1</dozer.version>
         <h2gis-ext.version>1.3.0</h2gis-ext.version>
         <spring-hateoas.version>0.23.0.RELEASE</spring-hateoas.version>
-        <snippetsDirectory>${project.build.directory}/generated-snippets
-        </snippetsDirectory>
+        <snippetsDirectory>${project.build.directory}/generated-snippets</snippetsDirectory>
         <asciidoctor-maven-plugin.version>1.5.2</asciidoctor-maven-plugin.version>
     </properties>
 

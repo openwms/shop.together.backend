@@ -34,7 +34,7 @@ import static io.interface21.shop2gether.service.Owner.*;
                 @UniqueConstraint(name = "UC_EMAIL_ACTIVE", columnNames = {COLUMN_EMAIL, COLUMN_ACTIVE})
         })
 @Entity
-class Owner extends ApplicationEntity {
+public class Owner extends ApplicationEntity {
 
     public static final String TABLE_NAME = "T_OWNER";
     public static final String COLUMN_USERNAME = "C_USERNAME";

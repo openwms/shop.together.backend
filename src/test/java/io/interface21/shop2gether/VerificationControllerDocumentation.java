@@ -21,13 +21,22 @@
  */
 package io.interface21.shop2gether;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import io.interface21.shop2gether.service.Owner;
+import io.interface21.shop2gether.service.RepoAccessor;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.mail.MailSender;
+import org.springframework.test.web.servlet.MvcResult;
 
+import static java.lang.String.valueOf;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.core.Is.is;
+import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -43,16 +52,17 @@ public class VerificationControllerDocumentation extends DocumentationBase {
 
     @MockBean
     private MailSender mailSender;
-    private final OwnerService ownerService;
+    @Autowired
+    private ObjectMapper objectMapper;
+    @Autowired
+    private OwnerService<?> ownerService;
+    @Autowired
+    private RepoAccessor accessor;
     private static final String PHONENUMBER = "0815";
-
-    public VerificationControllerDocumentation(OwnerService ownerService) {
-        this.ownerService = ownerService;
-    }
 
     public final
     @Test
-    void shouldCreateNewUser() throws Exception {
+    void should_Signup_And_Create_New_User() throws Exception {
         super.mockMvc.perform(get(VerificationController.RESOURCE_PLURAL + "/" +
                 PHONENUMBER
         ))
@@ -61,6 +71,30 @@ public class VerificationControllerDocumentation extends DocumentationBase {
                 .andExpect(jsonPath("phonenumber", is(PHONENUMBER)))
                 .andDo(document("verification-getfor-phonenumber"));
 
-        ownerService.findAll().get(0);
+        OwnerVO<?> owner = ownerService.findAll().get(0);
+        assertThat(owner.getPhonenumber()).isEqualTo(PHONENUMBER);
+        assertThat(owner.getUsername()).isEqualTo(PHONENUMBER);
+        assertThat(owner.isNew()).isFalse();
+    }
+
+    public final
+    @Test
+    void should_Signup_And_Not_Create_New_User() throws Exception {
+    }
+
+    public final
+    @Test
+    void should_Verify_And_Return_Owner() throws Exception {
+        Owner o = accessor.getOwnerRepository().save(new Owner(PHONENUMBER));
+        MvcResult result = super.mockMvc.perform(
+                post(VerificationController.RESOURCE_PLURAL)
+                        .contentType
+                                (APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(new VerificationVO
+                                (valueOf(12345), PHONENUMBER))))
+                .andReturn();
+        UserVO userVO = objectMapper.readValue(result.getResponse().getContentAsString(), UserVO.class);
+        assertThat(userVO.isNew()).isFalse();
+
     }
 }

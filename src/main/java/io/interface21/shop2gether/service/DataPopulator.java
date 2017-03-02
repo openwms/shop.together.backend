@@ -4,6 +4,7 @@ import io.interface21.shop2gether.Coordinate;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 import javax.persistence.EntityManager;
 
@@ -15,6 +16,7 @@ import javax.persistence.EntityManager;
 @Configuration
 class DataPopulator {
 
+    @Profile("H2")
     @Bean
     CommandLineRunner clr(Repositories.OwnerRepository repo, Repositories.UserGroupRepository ugRepo, Repositories.TextNoteRepository tnRepo, EntityManager em) {
         return args -> {
@@ -27,12 +29,12 @@ class DataPopulator {
             UserGroup ug = ugRepo.save(new UserGroup(heiko, "Family"));
 
             Owner luente = new Owner("Antikatelier Luending", "luente@home.com", new Coordinate(7.350690, 49.448634, 0.0421, 0.0922));
-            heiko.setPhonenumber("0815");
+            luente.setPhonenumber("0815");
             repo.save(luente);
             ug.add(luente);
 
             Owner roland = new Owner("Metzgerei Reis", "bulle-rolland@home.com", new Coordinate(7.350548, 49.448233, 0.0421, 0.0922));
-            heiko.setPhonenumber("42");
+            roland.setPhonenumber("42");
             repo.save(roland);
             ug.add(roland);
 

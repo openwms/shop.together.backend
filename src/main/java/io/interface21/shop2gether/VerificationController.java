@@ -27,10 +27,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 /**
- * A VerificationController.
+ * A VerificationController is the entry point into the model does the user
+ * verification the first time.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
@@ -45,7 +47,7 @@ class VerificationController {
     }
 
     @GetMapping(RESOURCE_PLURAL + "/{phonenumber}")
-    VerificationVO request(@PathVariable @NotNull String phonenumber) {
+    VerificationVO requestCodeFor(@PathVariable @Min(1) String phonenumber) {
         return service.request(phonenumber);
     }
 

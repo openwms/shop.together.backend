@@ -14,6 +14,10 @@ public class UserVO extends AbstractBase {
     public String username, phonenumber, persistentKey;
     public Coordinate home;
 
+    public boolean isNew() {
+        return persistentKey == null || persistentKey.isEmpty();
+    }
+
     @Override
     public String toString() {
         return "UserVO{" +

@@ -47,7 +47,6 @@ import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.docu
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@ActiveProfiles("H2")
 public class DocumentationBase {
 
     protected static final Logger LOGGER = LoggerFactory.getLogger("DOCUMENTATION");
