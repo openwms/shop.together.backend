@@ -37,6 +37,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+
 /**
  * A VerificationController is the HTTP entry point into the domain model by providing
  * signup and verification.
@@ -59,10 +62,13 @@ class VerificationController {
     }
 
     @PostMapping(RESOURCE_PLURAL)
-    void verify(@RequestBody @NotNull VerificationVO verification, HttpServletRequest req,
-                HttpServletResponse resp) {
+    void verify(@RequestBody @NotNull VerificationVO verification, HttpServletResponse
+            resp) {
         UserVO userVO = service.verify(verification);
-        resp.addHeader(HttpHeaders.LOCATION, getLocationHeader(req, userVO.getPersistentKey()));
+        userVO.add(linkTo(methodOn(OwnerController.class).getOwnerFor(userVO
+                .getPersistentKey
+                        ())).withRel("_self"));
+        resp.addHeader(HttpHeaders.LOCATION, userVO.getLink("_self").getHref());
     }
 
     @ExceptionHandler(IllegalArgumentException.class)

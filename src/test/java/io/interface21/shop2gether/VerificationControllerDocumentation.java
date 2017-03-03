@@ -118,7 +118,7 @@ public class VerificationControllerDocumentation extends DocumentationBase {
 
         assertThat(result.getResponse().containsHeader(LOCATION)).isTrue();
         String ownerUrl = result.getResponse().getHeader(LOCATION);
-        String persistentKey = ownerUrl.substring(ownerUrl.lastIndexOf("/")+1, ownerUrl
+        String persistentKey = ownerUrl.substring(ownerUrl.lastIndexOf("/") + 1, ownerUrl
                 .length());
 
         Owner owner = accessor.getOwnerRepository().findByPKey
