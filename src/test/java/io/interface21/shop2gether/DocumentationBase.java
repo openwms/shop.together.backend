@@ -31,10 +31,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.restdocs.JUnitRestDocumentation;
-import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
@@ -46,6 +47,8 @@ import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.docu
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
 @RunWith(SpringRunner.class)
+@Transactional
+@Rollback
 @SpringBootTest
 public class DocumentationBase {
 

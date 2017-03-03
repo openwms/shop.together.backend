@@ -60,7 +60,7 @@ public class VerificationControllerDocumentation extends DocumentationBase {
     private OwnerService<?> ownerService;
     @Autowired
     private RepoAccessor accessor;
-    private static final String PHONENUMBER = "08125";
+    private static final String PHONENUMBER = "08123";
 
     public final
     @Test
@@ -88,7 +88,9 @@ public class VerificationControllerDocumentation extends DocumentationBase {
     public final
     @Test
     void should_Verify_And_Return_Owner() throws Exception {
-        Owner o = accessor.getOwnerRepository().save(new Owner(PHONENUMBER));
+        Owner o = accessor.getOwnerRepository().save(Owner.newBuilder().withUsername
+                (PHONENUMBER).withPhonenumber(PHONENUMBER).withVerificationCode("12345")
+                .build());
         MvcResult result = super.mockMvc.perform(
                 post(VerificationController.RESOURCE_PLURAL)
                         .contentType
