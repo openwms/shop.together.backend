@@ -30,6 +30,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.mail.MailSender;
 import org.springframework.test.web.servlet.MvcResult;
 
+import java.util.List;
+
 import static java.lang.String.valueOf;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -58,15 +60,16 @@ public class VerificationControllerDocumentation extends DocumentationBase {
     private OwnerService<?> ownerService;
     @Autowired
     private RepoAccessor accessor;
-    private static final String PHONENUMBER = "0815";
+    private static final String PHONENUMBER = "08125";
 
     public final
     @Test
     void should_Signup_And_Create_New_User() throws Exception {
+        List<Owner> owners = accessor.getOwnerRepository().findAll();
         super.mockMvc.perform(get(VerificationController.RESOURCE_PLURAL + "/" +
                 PHONENUMBER
         ))
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andExpect(jsonPath("code", notNullValue()))
                 .andExpect(jsonPath("phonenumber", is(PHONENUMBER)))
                 .andDo(document("verification-getfor-phonenumber"));
@@ -90,8 +93,9 @@ public class VerificationControllerDocumentation extends DocumentationBase {
                 post(VerificationController.RESOURCE_PLURAL)
                         .contentType
                                 (APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(new VerificationVO
+                        .content(objectMapper.writeValueAsString(VerificationVO.of
                                 (valueOf(12345), PHONENUMBER))))
+                .andExpect(status().isOk())
                 .andReturn();
         UserVO userVO = objectMapper.readValue(result.getResponse().getContentAsString(), UserVO.class);
         assertThat(userVO.isNew()).isFalse();

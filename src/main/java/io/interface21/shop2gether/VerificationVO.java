@@ -42,9 +42,13 @@ public class VerificationVO implements Serializable {
     public VerificationVO() {
     }
 
-    public VerificationVO(String code, String phonenumber) {
+    private VerificationVO(String code, String phonenumber) {
         this.code = code;
         this.phonenumber = phonenumber;
+    }
+
+    public static VerificationVO of(String code, String phonenumber) {
+        return new VerificationVO(code, phonenumber);
     }
 
     public boolean codeEquals(String verificationCode) {

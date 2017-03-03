@@ -21,6 +21,8 @@
  */
 package io.interface21.shop2gether;
 
+import org.springframework.http.ResponseEntity;
+
 /**
  * A VerificationService.
  *
@@ -28,7 +30,7 @@ package io.interface21.shop2gether;
  */
 public interface VerificationService {
 
-    VerificationVO request(String phonenumber);
+    ResponseEntity<VerificationVO> request(String phonenumber);
 
     UserVO verify(VerificationVO verification);
 }
