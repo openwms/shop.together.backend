@@ -35,7 +35,8 @@ import org.springframework.http.ResponseEntity;
 import java.util.Optional;
 
 /**
- * A VerificationServiceImpl.
+ * A VerificationServiceImpl is a transactional Spring managed Service that acts as the
+ * entry point into the domain.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
@@ -67,7 +68,6 @@ class VerificationServiceImpl implements VerificationService {
             optUser.get().verificationSent(verification);
             result = new ResponseEntity<>(verification, HttpStatus.OK);
         } else {
-            LOGGER.debug("New user with phonenumber [{}] needs to be created", phonenumber);
             createUser(phonenumber, verification);
             result = new ResponseEntity<>(verification, HttpStatus.CREATED);
         }
@@ -82,12 +82,18 @@ class VerificationServiceImpl implements VerificationService {
                 .withVerificationCode(verification.getCode())
                 .build();
         ownerRepository.save(user);
+        LOGGER.debug("User with phonenumber [{}] created", phonenumber);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public OwnerVO verify(VerificationVO verification) {
-        Owner user = ownerRepository.findByPhonenumber(verification.getPhonenumber()).orElseThrow(NotFoundException::new);
-        user.throwIfInvalid(verification);
-        return mapper.map(user, OwnerVO.class);
+    public OwnerVO verify(VerificationVO v) {
+        return mapper.map(
+                ownerRepository.findByPhonenumber(v.getPhonenumber())
+                        .orElseThrow(NotFoundException::new)
+                        .throwIfInvalid(v),
+                OwnerVO.class);
     }
 }

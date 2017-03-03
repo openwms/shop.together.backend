@@ -29,7 +29,8 @@ import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 /**
- * A VerificationVO.
+ * A VerificationVO encapsulates all data necessary for performing an verification with
+ * the backend.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
@@ -39,7 +40,10 @@ public class VerificationVO implements Serializable {
 
     private String code, phonenumber;
 
-    public VerificationVO() {
+    /**
+     * For Jackson.
+     */
+    VerificationVO() {
     }
 
     private VerificationVO(String code, String phonenumber) {
@@ -47,15 +51,36 @@ public class VerificationVO implements Serializable {
         this.phonenumber = phonenumber;
     }
 
+    /**
+     * Factory method to create one.
+     *
+     * @param code        The verification code
+     * @param phonenumber The corresponding phonenumber
+     * @return An instance
+     */
     public static VerificationVO of(String code, String phonenumber) {
         return new VerificationVO(code, phonenumber);
     }
 
+    /**
+     * Compare the given {@code verificationCode} with the own one.
+     *
+     * @param verificationCode Code to compare with
+     * @return {@code true} if matches, otherwise {@code false}
+     */
     public boolean codeEquals(String verificationCode) {
         return verificationCode == null && this.code == null || verificationCode != null && verificationCode.equals(code);
     }
 
+    /**
+     * Checks if the given {@code verificationCodeSent} is older than 1 hour or
+     * {@literal null}.
+     *
+     * @param verificationCodeSent The date to compare with
+     * @return {@code true} if expired, otherwise {@code false}
+     */
     public boolean hasExpired(Date verificationCodeSent) {
-        return verificationCodeSent == null || TimeUnit.HOURS.toHours(new Date().getTime() - verificationCodeSent.getTime()) > 1;
+        return verificationCodeSent == null || TimeUnit.MILLISECONDS.toHours(new Date()
+                .getTime() - verificationCodeSent.getTime()) > 0;
     }
 }

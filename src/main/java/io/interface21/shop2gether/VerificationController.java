@@ -21,20 +21,25 @@
  */
 package io.interface21.shop2gether;
 
+import org.springframework.hateoas.UriTemplate;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 /**
- * A VerificationController is the entry point into the model does the user
- * verification the first time.
+ * A VerificationController is the HTTP entry point into the domain model by providing
+ * signup and verification.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
@@ -49,13 +54,25 @@ class VerificationController {
     }
 
     @GetMapping(RESOURCE_PLURAL + "/{phonenumber}")
-    ResponseEntity<VerificationVO> requestCodeFor(@PathVariable @Min(1) String
-                                                          phonenumber) {
+    ResponseEntity<VerificationVO> requestCodeFor(@PathVariable @Min(1) String phonenumber) {
         return service.request(phonenumber);
     }
 
     @PostMapping(RESOURCE_PLURAL)
-    UserVO verify(@RequestBody @NotNull VerificationVO verification) {
-        return service.verify(verification);
+    void verify(@RequestBody @NotNull VerificationVO verification, HttpServletRequest req,
+                HttpServletResponse resp) {
+        UserVO userVO = service.verify(verification);
+        resp.addHeader(HttpHeaders.LOCATION, getLocationHeader(req, userVO.getPersistentKey()));
     }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    private ResponseEntity<String> handleIllegalClientRequest(IllegalArgumentException iae) {
+        return new ResponseEntity<>(iae.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    private String getLocationHeader(HttpServletRequest req, String identifier) {
+        return new UriTemplate(req.getRequestURL().append("/{objId}").toString())
+                .expand(identifier).toASCIIString();
+    }
+
 }

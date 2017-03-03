@@ -30,16 +30,16 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.mail.MailSender;
 import org.springframework.test.web.servlet.MvcResult;
 
-import java.util.List;
-
 import static java.lang.String.valueOf;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.core.Is.is;
+import static org.springframework.http.HttpHeaders.LOCATION;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -60,19 +60,18 @@ public class VerificationControllerDocumentation extends DocumentationBase {
     private OwnerService<?> ownerService;
     @Autowired
     private RepoAccessor accessor;
-    private static final String PHONENUMBER = "08123";
+    private static final String PHONENUMBER = "0815";
 
     public final
     @Test
     void should_Signup_And_Create_New_User() throws Exception {
-        List<Owner> owners = accessor.getOwnerRepository().findAll();
         super.mockMvc.perform(get(VerificationController.RESOURCE_PLURAL + "/" +
                 PHONENUMBER
         ))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("code", notNullValue()))
                 .andExpect(jsonPath("phonenumber", is(PHONENUMBER)))
-                .andDo(document("verification-getfor-phonenumber"));
+                .andDo(document("11-verification-signup-new-user"));
 
         OwnerVO<?> owner = ownerService.findAll().get(0);
         assertThat(owner.getPhonenumber()).isEqualTo(PHONENUMBER);
@@ -83,24 +82,65 @@ public class VerificationControllerDocumentation extends DocumentationBase {
     public final
     @Test
     void should_Signup_And_Not_Create_New_User() throws Exception {
+        Owner o = accessor.getOwnerRepository().save(Owner.newBuilder().withUsername
+                (PHONENUMBER).withPhonenumber(PHONENUMBER).build());
+
+        super.mockMvc.perform(get(VerificationController.RESOURCE_PLURAL + "/" +
+                PHONENUMBER
+        ))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("code", notNullValue()))
+                .andExpect(jsonPath("phonenumber", is(PHONENUMBER)))
+                .andDo(document("12-verification-signup-existing-user"));
+
+        OwnerVO<?> owner = ownerService.findAll().get(0);
+        assertThat(owner.getPhonenumber()).isEqualTo(PHONENUMBER);
+        assertThat(owner.getUsername()).isEqualTo(PHONENUMBER);
+        assertThat(owner.getPersistentKey()).isEqualTo(o.getPersistentKey());
     }
 
     public final
     @Test
     void should_Verify_And_Return_Owner() throws Exception {
-        Owner o = accessor.getOwnerRepository().save(Owner.newBuilder().withUsername
-                (PHONENUMBER).withPhonenumber(PHONENUMBER).withVerificationCode("12345")
-                .build());
+        accessor.getOwnerRepository().save(Owner.newBuilder().withUsername
+                (PHONENUMBER).withPhonenumber(PHONENUMBER).withVerificationCode
+                ("12345").build());
+
         MvcResult result = super.mockMvc.perform(
                 post(VerificationController.RESOURCE_PLURAL)
-                        .contentType
-                                (APPLICATION_JSON)
+                        .contentType(APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(VerificationVO.of
                                 (valueOf(12345), PHONENUMBER))))
                 .andExpect(status().isOk())
+                .andExpect(header().string(LOCATION, notNullValue(String.class)))
+                .andDo(document("13-verification-verified"))
                 .andReturn();
-        UserVO userVO = objectMapper.readValue(result.getResponse().getContentAsString(), UserVO.class);
-        assertThat(userVO.isNew()).isFalse();
 
+        assertThat(result.getResponse().containsHeader(LOCATION)).isTrue();
+        String ownerUrl = result.getResponse().getHeader(LOCATION);
+        String persistentKey = ownerUrl.substring(ownerUrl.lastIndexOf("/")+1, ownerUrl
+                .length());
+
+        Owner owner = accessor.getOwnerRepository().findByPKey
+                (persistentKey).get();
+        assertThat(owner.isNew()).isFalse();
+        assertThat(owner.getUsername()).isEqualTo(PHONENUMBER).isEqualTo(owner
+                .getUsername());
+    }
+
+    public final
+    @Test
+    void should_Not_Verify_With_Wrong_Code() throws Exception {
+        accessor.getOwnerRepository().save(Owner.newBuilder().withUsername
+                (PHONENUMBER).withPhonenumber(PHONENUMBER).build());
+
+        super.mockMvc.perform(
+                post(VerificationController.RESOURCE_PLURAL)
+                        .contentType(APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(VerificationVO.of
+                                (valueOf(12345), PHONENUMBER))))
+                .andExpect(status().isBadRequest())
+                .andDo(document("14-verification-wrong-code"))
+                .andReturn();
     }
 }
