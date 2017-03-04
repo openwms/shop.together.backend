@@ -34,8 +34,14 @@ public class RepoAccessor {
 
     @Autowired
     private Repositories.OwnerRepository ownerRepository;
+    @Autowired
+    private Repositories.ItemRepository itemRepository;
 
     public Repositories.OwnerRepository getOwnerRepository() {
         return ownerRepository;
+    }
+
+    public Repositories.ItemRepository getItemRepository() {
+        return itemRepository;
     }
 }

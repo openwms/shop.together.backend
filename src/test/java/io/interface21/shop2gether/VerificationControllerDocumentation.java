@@ -21,13 +21,10 @@
  */
 package io.interface21.shop2gether;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.interface21.shop2gether.service.Owner;
-import io.interface21.shop2gether.service.RepoAccessor;
+import org.ameba.exception.NotFoundException;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.mail.MailSender;
 import org.springframework.test.web.servlet.MvcResult;
 
 import static java.lang.String.valueOf;
@@ -46,20 +43,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 /**
  * A VerificationControllerDocumentation is a full integration test without slices and
- * mocks.
+ * mocks to test the interaction model with Verification resources.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
 public class VerificationControllerDocumentation extends DocumentationBase {
 
-    @MockBean
-    private MailSender mailSender;
-    @Autowired
-    private ObjectMapper objectMapper;
     @Autowired
     private OwnerService<?> ownerService;
-    @Autowired
-    private RepoAccessor accessor;
     private static final String PHONENUMBER = "0815";
 
     public final
@@ -101,7 +92,7 @@ public class VerificationControllerDocumentation extends DocumentationBase {
 
     public final
     @Test
-    void should_Verify_And_Return_Owner() throws Exception {
+    void should_Verify_And_Return_Owner_Link() throws Exception {
         accessor.getOwnerRepository().save(Owner.newBuilder().withUsername
                 (PHONENUMBER).withPhonenumber(PHONENUMBER).withVerificationCode
                 ("12345").build());
@@ -118,11 +109,11 @@ public class VerificationControllerDocumentation extends DocumentationBase {
 
         assertThat(result.getResponse().containsHeader(LOCATION)).isTrue();
         String ownerUrl = result.getResponse().getHeader(LOCATION);
-        String persistentKey = ownerUrl.substring(ownerUrl.lastIndexOf("/") + 1, ownerUrl
-                .length());
+        String persistentKey = ownerUrl.substring(ownerUrl.lastIndexOf("/") + 1,
+                ownerUrl.length());
 
         Owner owner = accessor.getOwnerRepository().findByPKey
-                (persistentKey).get();
+                (persistentKey).orElseThrow(NotFoundException::new);
         assertThat(owner.isNew()).isFalse();
         assertThat(owner.getUsername()).isEqualTo(PHONENUMBER).isEqualTo(owner
                 .getUsername());

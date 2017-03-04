@@ -22,6 +22,7 @@
 package io.interface21.shop2gether;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.interface21.shop2gether.service.RepoAccessor;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -30,6 +31,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.mail.MailSender;
 import org.springframework.restdocs.JUnitRestDocumentation;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -54,12 +57,16 @@ public class DocumentationBase {
 
     protected static final Logger LOGGER = LoggerFactory.getLogger("DOCUMENTATION");
     protected MockMvc mockMvc;
+    @MockBean
+    private MailSender mailSender;
     @Autowired
     protected ObjectMapper objectMapper;
-    @Rule
-    public JUnitRestDocumentation restDocumentation = new JUnitRestDocumentation("target/generated-snippets");
+    @Autowired
+    protected RepoAccessor accessor;
     @Autowired
     protected WebApplicationContext context;
+    @Rule
+    public JUnitRestDocumentation restDocumentation = new JUnitRestDocumentation("target/generated-snippets");
 
     void setupInternal() throws Exception {
         CharacterEncodingFilter filter = new CharacterEncodingFilter("UTF-8", true);

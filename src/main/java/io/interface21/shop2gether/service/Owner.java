@@ -181,10 +181,11 @@ public class Owner extends ApplicationEntity {
         return this;
     }
 
-    public <T extends ItemVO> void copyFrom(OwnerVO<T> toSave) {
+    public <T extends ItemVO> Owner copyFrom(OwnerVO<T> toSave) {
         this.username = toSave.username;
         this.phonenumber = toSave.phonenumber;
         this.home = toSave.home;
+        return this;
     }
 
 
