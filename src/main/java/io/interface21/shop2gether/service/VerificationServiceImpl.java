@@ -29,11 +29,14 @@ import org.ameba.exception.NotFoundException;
 import org.ameba.mapping.BeanMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import java.util.Optional;
 
 /**
- * A VerificationServiceImpl.
+ * A VerificationServiceImpl is a transactional Spring managed Service that acts as the
+ * entry point into the domain.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
@@ -53,18 +56,23 @@ class VerificationServiceImpl implements VerificationService {
         this.sender = sender;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public VerificationVO request(String phonenumber) {
-        VerificationVO verification = new VerificationVO(codeGenerator.generate(), phonenumber);
+    public ResponseEntity<VerificationVO> request(String phonenumber) {
+        ResponseEntity<VerificationVO> result;
+        VerificationVO verification = VerificationVO.of(codeGenerator.generate(), phonenumber);
         Optional<Owner> optUser = ownerRepository.findByPhonenumber(phonenumber);
         if (optUser.isPresent()) {
             optUser.get().verificationSent(verification);
+            result = new ResponseEntity<>(verification, HttpStatus.OK);
         } else {
-            LOGGER.debug("New user with phonenumber [{}] needs to be created", phonenumber);
             createUser(phonenumber, verification);
+            result = new ResponseEntity<>(verification, HttpStatus.CREATED);
         }
         sender.send(verification.getCode(), verification.getPhonenumber());
-        return verification;
+        return result;
     }
 
     private void createUser(String phonenumber, VerificationVO verification) {
@@ -74,12 +82,18 @@ class VerificationServiceImpl implements VerificationService {
                 .withVerificationCode(verification.getCode())
                 .build();
         ownerRepository.save(user);
+        LOGGER.debug("User with phonenumber [{}] created", phonenumber);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public OwnerVO verify(VerificationVO verification) {
-        Owner user = ownerRepository.findByPhonenumber(verification.getPhonenumber()).orElseThrow(NotFoundException::new);
-        user.throwIfInvalid(verification);
-        return mapper.map(user, OwnerVO.class);
+    public OwnerVO verify(VerificationVO v) {
+        return mapper.map(
+                ownerRepository.findByPhonenumber(v.getPhonenumber())
+                        .orElseThrow(NotFoundException::new)
+                        .throwIfInvalid(v),
+                OwnerVO.class);
     }
 }

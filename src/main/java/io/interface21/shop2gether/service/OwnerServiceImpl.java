@@ -20,7 +20,7 @@ import static java.lang.String.format;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
 @TxService
-class OwnerServiceImpl<T extends ItemVO> implements OwnerService<T> {
+class OwnerServiceImpl implements OwnerService<ItemVO> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(OwnerServiceImpl.class);
     private final BeanMapper mapper;
@@ -35,7 +35,7 @@ class OwnerServiceImpl<T extends ItemVO> implements OwnerService<T> {
      * {@inheritDoc}
      */
     @Override
-    public OwnerVO<T> findByPKey(String pKey) {
+    public OwnerVO<ItemVO> findByPKey(String pKey) {
         return mapper.map(findOrDie(pKey), OwnerVO.class);
     }
 
@@ -43,11 +43,8 @@ class OwnerServiceImpl<T extends ItemVO> implements OwnerService<T> {
      * {@inheritDoc}
      */
     @Override
-    public OwnerVO<T> save(String pKey, OwnerVO<T> toSave) {
-        Owner saved = findOrDie(pKey);
-        saved.copyFrom(toSave);
-        saved = repository.save(saved);
-        return mapper.map(saved, OwnerVO.class);
+    public OwnerVO<ItemVO> save(String pKey, OwnerVO<ItemVO> toSave) {
+        return mapper.map(repository.save(findOrDie(pKey).copyFrom(toSave)), OwnerVO.class);
     }
 
     private Owner findOrDie(String pKey) {
@@ -58,7 +55,7 @@ class OwnerServiceImpl<T extends ItemVO> implements OwnerService<T> {
      * {@inheritDoc}
      */
     @Override
-    public OwnerVO<T> save(@NotNull String pKey, @NotNull ItemVO item) {
+    public OwnerVO<ItemVO> save(@NotNull String pKey, @NotNull ItemVO item) {
         Owner saved = findOrDie(pKey);
         Item toSave = mapper.map(item, Item.class);
         if (toSave.isNew()) {

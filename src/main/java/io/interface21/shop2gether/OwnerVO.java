@@ -1,6 +1,7 @@
 package io.interface21.shop2gether;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Getter;
 
 import java.io.Serializable;
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.List;
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
+@Getter
 public class OwnerVO<T extends ItemVO> extends UserVO implements Serializable {
 
     @JsonIgnore

@@ -13,11 +13,32 @@ import lombok.ToString;
 import org.ameba.exception.NotFoundException;
 import org.ameba.integration.jpa.ApplicationEntity;
 
-import javax.persistence.*;
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
-import java.util.*;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Optional;
+import java.util.Set;
 
-import static io.interface21.shop2gether.service.Owner.*;
+import static io.interface21.shop2gether.service.Owner.COLUMN_ACTIVE;
+import static io.interface21.shop2gether.service.Owner.COLUMN_EMAIL;
+import static io.interface21.shop2gether.service.Owner.COLUMN_USERNAME;
 
 /**
  * An Owner is the actual Owner of {@link Item Items} and is the user of the system.
@@ -34,9 +55,9 @@ import static io.interface21.shop2gether.service.Owner.*;
                 @UniqueConstraint(name = "UC_EMAIL_ACTIVE", columnNames = {COLUMN_EMAIL, COLUMN_ACTIVE})
         })
 @Entity
-class Owner extends ApplicationEntity {
+public class Owner extends ApplicationEntity {
 
-    public static final String TABLE_NAME = "T_USER";
+    public static final String TABLE_NAME = "T_OWNER";
     public static final String COLUMN_USERNAME = "C_USERNAME";
     public static final String COLUMN_PASSWORD = "C_PASSWORD";
     public static final String COLUMN_PHONE = "C_PHONE";
@@ -66,7 +87,7 @@ class Owner extends ApplicationEntity {
     /**
      * Homeposition internally used for querying.
      */
-    @Column(name = "C_HOME_POS")
+    @Column(name = "C_HOME_POS", length = 2048)
     private Point homePosition;
     @Column(name = "C_CODE")
     private String verificationCode;
@@ -143,19 +164,28 @@ class Owner extends ApplicationEntity {
         this.phonenumber = phonenumber;
     }
 
-    public void throwIfInvalid(VerificationVO verification) {
+    /**
+     * Checks if the verification code has not expired and matches the sent one.
+     *
+     * @param verification Holds the code to compare
+     * @return This
+     * @throws IllegalArgumentException if doesn't match or expired
+     */
+    Owner throwIfInvalid(VerificationVO verification) {
         if (!verification.codeEquals(this.verificationCode)) {
             throw new IllegalArgumentException("Verificationcode does not match the previously sent one");
         }
-        if (!verification.hasExpired(this.verificationCodeSent)) {
+        if (verification.hasExpired(this.verificationCodeSent)) {
             throw new IllegalArgumentException("Verificationcode expired");
         }
+        return this;
     }
 
-    public <T extends ItemVO> void copyFrom(OwnerVO<T> toSave) {
+    public <T extends ItemVO> Owner copyFrom(OwnerVO<T> toSave) {
         this.username = toSave.username;
         this.phonenumber = toSave.phonenumber;
         this.home = toSave.home;
+        return this;
     }
 
 

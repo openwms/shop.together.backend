@@ -17,6 +17,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 @RestController
 class OwnerController<T extends ItemVO> {
 
+    static final String RESOURCE_PLURAL = "/owners";
     private final OwnerService<T> ownerService;
     private static final Logger LOGGER = LoggerFactory.getLogger(OwnerController.class);
 
@@ -24,7 +25,7 @@ class OwnerController<T extends ItemVO> {
         this.ownerService = ownerService;
     }
 
-    @GetMapping("/owners/{pKey}")
+    @GetMapping(RESOURCE_PLURAL + "/{pKey}")
     OwnerVO getOwnerFor(@PathVariable String pKey) {
         OwnerVO<T> owner = ownerService.findByPKey(pKey);
         if (!owner.getItems().isEmpty()) {
@@ -35,24 +36,24 @@ class OwnerController<T extends ItemVO> {
         return owner;
     }
 
-    @GetMapping("/owners")
+    @GetMapping(RESOURCE_PLURAL)
     List<OwnerVO> getOwners() {
         return ownerService.findAll();
     }
 
-    @PostMapping("/owners/{pKey}")
+    @PostMapping(RESOURCE_PLURAL + "/{pKey}")
     void save(@PathVariable String pKey, @RequestBody OwnerVO owner) {
         LOGGER.debug("Updating owner with record [{}]", owner);
         ownerService.save(pKey, owner);
     }
 
-    @PostMapping("/owners/{pKey}/items")
+    @PostMapping(RESOURCE_PLURAL + "/{pKey}/items")
     void saveItem(@PathVariable String pKey, @RequestBody ItemVO item) {
         LOGGER.debug("Updating owner, store item [{}]", item);
         ownerService.save(pKey, item);
     }
 
-    @DeleteMapping("/owners/{pKey}")
+    @DeleteMapping(RESOURCE_PLURAL + "/{pKey}")
     String delete(@PathVariable String pKey) {
         LOGGER.debug("Deleting owner with pKey [{}]", pKey);
         return ownerService.delete(pKey);

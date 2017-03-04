@@ -19,18 +19,29 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package io.interface21.shop2gether;
+package io.interface21.shop2gether.service;
 
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
- * A VerificationService.
+ * A RepoAccessor.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-public interface VerificationService {
+@Component
+public class RepoAccessor {
 
-    ResponseEntity<VerificationVO> request(String phonenumber);
+    @Autowired
+    private Repositories.OwnerRepository ownerRepository;
+    @Autowired
+    private Repositories.ItemRepository itemRepository;
 
-    UserVO verify(VerificationVO verification);
+    public Repositories.OwnerRepository getOwnerRepository() {
+        return ownerRepository;
+    }
+
+    public Repositories.ItemRepository getItemRepository() {
+        return itemRepository;
+    }
 }

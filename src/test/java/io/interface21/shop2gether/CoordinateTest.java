@@ -32,9 +32,11 @@ import java.util.LinkedList;
  */
 public class CoordinateTest {
 
-    public
+    public final
     @Test
-    void testTranslation() {
+    void shouldCreateNewRoute() {
+
+
         LinkedList<Coordinate> coords = new LinkedList<>();
         coords.add(new Coordinate(1.0, 1.0, 0, 0));
         coords.add(new Coordinate(2.0, 1.0, 0, 0));
