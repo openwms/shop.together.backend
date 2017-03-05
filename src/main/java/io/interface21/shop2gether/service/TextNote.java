@@ -18,7 +18,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "T_TEXT_NOTE")
 @DiscriminatorValue("TNOTE")
-class TextNote extends Item<TextNote> {
+public class TextNote extends Item<TextNote> {
 
     @Column(name = "C_TITLE")
     private String title;

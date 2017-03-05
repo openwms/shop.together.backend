@@ -22,6 +22,7 @@
 package io.interface21.shop2gether;
 
 import io.interface21.shop2gether.service.Owner;
+import io.interface21.shop2gether.service.TextNote;
 import org.ameba.mapping.BeanMapper;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,6 +60,7 @@ public class OwnerControllerDocumentation extends DocumentationBase {
         // setup ...
         Owner owner = accessor.getOwnerRepository().save(Owner.newBuilder().withUsername(PHONENUMBER)
                 .withUsername(PHONENUMBER).build());
+        owner.addItem(new TextNote("Title", "Text", "#CECECE", true));
 
         // test ...
         MvcResult mvcResult = super.mockMvc.perform(get(OwnerController.RESOURCE_PLURAL +
