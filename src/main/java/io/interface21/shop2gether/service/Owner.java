@@ -96,7 +96,7 @@ public class Owner extends ApplicationEntity {
     private Date verificationCodeSent;
 
     @OrderBy("lastModifiedDt desc")
-    @OneToMany(cascade = CascadeType.MERGE)
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinTable(name = "T_OWNER_ITEM", joinColumns = {@JoinColumn(name = "C_OWNER_PK")}, inverseJoinColumns = @JoinColumn(name = "C_ITEM_PK"))
     private Set<Item> items = new HashSet<>();
 
@@ -140,6 +140,10 @@ public class Owner extends ApplicationEntity {
 
     public Optional<Item> getItem(Long persistentKey) {
         return items.stream().filter(i -> i.getpKey().equals(persistentKey)).findFirst();
+    }
+
+    public boolean addItem(Item item) {
+        return items.add(item);
     }
 
     public void updateItem(Item toSave) {
