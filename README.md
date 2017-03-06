@@ -16,13 +16,13 @@ in H2 is much more easy to activate than in PostgreSQL - just add a library (org
 How does the API interaction model look like. In general the flow of interactions looks
  like:
  
- a) Verify the client. Either signup of login is required
+ 1) Verify the client. Either signup of login is required
  
- b) After successful verification User details are required to load
+ 2) After successful verification User details are required to load
  
- c) The User may already have items, those are loaded in a third step.
+ 3) The User may already have items, those are loaded in a third step.
 
-## Login
+## 1) Verify
 
 First we need to get over the login procedure and populate the security context. // to be described
 
