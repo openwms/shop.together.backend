@@ -3,6 +3,9 @@ package io.interface21.shop2gether;
 import org.springframework.hateoas.Link;
 import org.springframework.web.bind.annotation.*;
 
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+
 /**
  * A ItemController exposes RESTful Item resources.
  *
@@ -25,11 +28,9 @@ class ItemController {
 
             // enrich
             item.getSharedWith().forEach(i -> {
+                item.add(linkTo(methodOn(UserGroupController.class).getItemFor(i.get()))
+                        .withRel("_items"));
                 item.add(new Link("https://shop2gether.herokuapp.com/usergroups/" + i.getPk(), "usergroups"));
-
-                // todo: until this bug is not fixed we're stuck on the line above instead... https://github.com/spring-projects/spring-hateoas/issues/169
-//                owner.add(linkTo(methodOn(ItemController.class).getItemFor(i.getPersistentKey())).withRel("_items"));
-            });
         }
         return item;
     }
