@@ -11,9 +11,16 @@ identified aggregates and exposed those as RESTful resources. The business objec
 in H2 is much more easy to activate than in PostgreSQL - just add a library (org.orbisgis:h2gis-ext) and call a function to activate it [see](src/main/resources/schema-H2.sql)
 - Separation of view model and persistency model. Like we did in other projects, we start from the beginning with separate models for persistence and the public API. We use [Ameba](https://github.com/abraxas-labs/ameba-lib) and [Dozer](http://dozer.sourceforge.net/) for mapping between both.
 
-# Flow
+# Interaction Model
 
-What is the flow and how to deal with the API?
+How does the API interaction model look like. In general the flow of interactions looks
+ like:
+ 
+ a) Verify the client. Either signup of login is required
+ 
+ b) After successful verification User details are required to load
+ 
+ c) The User may already have items, those are loaded in a third step.
 
 ## Login
 
