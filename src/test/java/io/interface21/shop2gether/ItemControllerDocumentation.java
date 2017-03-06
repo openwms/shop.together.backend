@@ -21,55 +21,53 @@
  */
 package io.interface21.shop2gether;
 
-import io.interface21.shop2gether.service.Owner;
 import io.interface21.shop2gether.service.TextNote;
 import org.junit.Test;
 import org.springframework.test.web.servlet.MvcResult;
 
-import static org.hamcrest.core.Is.is;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
- * A OwnerControllerDocumentation is a full integration test without slices and
- * mocks to test the interaction model with Owners and Users resources.
+ * A ItemControllerDocumentation.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-public class OwnerControllerDocumentation extends DocumentationBase {
-
-    private static final String PHONENUMBER = "0815";
+public class ItemControllerDocumentation extends DocumentationBase {
 
     public final
     @Test
-    void should_Complain_Nonexisting_Owner() throws Exception {
-        super.mockMvc.perform(get(OwnerController.RESOURCE_PLURAL +
+    void should_Complain_When_Get_Missing_Item() throws Exception {
+        super.mockMvc.perform(get(ItemController.RESOURCE_PLURAL +
                 "/UNKNOWN_PERSISTENT_KEY"))
                 .andExpect(status().isNotFound())
-                .andDo(document("21-owner-complain-nonexisting"));
+                .andDo(document("31-item-complain-nonexisting"));
     }
 
     public final
     @Test
-    void should_Get_Existing_Owner() throws Exception {
+    void should_Load_All_Items_For_Owner() throws Exception {
         // setup ...
-        Owner owner = accessor.getOwnerRepository().save(Owner.newBuilder().withUsername(PHONENUMBER)
-                .withUsername(PHONENUMBER).build());
-        owner.addItem(new TextNote("Title", "Text", "#CECECE", true));
+        TextNote saved = accessor.getItemRepository().save(new TextNote("Title",
+                "Some " +
+                "awesome text",
+                "#CECECE", true));
 
         // test ...
-        MvcResult mvcResult = super.mockMvc.perform(get(OwnerController.RESOURCE_PLURAL +
-                "/" + owner.getPersistentKey()))
+        MvcResult result = super.mockMvc.perform(get(ItemController.RESOURCE_PLURAL +
+                "/" + saved.getpKey()))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("username", is(owner.getUsername())))
-                .andExpect(jsonPath("persistentKey", is(owner.getPersistentKey())))
-                .andExpect(jsonPath("new", is(false)))
-                .andExpect(jsonPath("$.links[0].rel", is("_items")))
-                .andDo(document("22-owner-get-existing"))
+                .andDo(document("32-item-load-all-for-owner"))
                 .andReturn();
 
-
+        // verify returned object ...
+        TextNoteVO returned = objectMapper.readValue(result.getResponse()
+                        .getContentAsString(), TextNoteVO.class);
+        assertThat(returned)
+                .extracting("title", "text", "color", "pinned")
+                .contains("Title", "Some awesome text", "#CECECE", true);
+        assertThat(returned.getPersistentKey()).isEqualTo(saved.getpKey());
     }
 }
