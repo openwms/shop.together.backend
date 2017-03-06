@@ -22,9 +22,7 @@
 package io.interface21.shop2gether;
 
 import io.interface21.shop2gether.service.TextNote;
-import org.ameba.mapping.BeanMapper;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.servlet.MvcResult;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -38,10 +36,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
 public class ItemControllerDocumentation extends DocumentationBase {
-
-    private static final String PHONENUMBER = "0815";
-    @Autowired
-    private BeanMapper mapper;
 
     public final
     @Test
@@ -68,12 +62,12 @@ public class ItemControllerDocumentation extends DocumentationBase {
                 .andDo(document("32-item-load-all-for-owner"))
                 .andReturn();
 
-        // verify ...
-        TextNote returned = objectMapper.readValue(result.getResponse()
-                        .getContentAsString(), TextNote.class);
+        // verify returned object ...
+        TextNoteVO returned = objectMapper.readValue(result.getResponse()
+                        .getContentAsString(), TextNoteVO.class);
         assertThat(returned)
                 .extracting("title", "text", "color", "pinned")
-                .contains("Title", "awesome text", "#CECECE", true);
-
+                .contains("Title", "Some awesome text", "#CECECE", true);
+        assertThat(returned.getPersistentKey()).isEqualTo(saved.getpKey());
     }
 }

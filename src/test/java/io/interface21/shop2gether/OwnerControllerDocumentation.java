@@ -23,14 +23,13 @@ package io.interface21.shop2gether;
 
 import io.interface21.shop2gether.service.Owner;
 import io.interface21.shop2gether.service.TextNote;
-import org.ameba.mapping.BeanMapper;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.servlet.MvcResult;
 
+import static org.hamcrest.core.Is.is;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
@@ -42,8 +41,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class OwnerControllerDocumentation extends DocumentationBase {
 
     private static final String PHONENUMBER = "0815";
-    @Autowired
-    private BeanMapper mapper;
 
     public final
     @Test
@@ -66,8 +63,10 @@ public class OwnerControllerDocumentation extends DocumentationBase {
         MvcResult mvcResult = super.mockMvc.perform(get(OwnerController.RESOURCE_PLURAL +
                 "/" + owner.getPersistentKey()))
                 .andExpect(status().isOk())
-                .andExpect(content().string(objectMapper.writeValueAsString(mapper.map
-                        (owner, OwnerVO.class))))
+                .andExpect(jsonPath("username", is(owner.getUsername())))
+                .andExpect(jsonPath("persistentKey", is(owner.getPersistentKey())))
+                .andExpect(jsonPath("new", is(false)))
+                .andExpect(jsonPath("$.links[0].rel", is("_items")))
                 .andDo(document("22-owner-get-existing"))
                 .andReturn();
 

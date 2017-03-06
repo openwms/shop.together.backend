@@ -23,7 +23,6 @@ import java.util.List;
 public abstract class ItemVO extends AbstractBase implements Serializable {
 
     private String persistentKey;
-    public String pKey;
     public boolean shareable;
     public long version;
     public long lastModified;
