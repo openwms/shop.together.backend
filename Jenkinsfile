@@ -9,7 +9,7 @@ node {
    parallel (
      "default-build": {
        stage('\u27A1 Build') {
-          sh "'${mvnHome}/bin/mvn' clean install"
+          sh "'${mvnHome}/bin/mvn' clean install -Dbnumber=${BUILD_NUMBER} -Dbdate=${BUILD_ID}"
        }
      },
      "sonar-build": {
