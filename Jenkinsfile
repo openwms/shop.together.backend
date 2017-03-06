@@ -16,7 +16,6 @@ node {
       archive 'target/*.jar'
    }
    stage('\u27A1 Heroku Staging') {
-      sh "git remote remove heroku"
       sh "git remote add heroku https://:${DGMXAT_HEROKU_API_KEY}@git.heroku.com/shop2gether.git"
       sh "git push heroku master -f"
    }
