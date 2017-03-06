@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 class ItemController {
 
+    static final String RESOURCE_PLURAL = "/items";
     private final ItemService itemService;
 
     ItemController(ItemService itemService) {
         this.itemService = itemService;
     }
 
-
-    @GetMapping("/items/{pKey}")
+    @GetMapping(RESOURCE_PLURAL + "/{pKey}")
     ItemVO getItemFor(@PathVariable String pKey) {
         ItemVO item = itemService.getByPKey(pKey);
         if (!item.getSharedWith().isEmpty()) {
@@ -35,13 +35,13 @@ class ItemController {
     }
 
 
-    @DeleteMapping("/items/{id}")
-    void delete(@PathVariable String id) {
+    @DeleteMapping(RESOURCE_PLURAL + "/{id}")
+    void deleteSingleItem(@PathVariable String id) {
         itemService.delete(id);
     }
 
-    @PatchMapping("/items/{id}")
-    void patch(@PathVariable String id, @RequestBody ItemVO item) {
+    @PatchMapping(RESOURCE_PLURAL + "/{id}")
+    void patchItem(@PathVariable String id, @RequestBody ItemVO item) {
         itemService.updatePartially(id, item);
     }
 }

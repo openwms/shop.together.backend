@@ -17,9 +17,9 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 @RestController
 class OwnerController<T extends ItemVO> {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(OwnerController.class);
     static final String RESOURCE_PLURAL = "/owners";
     private final OwnerService<T> ownerService;
-    private static final Logger LOGGER = LoggerFactory.getLogger(OwnerController.class);
 
     OwnerController(OwnerService<T> ownerService) {
         this.ownerService = ownerService;
