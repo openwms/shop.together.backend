@@ -24,7 +24,14 @@ How does the API interaction model look like. In general the flow of interaction
 
 ## 1) Verify
 
-First we need to get over the login procedure and populate the security context. // to be described
+First we need to get over the login procedure and populate the security context. For 
+this we have two options:
+
+ 1.1) A new user needs to sign up with its mobile number
+ 
+ 1.2) An existing user may come back but credentials are not known
+ 
+The system must handle these two options.
 
 ## Get Owner information
 
