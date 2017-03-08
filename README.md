@@ -1,15 +1,24 @@
-# shop.together.backend
+# Loobo Storage
 
-The Shop2Gether backend is built with less effort possible to back the Shop2Gether mobile application. We just discussed, sketched and implemented the domain model,
-identified aggregates and exposed those as RESTful resources. The business object model, the persistency model (EO: Entity Objects) and view object model (VO) look like this:
+The Loobo Storage project is the backend to back the Loobo mobile application. The 
+features are mainly driven by the use cases the mobile all requires. We discussed, 
+sketched and implemented the domain model and interaction model, identified aggregates 
+and exposed those as RESTful resources. The business object model, the persistent model
+ (EO: Entity Objects) and view object model (VO) look similar to this:
 
 ![DM][1]
 
 # Specialities
 
-- Spatial Query Support. To find other users in the interested area the app requires a database that supports spatial queries. H2 and PostgreSQL are good candidates for that. Spatial Query support
-in H2 is much more easy to activate than in PostgreSQL - just add a library (org.orbisgis:h2gis-ext) and call a function to activate it [see](src/main/resources/schema-H2.sql)
-- Separation of view model and persistency model. Like we did in other projects, we start from the beginning with separate models for persistence and the public API. We use [Ameba](https://github.com/abraxas-labs/ameba-lib) and [Dozer](http://dozer.sourceforge.net/) for mapping between both.
+- Spatial Query Support. To find users in the interested area the app requires a 
+database that supports spatial queries. H2 and PostgreSQL are good candidates for that.
+ Spatial Query support in H2 is much more easy to enable than in PostgreSQL - just 
+ add a library (org.orbisgis:h2gis-ext) and call a function to activate it [see]
+ (src/main/resources/schema-H2.sql)
+- Separation of view model and persistent model. Like we did in other projects, we 
+start from the beginning with separate models for persistence and the public API. We 
+use [Ameba](https://github.com/abraxas-labs/ameba-lib) and [Dozer](http://dozer
+.sourceforge.net/) to map between both models.
 
 # Interaction Model
 
