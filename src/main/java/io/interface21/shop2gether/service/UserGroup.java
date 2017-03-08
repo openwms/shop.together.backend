@@ -3,12 +3,21 @@ package io.interface21.shop2gether.service;
 import lombok.Getter;
 import org.ameba.integration.jpa.ApplicationEntity;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static io.interface21.shop2gether.service.UserGroup.*;
+import static io.interface21.shop2gether.service.UserGroup.COLUMN_NAME;
+import static io.interface21.shop2gether.service.UserGroup.COLUMN_OWNER;
+import static io.interface21.shop2gether.service.UserGroup.TABLE_NAME;
 
 /**
  * An UserGroup is used to group a set of Users in order to assign Items to them.
@@ -68,8 +77,10 @@ class UserGroup extends ApplicationEntity {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         UserGroup userGroup = (UserGroup) o;
         return Objects.equals(owner, userGroup.owner) &&
                 Objects.equals(name, userGroup.name);

@@ -54,7 +54,7 @@ public class ItemControllerDocumentation extends DocumentationBase {
         // setup ...
         TextNote saved = accessor.getItemRepository().save(new TextNote("Title",
                 "Some " +
-                "awesome text",
+                        "awesome text",
                 "#CECECE", true));
 
         // test ...
@@ -67,7 +67,7 @@ public class ItemControllerDocumentation extends DocumentationBase {
 
         // verify returned object ...
         TextNoteVO returned = objectMapper.readValue(result.getResponse()
-                        .getContentAsString(), TextNoteVO.class);
+                .getContentAsString(), TextNoteVO.class);
         assertThat(returned)
                 .extracting("title", "text", "color", "pinned")
                 .contains("Title", "Some awesome text", "#CECECE", true);

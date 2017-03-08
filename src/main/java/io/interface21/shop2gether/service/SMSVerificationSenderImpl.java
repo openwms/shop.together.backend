@@ -60,8 +60,8 @@ class SMSVerificationSenderImpl implements VerificationSender {
         msg.setSubject("Your Loobo verification code is");
         msg.setText(verification);
         try {
-// TODO [openwms]: 18/02/17 Activate sender here and remove code from result object
-        //    this.mailSender.send(msg);
+            // TODO [openwms]: 18/02/17 Activate sender here and remove code from result object
+            //    this.mailSender.send(msg);
         } catch (Exception ex) {
             LOGGER.error(ex.getMessage(), ex);
             throw new IntegrationLayerException(ex.getMessage());
