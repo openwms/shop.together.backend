@@ -36,6 +36,8 @@ class ItemController {
                         (item.getPersistentKey())).withRel("usergroups"));
             });
         }
+        ;
+        item.add(linkTo(methodOn(ItemController.class).getItemFor(pKey)).withSelfRel());
         return item;
     }
 

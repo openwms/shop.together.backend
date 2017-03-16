@@ -26,8 +26,10 @@ import org.junit.Test;
 import org.springframework.test.web.servlet.MvcResult;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.core.IsNull.notNullValue;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
@@ -52,19 +54,20 @@ public class ItemControllerDocumentation extends DocumentationBase {
         // setup ...
         TextNote saved = accessor.getItemRepository().save(new TextNote("Title",
                 "Some " +
-                "awesome text",
+                        "awesome text",
                 "#CECECE", true));
 
         // test ...
         MvcResult result = super.mockMvc.perform(get(ItemController.RESOURCE_PLURAL +
                 "/" + saved.getpKey()))
                 .andExpect(status().isOk())
+                .andExpect(jsonPath("$.links[?(@.rel == 'self')]", notNullValue()))
                 .andDo(document("32-item-load-all-for-owner"))
                 .andReturn();
 
         // verify returned object ...
         TextNoteVO returned = objectMapper.readValue(result.getResponse()
-                        .getContentAsString(), TextNoteVO.class);
+                .getContentAsString(), TextNoteVO.class);
         assertThat(returned)
                 .extracting("title", "text", "color", "pinned")
                 .contains("Title", "Some awesome text", "#CECECE", true);

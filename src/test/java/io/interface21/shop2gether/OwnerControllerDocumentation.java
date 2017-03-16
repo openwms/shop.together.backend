@@ -27,6 +27,7 @@ import org.junit.Test;
 import org.springframework.test.web.servlet.MvcResult;
 
 import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsNull.notNullValue;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -67,6 +68,7 @@ public class OwnerControllerDocumentation extends DocumentationBase {
                 .andExpect(jsonPath("persistentKey", is(owner.getPersistentKey())))
                 .andExpect(jsonPath("new", is(false)))
                 .andExpect(jsonPath("$.links[0].rel", is("_items")))
+                .andExpect(jsonPath("$.links[?(@.rel == 'self')]", notNullValue()))
                 .andDo(document("22-owner-get-existing"))
                 .andReturn();
 

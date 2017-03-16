@@ -2,7 +2,12 @@ package io.interface21.shop2gether;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -33,6 +38,7 @@ class OwnerController<T extends ItemVO> {
                 owner.add(linkTo(methodOn(ItemController.class).getItemFor(i.getPersistentKey())).withRel("_items"));
             });
         }
+        owner.add(linkTo(methodOn(OwnerController.class).getOwnerFor(pKey)).withSelfRel());
         return owner;
     }
 

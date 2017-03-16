@@ -5,7 +5,25 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.Table;
+import javax.persistence.TableGenerator;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.Version;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -157,18 +175,23 @@ abstract class Item<T extends Item> {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Item)) return false;
+        if (this == o)
+            return true;
+        if (!(o instanceof Item))
+            return false;
 
         Item item = (Item) o;
 
         if (pKey != null) {
             return pKey.equals(item.pKey);
         } else {
-            if (item.pKey != null) return false;
+            if (item.pKey != null)
+                return false;
         }
-        if (pk != null ? !pk.equals(item.pk) : item.pk != null) return false;
-        if (ol != item.ol) return false;
+        if (pk != null ? !pk.equals(item.pk) : item.pk != null)
+            return false;
+        if (ol != item.ol)
+            return false;
         if (shareable != null ? !shareable.equals(item.shareable) : item.shareable != null)
             return false;
         if (createDt != null ? !createDt.equals(item.createDt) : item.createDt != null)
